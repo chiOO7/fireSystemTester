@@ -11,4 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ModbusChapter {
     private Integer chapterNumber;
+    private Long id;
 }

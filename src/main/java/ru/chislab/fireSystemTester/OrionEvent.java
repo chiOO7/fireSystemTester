@@ -1,44 +1,11 @@
 package ru.chislab.fireSystemTester;
 
-public enum OrionEvent {
-    NETWORK_RESTORATION_220V,
-    NETWORK_FAILURE_220V,
-    PENETRATION_ALARM,
-    HINDRANCE,
-    MANUAL_ACTIVATION_OF_THE_ACTUATOR,
-    MANUAL_DEACTIVATION_OF_THE_ACTUATOR,
-    UDP_ACTIVATION,
-    UDP_RESTORATION,
-    CODE_SELECTION,
-    DOOR_IS_OPEN,
-    BAD_TAKE,
-    DURESS_CODE_PRESENTED,
-    TEST,
-    TEST_MODE_ENABLED,
-    TEST_MODE_DISABLED,
-    CONTROL_RESTORATION,
-    TAKE_DELAY,
-    SECURING_THE_ENTRANCE,
-    ACCESS_CLOSED,
-    ACCESS_DENIED,
-    DOOR_IS_BROKEN,
-    ACCESS_GRANTED,
-    ACCESS_BANNED,
-    ACCESS_RESTORATION,
-    DOOR_IS_CLOSED,
-    PASS,
-    DOOR_IS_LOCKED,
-    IDENTIFICATION,
-    TECH_ENTRANCE_RESTORATION,
-    TECH_ENTRANCE_VIOLATION,
-    FIRE,
-    TECH_ENTRANCE_2_VIOLATION,
-    NORM_OF_EQUIPMENT_RESTORATION,
-    FIRE_2,
-    EQUIPMENT_MALFUNCTION,
-    UNKNOWN_DEVICE,
-    ATTENTION,
-    ENTRANCE_BREAK,
+import java.time.LocalDateTime;
 
-
+public class OrionEvent {
+    private Events event;
+    private Zone zone;
+    private ModbusChapter chapter;
+    private User user;
+    private LocalDateTime dateTime;
 }
