@@ -1,0 +1,14 @@
+package ru.chislab.fireSystemTester;
+
+public enum ZoneTypes {
+
+    EMPTY_TYPE,
+    SIGNAL_LINE_STATE,
+    CONTROL_CIRCUITS_STATE,
+    DEVICE_STATE,
+    ON_OFF_AUTOMATICS,
+    START_RESET_OR_DIST_START,
+    NUMBER_VALUE,
+    IMPULSE_COUNTER,
+    BACKUP_POWER_SUPPLY
+}
