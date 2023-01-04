@@ -1,4 +1,4 @@
-package ru.chislab.fireSystemTester;
+package ru.chislab.fireSystemTester.enums;
 
 public enum ZoneTypes {
 
@@ -7,7 +7,7 @@ public enum ZoneTypes {
     CONTROL_CIRCUITS_STATE,
     DEVICE_STATE,
     ON_OFF_AUTOMATICS,
-    START_RESET_OR_DIST_START,
+    START_RESET_OR_REMOTE_START,
     NUMBER_VALUE,
     IMPULSE_COUNTER,
     BACKUP_POWER_SUPPLY

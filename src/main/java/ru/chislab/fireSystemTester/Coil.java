@@ -4,11 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.chislab.fireSystemTester.devices.Device;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Coil {
-    private Integer deviceAddress;
+    private Device device;
 }
