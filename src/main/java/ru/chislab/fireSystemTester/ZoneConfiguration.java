@@ -9,17 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Zone {
+public class ZoneConfiguration {
 
     private Device device;
     private SignalLine signalLine;
     private ModbusChapter modbusChapter;
     private ZoneTypes zoneType;
 
-    public static void main(String[] args) {
-//        Zone zone = new Zone();
-//        zone.setZoneType(ZoneTypes.BACKUP_POWER_SUPPLY);
-//
-//        System.out.println(zone.getZoneType().ordinal());
-    }
 }
