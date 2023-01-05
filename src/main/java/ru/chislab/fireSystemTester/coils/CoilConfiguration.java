@@ -8,7 +8,8 @@ import ru.chislab.fireSystemTester.devices.Device;
 @Setter
 public class CoilConfiguration {
 
-    private Integer coilNumber;
+    private Integer modbusCoilNumber;
     private Integer deviceAddress;
     private Integer coilNumberInDevice;
+
 }

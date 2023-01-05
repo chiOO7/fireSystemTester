@@ -6,6 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ChapterConfiguration {
-    private Integer chapterNumber;
+
+    private Integer modbusChapterNumber;
     private Long chapterID;
+
 }

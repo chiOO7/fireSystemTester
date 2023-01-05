@@ -8,6 +8,13 @@ import java.util.Objects;
 @Getter
 @Setter
 public class Zone {
+    @Override
+    public String toString() {
+        return "Zone{" +
+                "configuration=" + configuration +
+                ", state=" + state +
+                '}';
+    }
 
     private ZoneConfiguration configuration;
 
@@ -16,6 +23,8 @@ public class Zone {
     public Zone(ZoneConfiguration configuration) {
         this.configuration = configuration;
     }
+
+
 
     @Override
     public boolean equals(Object o) {

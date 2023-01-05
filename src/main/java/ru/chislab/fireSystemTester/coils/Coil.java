@@ -8,8 +8,6 @@ import ru.chislab.fireSystemTester.devices.Device;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class Coil {
     private Device device;
 }

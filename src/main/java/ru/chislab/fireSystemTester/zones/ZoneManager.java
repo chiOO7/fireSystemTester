@@ -8,23 +8,30 @@ import java.util.List;
 
 public class ZoneManager {
 
-    private static List<Zone> zones;
+    private List<Zone> zones;
 
-    public static List<Zone> getZones() {
+    public List<Zone> getZones() {
         return zones;
     }
     private ModbusDataSource modbusDataSource;
 
     public ZoneManager(ModbusDataSource modbusDataSource) {
+
         this.modbusDataSource = modbusDataSource;
+        zones = new ArrayList<>();
     }
 
     public void defineZones() {
-        List<Zone> zones = ZoneManager.getZones();
         List<ZoneConfiguration> zoneConfigurations = modbusDataSource.getModbusZoneConfigurations();
         for (ZoneConfiguration configuration : zoneConfigurations) {
             Zone zone = new Zone(configuration);
             zones.add(zone);
+        }
+    }
+
+    public void updateZonesState() {
+        for (Zone zone : zones) {
+            zone.setState(modbusDataSource.getZoneStateByModbusZoneNumber(zone.getConfiguration().getModbusZoneNumber()));
         }
     }
 

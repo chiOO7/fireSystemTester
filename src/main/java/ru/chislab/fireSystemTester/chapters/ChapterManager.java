@@ -6,23 +6,30 @@ public class ChapterManager {
 
     private static final int CHAPTERS_COUNT = 64;
 
-    private static Chapter[] chapters = new Chapter[CHAPTERS_COUNT];
+
+    private Chapter[] chapters;
     private ModbusDataSource modbusDataSource;
 
     public ChapterManager(ModbusDataSource modbusDataSource) {
+
         this.modbusDataSource = modbusDataSource;
+        chapters = new Chapter[CHAPTERS_COUNT];
     }
 
 
 
-    public static Chapter getChapterByNumber(int number) {
+    public Chapter getChapterByNumber(int number) {
         return chapters[number - 1];
     }
 
-    public void defineChaptersID() {
-        long[] chaptersIDs = modbusDataSource.getModbusChaptersIDs();
-        for (int i = 0; i < chaptersIDs.length; i++) {
-            chapters[i].getConfiguration().setChapterID(chaptersIDs[i]);
-        }
-    }
+    public Chapter[] getChapters() {return chapters;}
+
+//    public void defineChaptersID() {
+//        ChapterConfiguration[] configurations = modbusDataSource.getModbusChaptersConfigurations();
+//        for (int i = 0; i < configurations.length; i++) {
+//            Chapter chapter = new Chapter();
+//            chapter.setConfiguration(configurations[i]);
+//            chapters[i] = chapter;
+//        }
+//    }
 }
