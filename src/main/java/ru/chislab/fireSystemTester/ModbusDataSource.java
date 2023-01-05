@@ -1,11 +1,29 @@
 package ru.chislab.fireSystemTester;
 
+import ru.chislab.fireSystemTester.chapters.ChapterManager;
+import ru.chislab.fireSystemTester.zones.Zone;
 import ru.chislab.fireSystemTester.zones.ZoneConfiguration;
+import ru.chislab.fireSystemTester.zones.ZoneManager;
 import ru.chislab.fireSystemTester.zones.ZoneState;
 
 import java.util.List;
 
 public class ModbusDataSource {
+
+
+
+
+
+    public long[] getModbusChaptersIDs() {
+        return null;
+    }
+
+
+    public List<ZoneConfiguration> getModbusZoneConfigurations() {
+        return null;
+    }
+
+
 
     public Integer getNumberOfNewestOrionEvent() {
         return null;

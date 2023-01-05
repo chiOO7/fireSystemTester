@@ -1,13 +1,15 @@
 package ru.chislab.fireSystemTester.devices;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import ru.chislab.fireSystemTester.coils.Coil;
+import ru.chislab.fireSystemTester.SignalLine;
+
+import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public abstract class Device {
+    private List<SignalLine> signalLines;
+    private List<Coil> coils;
 }

@@ -1,4 +1,4 @@
-package ru.chislab.fireSystemTester;
+package ru.chislab.fireSystemTester.coils;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
