@@ -10,13 +10,13 @@ public class ApplicationRunner {
         ZoneManager zoneManager = new ZoneManager(dataSource);
         zoneManager.defineZones();
 
-        while (true) {
+
             zoneManager.updateZonesState();
 
             System.out.println("\nZones :");
 
             zoneManager.getZones().stream().map(zone -> zone.toString()).forEach(System.out::println);
             Thread.sleep(1000);
-        }
+
     }
 }

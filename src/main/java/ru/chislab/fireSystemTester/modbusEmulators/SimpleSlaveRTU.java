@@ -1,63 +1,91 @@
 package ru.chislab.fireSystemTester.modbusEmulators;
 
-import com.intelligt.modbus.jlibmodbus.Modbus;
+
 import com.intelligt.modbus.jlibmodbus.data.DataHolder;
 import com.intelligt.modbus.jlibmodbus.data.SimpleDataHolderBuilder;
+import com.intelligt.modbus.jlibmodbus.exception.IllegalDataAddressException;
+import com.intelligt.modbus.jlibmodbus.exception.IllegalDataValueException;
 import com.intelligt.modbus.jlibmodbus.exception.ModbusIOException;
-import com.intelligt.modbus.jlibmodbus.exception.ModbusProtocolException;
-import com.intelligt.modbus.jlibmodbus.serial.SerialParameters;
-import com.intelligt.modbus.jlibmodbus.serial.SerialPort;
+import com.intelligt.modbus.jlibmodbus.serial.SerialPortException;
 import com.intelligt.modbus.jlibmodbus.slave.ModbusSlave;
 import com.intelligt.modbus.jlibmodbus.slave.ModbusSlaveFactory;
-import jssc.SerialPortList;
+import ru.chislab.fireSystemTester.ModbusSerialPort;
+import ru.chislab.fireSystemTester.enums.ZoneTypes;
+import ru.chislab.fireSystemTester.zones.ZoneConfiguration;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class SimpleSlaveRTU {
     final static private int slaveId = 1;
+    final static private int ZONE_COUNT = 5;
+
+    final static private int INPUT_REGISTERS_TABLE_SIZE = 20;
 
     public static void main(String[] argv) {
-        Modbus.setLogLevel(Modbus.LogLevel.LEVEL_DEBUG);
-        SerialParameters serialParameters = new SerialParameters();
+        Scanner scanner = new Scanner(System.in);
+
+//        Modbus.setLogLevel(Modbus.LogLevel.LEVEL_DEBUG);
 
         try {
+            ModbusSlave slave = initSlave(slaveId);
 
-            String[] dev_list = SerialPortList.getPortNames();
-            // if there is at least one serial port at your system
-            if (dev_list.length > 0) {
+            List<ZoneConfiguration> configurations = new ArrayList<>();
 
-                // you can choose the one of those you need
-                serialParameters.setDevice(dev_list[1]);
-                // these parameters are set by default
-                serialParameters.setBaudRate(SerialPort.BaudRate.BAUD_RATE_9600);
-                serialParameters.setDataBits(8);
-                serialParameters.setParity(SerialPort.Parity.NONE);
-                serialParameters.setStopBits(1);
-
-                ModbusSlave slave = ModbusSlaveFactory.createModbusSlaveRTU(serialParameters);
-
-                slave.setServerAddress(slaveId);
-                slave.setBroadcastEnabled(true);
-
-                slave.setReadTimeout(1000000);
-
-                slave.setDataHolder(new SimpleDataHolderBuilder(4));
-                DataHolder dataHolder = slave.getDataHolder();
-
-                dataHolder.getInputRegisters().set(0, 12);
-                dataHolder.getInputRegisters().set(1, 3);
-                dataHolder.getInputRegisters().set(2, 2);
-                dataHolder.getInputRegisters().set(3, 1);
-
-                slave.listen();
-
-                slave.shutdown();
+            for (int i = 0; i < ZONE_COUNT; i++) {
+                ZoneConfiguration configuration = new ZoneConfiguration();
+                configuration.setModbusZoneNumber(i + 1);
+                configuration.setDeviceAddress(12);
+                configuration.setSignalLineNumber(i + 1);
+                configuration.setModbusChapterNumber(1);
+                configuration.setZoneType(ZoneTypes.SIGNAL_LINE_STATE);
+                configurations.add(configuration);
             }
-        } catch (ModbusProtocolException e) {
-            e.printStackTrace();
+
+            DataHolder dataHolder = slave.getDataHolder();
+
+            setZoneConfigurationRegisters(configurations, dataHolder);
+
+            slave.listen();
+            slave.shutdown();
         } catch (ModbusIOException e) {
             e.printStackTrace();
-        } catch (com.intelligt.modbus.jlibmodbus.serial.SerialPortException e) {
-            e.printStackTrace();
+        }
+    }
+
+    private static ModbusSlave initSlave(int slaveId) {
+        ModbusSlave slave = null;
+        try {
+            slave = ModbusSlaveFactory.createModbusSlaveRTU(ModbusSerialPort.initSerial("COM3"));
+        } catch (SerialPortException e) {
+            throw new RuntimeException(e);
+        }
+
+        slave.setServerAddress(slaveId);
+        System.out.println("Slave id : " + slave.getServerAddress());
+        slave.setBroadcastEnabled(true);
+        slave.setReadTimeout(1000000);
+        slave.setDataHolder(new SimpleDataHolderBuilder(INPUT_REGISTERS_TABLE_SIZE));
+
+        return slave;
+    }
+
+    private static void setZoneConfigurationRegisters(List<ZoneConfiguration> configurations, DataHolder dataHolder) {
+        for (int i = 0; i < configurations.size(); i++) {
+            try {
+                dataHolder.getInputRegisters().set(i * 4, configurations.get(i).getDeviceAddress());
+                dataHolder.getInputRegisters().set(i * 4 + 1, configurations.get(i).getSignalLineNumber());
+                dataHolder.getInputRegisters().set(i * 4 + 2, configurations.get(i).getModbusChapterNumber());
+                dataHolder.getInputRegisters().set(i * 4 + 3, configurations.get(i).getZoneType().ordinal());
+                System.out.println((i * 4) + " : " + dataHolder.getInputRegisters().get(i * 4) + "; "
+                        + (i * 4 + 1) + " : " + dataHolder.getInputRegisters().get(i * 4 + 1) + "; "
+                        + (i * 4 + 2) + " : " + dataHolder.getInputRegisters().get(i * 4 + 2) + "; "
+                        + (i * 4 + 3) + " : " + dataHolder.getInputRegisters().get(i * 4 + 3)
+                );
+            } catch (IllegalDataAddressException | IllegalDataValueException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
