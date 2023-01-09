@@ -22,7 +22,7 @@ import java.util.Scanner;
 
 public class SimpleSlaveRTU {
     final static private int slaveId = 1;
-    final static private int ZONE_COUNT = 5;
+    final static private int ZONE_COUNT = 6;
     final static private int INPUT_REGISTERS_TABLE_SIZE = ZONE_COUNT * 4;
     final static private int HOLDING_REGISTERS_TABLE_SIZE = ZONE_COUNT;
     final static private int ZONE_STATE_HR_OFFSET = 40000;
@@ -39,7 +39,7 @@ public class SimpleSlaveRTU {
 
             List<ZoneState> states = new ArrayList<>();
 
-            for (int i = 0; i < ZONE_COUNT; i++) {
+            for (int i = 0; i < ZONE_COUNT - 1; i++) {
                 ZoneConfiguration configuration = new ZoneConfiguration();
                 configuration.setModbusZoneNumber(i + 1);
                 configuration.setDeviceAddress(12);
@@ -57,6 +57,23 @@ public class SimpleSlaveRTU {
                 state.setState(events);
                 states.add(state);
             }
+
+            ZoneConfiguration configuration = new ZoneConfiguration();
+            configuration.setModbusZoneNumber(6);
+            configuration.setDeviceAddress(0);
+            configuration.setSignalLineNumber(0);
+            configuration.setModbusChapterNumber(0);
+            configuration.setZoneType(ZoneTypes.EMPTY_TYPE);
+
+            configurations.add(configuration);
+
+            List<Events> events = new ArrayList<>();
+            events.add(null);
+            events.add(null);
+
+            ZoneState state = new ZoneState();
+            state.setState(events);
+            states.add(state);
 
             DataHolder dataHolder = slave.getDataHolder();
 
@@ -117,6 +134,7 @@ public class SimpleSlaveRTU {
     }
 
     private static int getWordByEvents(List<Events> events) {
+        if (events.get(0) == null && events.get(1) == null) return 0;
         return (events.get(0).getCode() << 8) + events.get(1).getCode();
     }
 }
