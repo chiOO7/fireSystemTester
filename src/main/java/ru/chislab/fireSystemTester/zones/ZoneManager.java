@@ -1,21 +1,24 @@
 package ru.chislab.fireSystemTester.zones;
 
+import lombok.Getter;
 import ru.chislab.fireSystemTester.ModbusDataSource;
+import ru.chislab.fireSystemTester.enums.Events;
+import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class ZoneManager {
 
     private List<Zone> zones;
 
-    public List<Zone> getZones() {
-        return zones;
-    }
+//    public List<Zone> getZones() {
+//        return zones;
+//    }
     private ModbusDataSource modbusDataSource;
 
     public ZoneManager(ModbusDataSource modbusDataSource) {
-
         this.modbusDataSource = modbusDataSource;
         zones = new ArrayList<>();
     }
@@ -51,5 +54,18 @@ public class ZoneManager {
                 zone.setState(modbusDataSource.getZoneStateByModbusZoneNumber(number));
             }
         }
+    }
+
+    public Zone getZoneByZoneNumber(int number) throws ZoneNotFoundException {
+        for (Zone zone : zones) {
+            if (zone.getConfiguration().getModbusZoneNumber() == number) {
+                return zone;
+            }
+        }
+        throw new ZoneNotFoundException("Zone not found or connection with С2000-ПП failed");
+    }
+
+    public void setZoneStateByZoneNumber(int number, List<Events> state) {
+        modbusDataSource.setZoneStateByModbusZoneNumber(number, state);
     }
 }

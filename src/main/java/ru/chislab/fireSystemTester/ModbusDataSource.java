@@ -30,7 +30,8 @@ public class ModbusDataSource {
             try {
                 registerValues = master.readInputRegisters(SLAVE_ID, OFFSET, ZONE_QUANTITY * 4);
             } catch (Exception e) {
-                e.printStackTrace();
+                System.err.println(e.getMessage());
+//                e.printStackTrace();
             } finally {
                 try {
                     master.disconnect();
@@ -131,6 +132,27 @@ public class ModbusDataSource {
         return state;
     }
 
+    public void setZoneStateByModbusZoneNumber(int number, List<Events> state) {
+        try {
+            ModbusMaster master = ModbusMasterFactory
+                    .createModbusMasterRTU(ModbusSerialPort.initSerial(PORT));
+            master.connect();
+            try {
+                master.writeSingleRegister(SLAVE_ID, number + ZONE_STATE_HR_OFFSET - 1, getWordByEvent(state));
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            } finally {
+                try {
+                    master.disconnect();
+                } catch (ModbusIOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        } catch (SerialPortException | ModbusIOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private static List<Events> getEventsByWord(int word) {
         int elderByte = word >> 8;
         int junByte = word - (elderByte << 8);
@@ -143,5 +165,9 @@ public class ModbusDataSource {
         events.add(event2);
 
         return events;
+    }
+
+    private static int getWordByEvent(List<Events> events) {
+        return (events.get(0).getCode() << 8) + events.get(1).getCode();
     }
 }
