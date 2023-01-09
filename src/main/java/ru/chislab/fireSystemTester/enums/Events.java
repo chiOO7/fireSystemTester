@@ -136,7 +136,19 @@ public enum Events {
     COMMUNICATION_WITH_DEVICE_RESTORED(251),
     C2000M_STARTING(253);
 
+    public static Events getEventByCode(int code) {
+        Events event = null;
+        for (int i = 0; i < Events.values().length; i++) {
+            if (Events.values()[i].code == code) event = Events.values()[i];
+        }
+        return event;
+    }
+
     private int code;
+
+    public int getCode() {
+        return code;
+    }
 
     Events(int code) {
         this.code = code;

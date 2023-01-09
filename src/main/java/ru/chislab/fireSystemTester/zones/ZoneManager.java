@@ -1,7 +1,6 @@
 package ru.chislab.fireSystemTester.zones;
 
 import ru.chislab.fireSystemTester.ModbusDataSource;
-import ru.chislab.fireSystemTester.OrionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +28,28 @@ public class ZoneManager {
         }
     }
 
+    public void updateZoneConfigurationByZoneNumber(int number) {
+        for (Zone zone : zones) {
+            if (zone.getConfiguration().getModbusZoneNumber() == number) {
+                ZoneConfiguration settableConfiguration = modbusDataSource.getModbusZoneConfigurationByZoneNumber(number);
+                if (!zone.getConfiguration().equals(settableConfiguration)) {
+                    zone.setConfiguration(modbusDataSource.getModbusZoneConfigurationByZoneNumber(number));
+                }
+            }
+        }
+    }
+
     public void updateZonesState() {
         for (Zone zone : zones) {
             zone.setState(modbusDataSource.getZoneStateByModbusZoneNumber(zone.getConfiguration().getModbusZoneNumber()));
         }
     }
 
+    public void updateZoneStateByZoneNumber(int number) {
+        for (Zone zone : zones) {
+            if (zone.getConfiguration().getModbusZoneNumber() == number) {
+                zone.setState(modbusDataSource.getZoneStateByModbusZoneNumber(number));
+            }
+        }
+    }
 }

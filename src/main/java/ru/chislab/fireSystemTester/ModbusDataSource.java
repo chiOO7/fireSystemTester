@@ -17,6 +17,7 @@ public class ModbusDataSource {
     private static final int SLAVE_ID = 1;
     private static final int OFFSET = 0;
     private static final int ZONE_QUANTITY = 5;
+    final static private int ZONE_STATE_HR_OFFSET = 40000;
 
     public List<ZoneConfiguration> getModbusZoneConfigurations() {
 
@@ -28,8 +29,6 @@ public class ModbusDataSource {
             master.connect();
             try {
                 registerValues = master.readInputRegisters(SLAVE_ID, OFFSET, ZONE_QUANTITY * 4);
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -47,12 +46,15 @@ public class ModbusDataSource {
             for (int i = 0; i < ZONE_QUANTITY; i++) {
                 ZoneConfiguration zoneConfiguration = new ZoneConfiguration();
 
-                zoneConfiguration.setModbusZoneNumber((i / 4) + 1);
+                zoneConfiguration.setModbusZoneNumber(i + 1);
                 zoneConfiguration.setDeviceAddress(registerValues[i * 4]);
                 zoneConfiguration.setSignalLineNumber(registerValues[i * 4 + 1]);
                 zoneConfiguration.setModbusChapterNumber(registerValues[i * 4 + 2]);
                 zoneConfiguration.setZoneType(ZoneTypes.values()[registerValues[i * 4 + 3]]);
-                zoneConfigurations.add(zoneConfiguration);
+                if (zoneConfiguration.getDeviceAddress() != 0 && zoneConfiguration.getZoneType() != ZoneTypes.EMPTY_TYPE
+                        && zoneConfiguration.getSignalLineNumber() != 0) {
+                    zoneConfigurations.add(zoneConfiguration);
+                }
             }
         } else {
             System.out.println("Do not have input registers");
@@ -61,16 +63,85 @@ public class ModbusDataSource {
         return zoneConfigurations;
     }
 
-    //Mock
+    public ZoneConfiguration getModbusZoneConfigurationByZoneNumber(int number) {
+
+        ZoneConfiguration zoneConfiguration = new ZoneConfiguration();
+        int[] registerValues = new int[0];
+        try {
+            ModbusMaster master = ModbusMasterFactory
+                    .createModbusMasterRTU(ModbusSerialPort.initSerial(PORT));
+            master.connect();
+            try {
+                registerValues = master.readInputRegisters(SLAVE_ID, number - 1, 4);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    master.disconnect();
+                } catch (ModbusIOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        } catch (SerialPortException | ModbusIOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (registerValues.length != 0) {
+            zoneConfiguration.setModbusZoneNumber(number);
+            zoneConfiguration.setDeviceAddress(registerValues[0]);
+            zoneConfiguration.setSignalLineNumber(registerValues[1]);
+            zoneConfiguration.setModbusChapterNumber(registerValues[2]);
+            zoneConfiguration.setZoneType(ZoneTypes.values()[registerValues[3]]);
+        } else {
+            System.out.println("Do not have input registers");
+        }
+
+        return zoneConfiguration;
+    }
+
     public ZoneState getZoneStateByModbusZoneNumber(int number) {
         ZoneState state = new ZoneState();
-        List<Events> events = new ArrayList<>();
-        events.add(Events.FIRE);
-        events.add(Events.ACTUATOR_FAILURE);
-        state.setState(events);
 
+        int[] registerValues = new int[0];
+        try {
+            ModbusMaster master = ModbusMasterFactory
+                    .createModbusMasterRTU(ModbusSerialPort.initSerial(PORT));
+            master.connect();
+            try {
+                registerValues = master.readHoldingRegisters(SLAVE_ID, number + ZONE_STATE_HR_OFFSET - 1, 1);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    master.disconnect();
+                } catch (ModbusIOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        } catch (SerialPortException | ModbusIOException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (registerValues.length != 0) {
+            List<Events> events = getEventsByWord(registerValues[0]);
+            state.setState(events);
+        } else {
+            System.out.println("Do not have holding registers");
+        }
         return state;
     }
 
+    private static List<Events> getEventsByWord(int word) {
+        int elderByte = word >> 8;
+        int junByte = word - (elderByte << 8);
 
+        Events event1 = Events.getEventByCode(elderByte);
+        Events event2 = Events.getEventByCode(junByte);
+
+        List<Events> events = new ArrayList<>();
+        events.add(event1);
+        events.add(event2);
+
+        return events;
+    }
 }
