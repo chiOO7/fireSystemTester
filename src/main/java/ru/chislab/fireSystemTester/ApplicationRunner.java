@@ -1,5 +1,10 @@
 package ru.chislab.fireSystemTester;
 
+import com.intelligt.modbus.jlibmodbus.Modbus;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.chislab.fireSystemTester.enums.Events;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
@@ -8,8 +13,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public class ApplicationRunner {
+    private final static String LOG4J_CONFIGURATION_PATH = "log4j.properties";
+
+    private final static Logger logger = LoggerFactory.getLogger(ApplicationRunner.class.getName());
+
     public static void main(String[] args) {
+        BasicConfigurator.configure();
+
+
+        PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
+
+
+        logger.info("Application start");
+        Modbus.setLogLevel(Modbus.LogLevel.LEVEL_DEBUG);
+
         ModbusDataSource dataSource = new ModbusDataSource();
 
         ZoneManager zoneManager = new ZoneManager(dataSource);
@@ -26,7 +45,7 @@ public class ApplicationRunner {
         try {
             System.out.println(zoneManager.getZoneByZoneNumber(number).getState());
         } catch (ZoneNotFoundException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
         }
         List<Events> state = new ArrayList<>();
         state.add(Events.FIRE);
@@ -37,7 +56,8 @@ public class ApplicationRunner {
         try {
             System.out.println(zoneManager.getZoneByZoneNumber(number).getState());
         } catch (ZoneNotFoundException e) {
-            System.err.println(e.getMessage());
+            logger.error(e.getMessage());
         }
+        logger.info("Application ends");
     }
 }

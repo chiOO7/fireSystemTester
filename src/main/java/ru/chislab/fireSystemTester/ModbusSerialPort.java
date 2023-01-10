@@ -1,12 +1,19 @@
 package ru.chislab.fireSystemTester;
 
+
 import com.intelligt.modbus.jlibmodbus.serial.SerialParameters;
 import jssc.SerialPortList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.Scanner;
 
+
 public class ModbusSerialPort {
+
+    private static final Logger logger = LoggerFactory.getLogger("ModbusSerialPort");
+
     public static SerialParameters initSerial() {
         SerialParameters serialParameters = new SerialParameters();
         String[] portNames = SerialPortList.getPortNames();
@@ -17,7 +24,7 @@ public class ModbusSerialPort {
             String portName = scanner.nextLine();
             initSerial(portName.toUpperCase());
         } else {
-            System.out.println("Ports do not available");
+            logger.error("Ports do not available");
         }
         return serialParameters;
     }
@@ -30,11 +37,11 @@ public class ModbusSerialPort {
             serialParameters.setDataBits(8);
             serialParameters.setParity(com.intelligt.modbus.jlibmodbus.serial.SerialPort.Parity.NONE);
             serialParameters.setStopBits(1);
-            System.out.println("Port : " + serialParameters.getDevice()
-                    + "; Baud rate : " + serialParameters.getBaudRate()
-                    + "; Data bits : " + serialParameters.getDataBits()
-                    + "; Parity : " + serialParameters.getParity()
-                    + "; Stop bits : " + serialParameters.getStopBits());
+            logger.debug("Port: " + serialParameters.getDevice()
+                    + "; Baud rate: " + serialParameters.getBaudRate()
+                    + "; Data bits: " + serialParameters.getDataBits()
+                    + "; Parity: " + serialParameters.getParity()
+                    + "; Stop bits: " + serialParameters.getStopBits());
         return serialParameters;
     }
 }

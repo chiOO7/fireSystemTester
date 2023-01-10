@@ -4,6 +4,8 @@ import com.intelligt.modbus.jlibmodbus.exception.ModbusIOException;
 import com.intelligt.modbus.jlibmodbus.master.ModbusMaster;
 import com.intelligt.modbus.jlibmodbus.master.ModbusMasterFactory;
 import com.intelligt.modbus.jlibmodbus.serial.SerialPortException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.chislab.fireSystemTester.enums.Events;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
 import ru.chislab.fireSystemTester.zones.ZoneConfiguration;
@@ -12,7 +14,11 @@ import ru.chislab.fireSystemTester.zones.ZoneState;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class ModbusDataSource {
+
+    private final static Logger logger = LoggerFactory.getLogger("ModbusDataSource");
+
     private static final String PORT = "COM1";
     private static final int SLAVE_ID = 1;
     private static final int OFFSET = 0;
@@ -30,8 +36,7 @@ public class ModbusDataSource {
             try {
                 registerValues = master.readInputRegisters(SLAVE_ID, OFFSET, ZONE_QUANTITY * 4);
             } catch (Exception e) {
-                System.err.println(e.getMessage());
-//                e.printStackTrace();
+                logger.error(e.getMessage());
             } finally {
                 try {
                     master.disconnect();
@@ -58,7 +63,7 @@ public class ModbusDataSource {
                 }
             }
         } else {
-            System.out.println("Do not have input registers");
+            logger.info("Input registers do not available");
         }
 
         return zoneConfigurations;
@@ -140,7 +145,7 @@ public class ModbusDataSource {
             try {
                 master.writeSingleRegister(SLAVE_ID, number + ZONE_STATE_HR_OFFSET - 1, getWordByEvent(state));
             } catch (Exception e) {
-                System.err.println(e.getMessage());
+                logger.error(e.getMessage());
             } finally {
                 try {
                     master.disconnect();

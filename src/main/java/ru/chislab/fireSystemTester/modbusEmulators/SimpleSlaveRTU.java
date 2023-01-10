@@ -9,6 +9,8 @@ import com.intelligt.modbus.jlibmodbus.exception.ModbusIOException;
 import com.intelligt.modbus.jlibmodbus.serial.SerialPortException;
 import com.intelligt.modbus.jlibmodbus.slave.ModbusSlave;
 import com.intelligt.modbus.jlibmodbus.slave.ModbusSlaveFactory;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.PropertyConfigurator;
 import ru.chislab.fireSystemTester.ModbusSerialPort;
 import ru.chislab.fireSystemTester.enums.Events;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
@@ -27,7 +29,14 @@ public class SimpleSlaveRTU {
     final static private int HOLDING_REGISTERS_TABLE_SIZE = ZONE_COUNT;
     final static private int ZONE_STATE_HR_OFFSET = 40000;
 
+    private final static String LOG4J_CONFIGURATION_PATH = "log4j.properties";
+
     public static void main(String[] argv) {
+
+        BasicConfigurator.configure();
+
+
+        PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
         Scanner scanner = new Scanner(System.in);
 
 //        Modbus.setLogLevel(Modbus.LogLevel.LEVEL_DEBUG);
