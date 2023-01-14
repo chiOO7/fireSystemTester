@@ -14,7 +14,6 @@ import org.apache.log4j.PropertyConfigurator;
 import ru.chislab.fireSystemTester.ModbusSerialPort;
 import ru.chislab.fireSystemTester.enums.Events;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
-import ru.chislab.fireSystemTester.zones.Zone;
 import ru.chislab.fireSystemTester.zones.ZoneConfiguration;
 import ru.chislab.fireSystemTester.zones.ZoneState;
 
@@ -65,7 +64,7 @@ public class SimpleSlaveRTU {
                 events.add(event1);
                 events.add(event2);
                 ZoneState state = new ZoneState();
-                state.setState(events);
+                state.setStates(events);
                 states.add(state);
             }
 
@@ -84,7 +83,7 @@ public class SimpleSlaveRTU {
                 events.add(event1);
                 events.add(event2);
                 ZoneState state = new ZoneState();
-                state.setState(events);
+                state.setStates(events);
                 states.add(state);
             }
 
@@ -141,7 +140,7 @@ public class SimpleSlaveRTU {
         System.out.println("Zone state registers:");
         for (int i = 0; i < states.size(); i++) {
             try {
-                dataHolder.getHoldingRegisters().set(i + ZONE_STATE_HR_OFFSET, getWordByEvents(states.get(i).getState()));
+                dataHolder.getHoldingRegisters().set(i + ZONE_STATE_HR_OFFSET, getWordByEvents(states.get(i).getStates()));
                 System.out.println((i + ZONE_STATE_HR_OFFSET) + ": " + dataHolder.getHoldingRegisters().get(i + ZONE_STATE_HR_OFFSET));
             } catch (IllegalDataAddressException | IllegalDataValueException e) {
                 throw new RuntimeException(e);

@@ -12,6 +12,6 @@ import java.util.List;
 @ToString
 public class ZoneState {
 
-    private List<Events> state;
+    private List<Events> states;
 
 }

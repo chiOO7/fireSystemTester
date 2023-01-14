@@ -130,7 +130,7 @@ public class ModbusDataSource {
 
         if (registerValues.length != 0) {
             List<Events> events = getEventsByWord(registerValues[0]);
-            state.setState(events);
+            state.setStates(events);
         } else {
             System.out.println("Do not have holding registers");
         }
