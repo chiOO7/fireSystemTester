@@ -5,13 +5,10 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.chislab.fireSystemTester.enums.Events;
-import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
+import ru.chislab.fireSystemTester.consoleUserInterfaces.ConsoleUIManager;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.util.Scanner;
 
 
 public class ApplicationRunner {
@@ -22,9 +19,7 @@ public class ApplicationRunner {
     public static void main(String[] args) {
         BasicConfigurator.configure();
 
-
         PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
-
 
         logger.info("Application start");
         Modbus.setLogLevel(Modbus.LogLevel.LEVEL_DEBUG);
@@ -35,29 +30,35 @@ public class ApplicationRunner {
         zoneManager.defineZones();
         zoneManager.updateZonesState();
 
-        System.out.println("\nZones :");
 
-        zoneManager.getZones().stream().map(zone -> zone.toString()).forEach(System.out::println);
+        ConsoleUIManager consoleUIManager = new ConsoleUIManager(zoneManager);
+        consoleUIManager.printZoneMenus();
 
-        int number = 1;
-        System.out.println("\nZone" + number + " :");
-        zoneManager.updateZoneStateByZoneNumber(number);
-        try {
-            System.out.println(zoneManager.getZoneByZoneNumber(number).getState());
-        } catch (ZoneNotFoundException e) {
-            logger.error(e.getMessage());
-        }
-        List<Events> state = new ArrayList<>();
-        state.add(Events.FIRE);
-        state.add(Events.ACTUATOR_FAILURE);
-        zoneManager.setZoneStateByZoneNumber(number, state);
 
-        zoneManager.updateZoneStateByZoneNumber(number);
-        try {
-            System.out.println(zoneManager.getZoneByZoneNumber(number).getState());
-        } catch (ZoneNotFoundException e) {
-            logger.error(e.getMessage());
-        }
+
+//        System.out.println("\nZones :");
+//
+//        zoneManager.getZones().stream().map(zone -> zone.toString()).forEach(System.out::println);
+//
+//        int number = 1;
+//        System.out.println("\nZone" + number + " :");
+//        zoneManager.updateZoneStateByZoneNumber(number);
+//        try {
+//            System.out.println(zoneManager.getZoneByZoneNumber(number).getState());
+//        } catch (ZoneNotFoundException e) {
+//            logger.error(e.getMessage());
+//        }
+//        List<Events> state = new ArrayList<>();
+//        state.add(Events.FIRE);
+//        state.add(Events.ACTUATOR_FAILURE);
+//        zoneManager.setZoneStateByZoneNumber(number, state);
+//
+//        zoneManager.updateZoneStateByZoneNumber(number);
+//        try {
+//            System.out.println(zoneManager.getZoneByZoneNumber(number).getState());
+//        } catch (ZoneNotFoundException e) {
+//            logger.error(e.getMessage());
+//        }
         logger.info("Application ends");
     }
 }

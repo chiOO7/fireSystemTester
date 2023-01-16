@@ -1,9 +1,11 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
+import lombok.Getter;
 import ru.chislab.fireSystemTester.enums.Events;
 
 import java.util.Objects;
 
+@Getter
 public class StateMenu extends ConsoleUIMenu{
 
     private int number;
@@ -27,4 +29,5 @@ public class StateMenu extends ConsoleUIMenu{
     public int hashCode() {
         return Objects.hash(number);
     }
+
 }

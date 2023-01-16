@@ -22,7 +22,7 @@ public class ModbusDataSource {
     private static final String PORT = "COM1";
     private static final int SLAVE_ID = 1;
     private static final int OFFSET = 0;
-    private static final int ZONE_QUANTITY = 5;
+    private static final int ZONE_QUANTITY = 10;
     final static private int ZONE_STATE_HR_OFFSET = 40000;
 
     public List<ZoneConfiguration> getModbusZoneConfigurations() {

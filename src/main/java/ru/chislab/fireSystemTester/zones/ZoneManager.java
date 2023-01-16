@@ -13,9 +13,6 @@ public class ZoneManager {
 
     private List<Zone> zones;
 
-//    public List<Zone> getZones() {
-//        return zones;
-//    }
     private ModbusDataSource modbusDataSource;
 
     public ZoneManager(ModbusDataSource modbusDataSource) {

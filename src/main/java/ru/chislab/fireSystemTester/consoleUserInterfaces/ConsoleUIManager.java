@@ -5,22 +5,20 @@ import ru.chislab.fireSystemTester.zones.ZoneManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ConsoleUIManager {
-    private final static List<ChapterMenu> chapterMenus = new ArrayList<>();
-
-//    private final static List<StateMenu> stateMenus = new ArrayList<>();
 
     private final ZoneManager zoneManager;
+
+    Scanner scanner = new Scanner(System.in);
+
+    private List<ZoneMenu> zoneMenus = new ArrayList<>();
 
     public ConsoleUIManager(ZoneManager zoneManager) {
         this.zoneManager = zoneManager;
 
         List<Zone> zones = zoneManager.getZones();
-
-
-
-        List<ZoneMenu> zoneMenus = new ArrayList<>();
 
         for (Zone zone : zones) {
             StateMenu stateMenu1 = new StateMenu(1, zone.getState().getStates().get(0));
@@ -33,13 +31,22 @@ public class ConsoleUIManager {
 
             zoneMenus.add(zoneMenu);
         }
+    }
 
-
-//            ChapterMenu chapterMenu = new ChapterMenu(zone.getConfiguration().getModbusChapterNumber());
-
-
-
-
+    public void printMenus(ConsoleUIMenu consoleUIMenu) {
 
     }
+
+    public int printZoneMenus() {
+        System.out.println();
+        System.out.println("0. Назад");
+        System.out.println("1. Обновить состояние зон");
+        for (int i = 0; i < zoneMenus.size(); i++) {
+            System.out.println((i + 2) + zoneMenus.get(i).toString());
+        }
+        System.out.println("Введите номер команды от 0 до " + (zoneMenus.size() + 1));
+        System.out.println();
+        return scanner.nextInt();
+    }
+
 }
