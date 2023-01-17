@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ZoneMapper {
-    public static ZoneMenu zoneToZoneMenuMapper(Zone zone) {
-        ZoneMenu zoneMenu = new ZoneMenu(zone.getZoneName(), null,
-                ZoneStateMapper.zoneStateToStateMenusMapper(new ZoneState()));
-        return zoneMenu;
-    }
+//    public static ZoneMenu zoneToZoneMenuMapper(Zone zone) {
+//        ZoneMenu zoneMenu = new ZoneMenu(zone.getZoneName(), null,
+//                ZoneStateMapper.zoneStateToStateMenusMapper(new ZoneState()));
+//        return zoneMenu;
+//    }
 }

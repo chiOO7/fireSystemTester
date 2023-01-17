@@ -5,8 +5,7 @@ import java.util.Scanner;
 
 public class AvailableChaptersMenu extends ConsoleUIMenu {
 
-
-    public AvailableChaptersMenu(String menuName, Scanner scanner, List<ConsoleUIMenu> subMenus) {
-        super(menuName, scanner, subMenus);
+    public AvailableChaptersMenu(Scanner scanner, List<ConsoleUIMenu> subMenus) {
+        super("Доступные разделы", scanner, subMenus);
     }
 }

@@ -1,17 +1,16 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 import lombok.Getter;
-import ru.chislab.fireSystemTester.zones.ZoneState;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 @Getter
 public class ZoneMenu extends ConsoleUIMenu{
 
+//    private final List<StateMenu> stateMenus;
 
-    public ZoneMenu(String menuName, Scanner scanner, List<ConsoleUIMenu> subMenus) {
-        super(menuName, scanner, subMenus);
+    public ZoneMenu(String menuName, Scanner scanner, List<ConsoleUIMenu> stateMenus) {
+        super(menuName, scanner, stateMenus);
     }
 }

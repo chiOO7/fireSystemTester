@@ -7,6 +7,7 @@ import lombok.Setter;
 import ru.chislab.fireSystemTester.devices.Device;
 import ru.chislab.fireSystemTester.zones.Zone;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -18,10 +19,11 @@ import java.util.Objects;
 public class Chapter {
 //    private ChapterConfiguration configuration;
     private int modbusChapterNumber;
-    private List<Zone> zones = Collections.emptyList();
+    private List<Zone> zones;
 
     public Chapter(int modbusChapterNumber) {
         this.modbusChapterNumber = modbusChapterNumber;
+        zones = new ArrayList<>();
     }
 
     @Override

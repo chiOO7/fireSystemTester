@@ -1,21 +1,17 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class ChapterMenu extends ConsoleUIMenu{
-
-    private Scanner scanner;
     private int number;
 
-    private List<ZoneMenu> zoneMenus;
+//    private List<ZoneMenu> zoneMenus;
 
     public ChapterMenu(int number, Scanner scanner, List<ConsoleUIMenu> zoneMenus) {
         super("Раздел " + number, scanner, zoneMenus);
         this.number = number;
-
     }
 
     @Override

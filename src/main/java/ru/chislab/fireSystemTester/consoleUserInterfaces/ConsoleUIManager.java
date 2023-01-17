@@ -1,5 +1,10 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
+import lombok.AllArgsConstructor;
+import ru.chislab.fireSystemTester.ModbusDataSource;
+import ru.chislab.fireSystemTester.chapters.Chapter;
+import ru.chislab.fireSystemTester.chapters.ChapterManager;
+import ru.chislab.fireSystemTester.enums.Events;
 import ru.chislab.fireSystemTester.zones.Zone;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
@@ -7,46 +12,36 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@AllArgsConstructor
 public class ConsoleUIManager {
-
-    private final ZoneManager zoneManager;
-
-    Scanner scanner = new Scanner(System.in);
-
-    private List<ZoneMenu> zoneMenus = new ArrayList<>();
-
-    public ConsoleUIManager(ZoneManager zoneManager) {
-        this.zoneManager = zoneManager;
-
-//        List<Zone> zones = zoneManager.getZones();
-//
-//        for (Zone zone : zones) {
-//            StateMenu stateMenu1 = new StateMenu(1, zone.getState().getStates().get(0));
-//            StateMenu stateMenu2 = new StateMenu(2, zone.getState().getStates().get(1));
-//            List<StateMenu> stateMenus = new ArrayList<>();
-//            stateMenus.add(stateMenu1);
-//            stateMenus.add(stateMenu2);
-//
-//            ZoneMenu zoneMenu = new ZoneMenu(zone.getConfiguration().getModbusZoneNumber(), stateMenus);
-//
-//            zoneMenus.add(zoneMenu);
-//        }
+    private static Scanner scanner = new Scanner(System.in);
+    private static ChapterManager chapterManager;
+    public static void main(String[] args) {
+        ModbusDataSource modbusDataSource = new ModbusDataSource();
+        ZoneManager zoneManager = new ZoneManager(modbusDataSource);
+        chapterManager = new ChapterManager(zoneManager);
+        initMenus();
     }
 
-    public void printMenus(ConsoleUIMenu consoleUIMenu) {
-
-    }
-
-    public int printZoneMenus() {
-        System.out.println();
-        System.out.println("0. Назад");
-        System.out.println("1. Обновить состояние зон");
-        for (int i = 0; i < zoneMenus.size(); i++) {
-            System.out.println((i + 2) + zoneMenus.get(i).toString());
+    public static void initMenus() {
+        List<ConsoleUIMenu> chapterMenus = new ArrayList<>();
+        for (Chapter chapter : chapterManager.getAvailableChapters()) {
+            List<ConsoleUIMenu> zoneMenus = new ArrayList<>();
+            for (Zone zone : chapter.getZones()) {
+                List<ConsoleUIMenu> stateMenus = new ArrayList<>();
+                for (Events state : zone.getZoneState().getStates()) {
+                    StateMenu stateMenu = new StateMenu(state, scanner);
+                    stateMenus.add(stateMenu);
+                }
+                ZoneMenu zoneMenu = new ZoneMenu("Зона ", scanner, stateMenus);
+                zoneMenus.add(zoneMenu);
+            }
+            ChapterMenu chapterMenu = new ChapterMenu(chapter.getModbusChapterNumber(), scanner, zoneMenus);
+            chapterMenus.add(chapterMenu);
         }
-        System.out.println("Введите номер команды от 0 до " + (zoneMenus.size() + 1));
-        System.out.println();
-        return scanner.nextInt();
+        AvailableChaptersMenu availableChaptersMenu = new AvailableChaptersMenu(scanner, chapterMenus);
+        StartMenu startMenu = new StartMenu(scanner, availableChaptersMenu);
+        startMenu.processMenu();
     }
 
 }

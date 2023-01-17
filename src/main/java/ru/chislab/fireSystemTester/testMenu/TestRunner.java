@@ -1,5 +1,7 @@
 package ru.chislab.fireSystemTester.testMenu;
 
+import ru.chislab.fireSystemTester.consoleUserInterfaces.StartMenu;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,7 +17,7 @@ public class TestRunner {
 
         menu.processMenu();
 
-        StartMenu startMenu = new StartMenu("s", scanner);
+//        StartMenu startMenu = new StartMenu("s", scanner);
 
     }
 
