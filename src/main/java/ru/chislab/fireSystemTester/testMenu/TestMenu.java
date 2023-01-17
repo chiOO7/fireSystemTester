@@ -4,18 +4,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Scanner;
 
 @Getter
 @Setter
 public class TestMenu extends TestAbstractMenu {
 
 
-
-
-    public TestMenu(List<TestAbstractMenu> menus, String name) {
-        super(0, menus, name);
+    public TestMenu(Scanner scanner, List<TestAbstractMenu> menus, String name) {
+        super(scanner, 0, menus, name);
     }
-
 
 
     public void printMenus() {
@@ -23,18 +21,18 @@ public class TestMenu extends TestAbstractMenu {
         System.out.println(name);
         System.out.println("0. Назад");
         System.out.println("1. Обновить состояние зон");
-        for (int i = 0; i < menus.size(); i++) {
-            System.out.println((i + 2) + ". " + menus.get(i));
+        for (int i = 0; i < menuPunkts.size(); i++) {
+            System.out.println((i + 2) + ". " + menuPunkts.get(i));
         }
         System.out.print("Enter command number: ");
     }
 
     @Override
     public void doSomething(int command) {
-        switch (command) {
-            case 1:
-                System.out.println(name + " first");
-                break;
+        if (command == 1) {
+            System.out.println(name + " first");
+        } else {
+            menuPunkts.get(command - 2).processMenu();
         }
     }
 }

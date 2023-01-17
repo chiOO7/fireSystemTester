@@ -4,22 +4,19 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Scanner;
 
 @Getter
 @Setter
 public class TestSubMenu extends TestAbstractMenu {
 
     @Override
-    public void doSomething(int command) {
-
-    }
-
-    @Override
     public String toString() {
-        return name + ": " + getMenus().get(0).toString() + "; " + getMenus().get(1).toString() ;
+        return name + ": " + getMenuPunkts().get(0).toString() + "; " + getMenuPunkts().get(1).toString();
     }
 
-    public TestSubMenu(List<TestAbstractMenu> menus, String name) {
-        super(1, menus, name);
+
+    public TestSubMenu(Scanner scanner, List<TestAbstractMenu> menus, String name) {
+        super(scanner, 1, menus, name);
     }
 }

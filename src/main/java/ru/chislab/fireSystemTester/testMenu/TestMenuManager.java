@@ -12,8 +12,8 @@ public class TestMenuManager {
        int command = scanner.nextInt();
        if (command == 0) return menu.getLevel() - 1;
        menu.doSomething(command);
-       if (menu.getMenus().isEmpty()) return 0;
-       int level = somthingWithMenu(menu.getMenus().get(command - 1));
+       if (menu.getMenuPunkts().isEmpty()) return 0;
+       int level = somthingWithMenu(menu.getMenuPunkts().get(command - 1));
        return level;
    }
 

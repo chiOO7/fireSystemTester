@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Scanner;
 
 @Getter
 @Setter
@@ -23,8 +24,8 @@ public class TestSubSubMenu extends TestAbstractMenu {
                 break;
         }
     }
-    public TestSubSubMenu(List<TestAbstractMenu> menus, String name) {
-        super(2, menus, name);
+    public TestSubSubMenu(Scanner scanner, List<TestAbstractMenu> menus, String name) {
+        super(scanner, 2, menus, name);
     }
 
 
@@ -34,7 +35,7 @@ public class TestSubSubMenu extends TestAbstractMenu {
     public void printMenus() {
         System.out.println();
         System.out.println(name);
-        System.out.println("0. Back");
+        System.out.println("0. Назад");
         for (int i = 0; i < punkts.size(); i++) {
             System.out.println((i + 1) + ". " + punkts.get(i));
         }
