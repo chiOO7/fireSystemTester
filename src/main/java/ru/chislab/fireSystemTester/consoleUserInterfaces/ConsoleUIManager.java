@@ -1,6 +1,8 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 import lombok.AllArgsConstructor;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.PropertyConfigurator;
 import ru.chislab.fireSystemTester.ModbusDataSource;
 import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
@@ -17,6 +19,9 @@ public class ConsoleUIManager {
     private static Scanner scanner = new Scanner(System.in);
     private static ChapterManager chapterManager;
     public static void main(String[] args) {
+        String LOG4J_CONFIGURATION_PATH = "log4j.properties";
+        BasicConfigurator.configure();
+        PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
         ModbusDataSource modbusDataSource = new ModbusDataSource();
         ZoneManager zoneManager = new ZoneManager(modbusDataSource);
         chapterManager = new ChapterManager(zoneManager);
@@ -29,14 +34,18 @@ public class ConsoleUIManager {
             List<ConsoleUIMenu> zoneMenus = new ArrayList<>();
             for (Zone zone : chapter.getZones()) {
                 List<ConsoleUIMenu> stateMenus = new ArrayList<>();
-                for (Events state : zone.getZoneState().getStates()) {
-                    StateMenu stateMenu = new StateMenu(state, scanner);
+                for (int i = 0; i < zone.getZoneState().getStates().size(); i++) {
+                    StateMenu stateMenu = new StateMenu(zone.getZoneState().getStates().get(i), scanner);
+                    stateMenu.setStateNumber(i + 1);
                     stateMenus.add(stateMenu);
                 }
-                ZoneMenu zoneMenu = new ZoneMenu("Зона ", scanner, stateMenus);
+                ZoneMenu zoneMenu = new ZoneMenu("Зона ", scanner, stateMenus,
+                        chapterManager.getZoneManager());
+                zoneMenu.setZoneNumber(zone.getConfiguration().getModbusZoneNumber());
                 zoneMenus.add(zoneMenu);
             }
-            ChapterMenu chapterMenu = new ChapterMenu(chapter.getModbusChapterNumber(), scanner, zoneMenus);
+            ChapterMenu chapterMenu = new ChapterMenu(chapter.getModbusChapterNumber(),
+                    scanner, zoneMenus, chapterManager.getZoneManager());
             chapterMenus.add(chapterMenu);
         }
         AvailableChaptersMenu availableChaptersMenu = new AvailableChaptersMenu(scanner, chapterMenus);

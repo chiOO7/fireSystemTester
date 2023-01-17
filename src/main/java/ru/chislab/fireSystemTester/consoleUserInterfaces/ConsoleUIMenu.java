@@ -18,6 +18,7 @@ public abstract class ConsoleUIMenu {
         while (true) {
             printMenus();
             int command = scanner.nextInt();
+            if (command == -1) System.exit(0);
             if (command == 0) break;
             doSomething(command);
         }

@@ -1,33 +1,36 @@
 package ru.chislab.fireSystemTester.chapters;
 
-import ru.chislab.fireSystemTester.zones.Zone;
+import lombok.Getter;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
+@Getter
 public class ChapterManager {
     private static final int CHAPTERS_COUNT = 64;
     private Chapter[] chapters;
-//    private ZoneManager zoneManager;
+    private ZoneManager zoneManager;
 
     public ChapterManager(ZoneManager zoneManager) {
-//        this.zoneManager = zoneManager;
+        this.zoneManager = zoneManager;
         chapters = new Chapter[CHAPTERS_COUNT];
-//        Arrays.fill(chapters, new Chapter());
         for (int i = 0; i < chapters.length; i++) {
             chapters[i] = new Chapter();
+            chapters[i].setModbusChapterNumber(i + 1);
             chapters[i].setZones(new ArrayList<>());
         }
         zoneManager.defineZones();
         zoneManager.updateZonesState();
-        for (Zone zone : zoneManager.getZones()) {
-            int cN = zone.getConfiguration().getModbusChapterNumber();
-            List<Zone> zones = chapters[zone.getConfiguration().getModbusChapterNumber() - 1].getZones();
+//        for (Zone zone : zoneManager.getZones()) {
+//            int cN = zone.getConfiguration().getModbusChapterNumber();
+//            List<Zone> zones = chapters[zone.getConfiguration().getModbusChapterNumber() - 1].getZones();
+//
+//            zones.add(zone);
+//        }
 
-            zones.add(zone);
+        for (Chapter chapter : chapters) {
+            chapter.setZones(zoneManager.getZonesByChapterNumber(chapter.getModbusChapterNumber()));
         }
     }
 

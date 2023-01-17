@@ -12,11 +12,17 @@ import java.util.Scanner;
 @Setter
 public class StateMenu extends ConsoleUIMenu{
 
+    private int stateNumber;
     private final Events state;
 
     public StateMenu(Events state, Scanner scanner) {
         super(state.toString(), scanner, Collections.emptyList());
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return "Состояние " + stateNumber + ": " + state;
     }
 
     @Override

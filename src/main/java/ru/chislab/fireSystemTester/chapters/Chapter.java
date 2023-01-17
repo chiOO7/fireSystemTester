@@ -19,11 +19,14 @@ import java.util.Objects;
 public class Chapter {
 //    private ChapterConfiguration configuration;
     private int modbusChapterNumber;
+
+    private String chapterName;
     private List<Zone> zones;
 
     public Chapter(int modbusChapterNumber) {
         this.modbusChapterNumber = modbusChapterNumber;
-        zones = new ArrayList<>();
+        this.zones = new ArrayList<>();
+        this.chapterName = "Имя раздела не установлено";
     }
 
     @Override

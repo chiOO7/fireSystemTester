@@ -62,6 +62,16 @@ public class ZoneManager {
         throw new ZoneNotFoundException("Zone not found or connection with С2000-ПП failed");
     }
 
+    public List<Zone> getZonesByChapterNumber(int chapterNumber) {
+        List<Zone> zoneList = new ArrayList<>();
+        for (Zone zone : zones) {
+            if (zone.getConfiguration().getModbusChapterNumber() == chapterNumber) {
+                zoneList.add(zone);
+            }
+        }
+        return zoneList;
+    }
+
     public void setZoneStateByZoneNumber(int number, List<Events> state) {
         modbusDataSource.setZoneStateByModbusZoneNumber(number, state);
     }
