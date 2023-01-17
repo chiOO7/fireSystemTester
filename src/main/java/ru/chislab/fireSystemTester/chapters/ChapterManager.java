@@ -1,6 +1,11 @@
 package ru.chislab.fireSystemTester.chapters;
 
 import ru.chislab.fireSystemTester.ModbusDataSource;
+import ru.chislab.fireSystemTester.zones.Zone;
+import ru.chislab.fireSystemTester.zones.ZoneManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChapterManager {
 
@@ -8,15 +13,13 @@ public class ChapterManager {
 
 
     private Chapter[] chapters;
-    private ModbusDataSource modbusDataSource;
+    private ZoneManager zoneManager;
 
-    public ChapterManager(ModbusDataSource modbusDataSource) {
+    public ChapterManager(ZoneManager zoneManager) {
 
-        this.modbusDataSource = modbusDataSource;
+        this.zoneManager = zoneManager;
         chapters = new Chapter[CHAPTERS_COUNT];
     }
-
-
 
     public Chapter getChapterByNumber(int number) {
         return chapters[number - 1];
@@ -24,12 +27,4 @@ public class ChapterManager {
 
     public Chapter[] getChapters() {return chapters;}
 
-//    public void defineChaptersID() {
-//        ChapterConfiguration[] configurations = modbusDataSource.getModbusChaptersConfigurations();
-//        for (int i = 0; i < configurations.length; i++) {
-//            Chapter chapter = new Chapter();
-//            chapter.setConfiguration(configurations[i]);
-//            chapters[i] = chapter;
-//        }
-//    }
 }

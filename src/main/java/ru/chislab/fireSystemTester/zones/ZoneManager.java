@@ -41,14 +41,14 @@ public class ZoneManager {
 
     public void updateZonesState() {
         for (Zone zone : zones) {
-            zone.setState(modbusDataSource.getZoneStateByModbusZoneNumber(zone.getConfiguration().getModbusZoneNumber()));
+            zone.setZoneState(modbusDataSource.getZoneStateByModbusZoneNumber(zone.getConfiguration().getModbusZoneNumber()));
         }
     }
 
     public void updateZoneStateByZoneNumber(int number) {
         for (Zone zone : zones) {
             if (zone.getConfiguration().getModbusZoneNumber() == number) {
-                zone.setState(modbusDataSource.getZoneStateByModbusZoneNumber(number));
+                zone.setZoneState(modbusDataSource.getZoneStateByModbusZoneNumber(number));
             }
         }
     }

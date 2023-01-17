@@ -12,13 +12,15 @@ public class Zone {
     public String toString() {
         return "Zone{" +
                 "configuration=" + configuration +
-                ", state=" + state +
+                ", state=" + zoneState +
                 '}';
     }
 
+    private String zoneName;
+
     private ZoneConfiguration configuration;
 
-    private ZoneState state;
+    private ZoneState zoneState;
 
     public Zone(ZoneConfiguration configuration) {
         this.configuration = configuration;
@@ -36,6 +38,6 @@ public class Zone {
 
     @Override
     public int hashCode() {
-        return Objects.hash(configuration, state);
+        return Objects.hash(configuration, zoneState);
     }
 }

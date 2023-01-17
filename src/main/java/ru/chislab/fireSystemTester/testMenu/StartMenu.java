@@ -1,14 +1,22 @@
 package ru.chislab.fireSystemTester.testMenu;
 
+import lombok.AllArgsConstructor;
+import lombok.Setter;
+import ru.chislab.fireSystemTester.chapters.Chapter;
+import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.consoleUserInterfaces.AvailableChaptersMenu;
+import ru.chislab.fireSystemTester.consoleUserInterfaces.ChapterMenu;
 import ru.chislab.fireSystemTester.consoleUserInterfaces.ConsoleUIMenu;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+@Setter
 public class StartMenu extends ConsoleUIMenu {
 
+    private ChapterManager chapterManager;
 
     @Override
     protected void printMenuHeader() {
@@ -35,6 +43,12 @@ public class StartMenu extends ConsoleUIMenu {
     }
 
     public StartMenu(String menuName, Scanner scanner) {
-        super(menuName, scanner, Collections.emptyList());
+        List<ConsoleUIMenu> chapterMenus = new ArrayList<>();
+        for (int i = 0; i < chapterManager.getChapters().length; i++) {
+            ChapterMenu chapterMenu = new ChapterMenu(i + 1, scanner, Collections.emptyList());
+        }
+//        AvailableChaptersMenu availableChaptersMenu = new AvailableChaptersMenu("Доступные разделы",
+//                scanner, Collections.emptyList());
+        super(menuName, scanner, chapterMenus);
     }
 }
