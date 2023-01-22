@@ -1,6 +1,6 @@
 package ru.chislab.fireSystemTester.enums;
 
-public enum Events {
+public enum States {
 
     RESTORING_THE_220V_NETWORK(1),
     NETWORK_220V_FAILURE(2),
@@ -136,12 +136,12 @@ public enum Events {
     COMMUNICATION_WITH_DEVICE_RESTORED(251),
     C2000M_STARTING(253);
 
-    public static Events getEventByCode(int code) {
-        Events event = null;
-        for (int i = 0; i < Events.values().length; i++) {
-            if (Events.values()[i].code == code) event = Events.values()[i];
+    public static States getStateByCode(int code) {
+        States state = null;
+        for (int i = 0; i < States.values().length; i++) {
+            if (States.values()[i].code == code) state = States.values()[i];
         }
-        return event;
+        return state;
     }
 
     private int code;
@@ -150,7 +150,7 @@ public enum Events {
         return code;
     }
 
-    Events(int code) {
+    States(int code) {
         this.code = code;
     }
 

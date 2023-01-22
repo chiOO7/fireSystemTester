@@ -1,21 +1,18 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
-import lombok.Getter;
 import lombok.Setter;
-import ru.chislab.fireSystemTester.enums.Events;
+import ru.chislab.fireSystemTester.enums.States;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 @Setter
 public class StateMenu extends ConsoleUIMenu{
 
     private int stateNumber;
-    private final Events state;
+    private final States state;
 
-    public StateMenu(Events state, Scanner scanner) {
+    public StateMenu(States state, Scanner scanner) {
         super(state.toString(), scanner, Collections.emptyList());
         this.state = state;
     }
@@ -28,8 +25,8 @@ public class StateMenu extends ConsoleUIMenu{
     @Override
     public void printMenus() {
         printMenuHeader();
-        for (int i = 0; i < Events.values().length; i++) {
-            System.out.println((i + 1) + ". " + Events.values()[i]);
+        for (int i = 0; i < States.values().length; i++) {
+            System.out.println((i + 1) + ". " + States.values()[i]);
         }
         printMenuFooter();
     }

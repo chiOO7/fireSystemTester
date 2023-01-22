@@ -5,20 +5,20 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.chislab.fireSystemTester.consoleUserInterfaces.ConsoleUIManager;
-import ru.chislab.fireSystemTester.enums.Events;
+import ru.chislab.fireSystemTester.dao.ZoneDao;
+import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 
 public class ApplicationRunner {
     private final static String LOG4J_CONFIGURATION_PATH = "log4j.properties";
 
     private final static Logger logger = LoggerFactory.getLogger(ApplicationRunner.class.getName());
+
 
     public static void main(String[] args) {
         BasicConfigurator.configure();
@@ -47,9 +47,9 @@ public class ApplicationRunner {
         } catch (ZoneNotFoundException e) {
             logger.error(e.getMessage());
         }
-        List<Events> state = new ArrayList<>();
-        state.add(Events.FIRE);
-        state.add(Events.ACTUATOR_FAILURE);
+        List<States> state = new ArrayList<>();
+        state.add(States.FIRE);
+        state.add(States.ACTUATOR_FAILURE);
         zoneManager.setZoneStateByZoneNumber(number, state);
 
         zoneManager.updateZoneStateByZoneNumber(number);

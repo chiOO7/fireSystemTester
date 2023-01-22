@@ -12,7 +12,7 @@ import com.intelligt.modbus.jlibmodbus.slave.ModbusSlaveFactory;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PropertyConfigurator;
 import ru.chislab.fireSystemTester.ModbusSerialPort;
-import ru.chislab.fireSystemTester.enums.Events;
+import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
 import ru.chislab.fireSystemTester.zones.ZoneConfiguration;
 import ru.chislab.fireSystemTester.zones.ZoneState;
@@ -58,9 +58,9 @@ public class SimpleSlaveRTU {
                 configuration.setZoneType(ZoneTypes.SIGNAL_LINE_STATE);
                 configurations.add(configuration);
 
-                Events event1 = Events.values()[i];
-                Events event2 = Events.values()[i + 1];
-                List<Events> events = new ArrayList<>();
+                States event1 = States.values()[i];
+                States event2 = States.values()[i + 1];
+                List<States> events = new ArrayList<>();
                 events.add(event1);
                 events.add(event2);
                 ZoneState state = new ZoneState();
@@ -77,9 +77,9 @@ public class SimpleSlaveRTU {
                 configuration.setZoneType(ZoneTypes.SIGNAL_LINE_STATE);
                 configurations.add(configuration);
 
-                Events event1 = Events.values()[i];
-                Events event2 = Events.values()[i + 1];
-                List<Events> events = new ArrayList<>();
+                States event1 = States.values()[i];
+                States event2 = States.values()[i + 1];
+                List<States> events = new ArrayList<>();
                 events.add(event1);
                 events.add(event2);
                 ZoneState state = new ZoneState();
@@ -148,7 +148,7 @@ public class SimpleSlaveRTU {
         }
     }
 
-    private static int getWordByEvents(List<Events> events) {
+    private static int getWordByEvents(List<States> events) {
         if (events.get(0) == null && events.get(1) == null) return 0;
         return (events.get(0).getCode() << 8) + events.get(1).getCode();
     }

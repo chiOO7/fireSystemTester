@@ -20,7 +20,8 @@ public class ChapterManager {
             chapters[i].setModbusChapterNumber(i + 1);
             chapters[i].setZones(new ArrayList<>());
         }
-        zoneManager.defineZones();
+        zoneManager.getZonesFromStorage();
+//        zoneManager.defineZones();
         zoneManager.updateZonesState();
 //        for (Zone zone : zoneManager.getZones()) {
 //            int cN = zone.getConfiguration().getModbusChapterNumber();

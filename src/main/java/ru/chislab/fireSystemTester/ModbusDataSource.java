@@ -6,7 +6,7 @@ import com.intelligt.modbus.jlibmodbus.master.ModbusMasterFactory;
 import com.intelligt.modbus.jlibmodbus.serial.SerialPortException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.chislab.fireSystemTester.enums.Events;
+import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
 import ru.chislab.fireSystemTester.zones.ZoneConfiguration;
 import ru.chislab.fireSystemTester.zones.ZoneState;
@@ -129,7 +129,7 @@ public class ModbusDataSource {
         }
 
         if (registerValues.length != 0) {
-            List<Events> events = getEventsByWord(registerValues[0]);
+            List<States> events = getEventsByWord(registerValues[0]);
             state.setStates(events);
         } else {
             System.out.println("Do not have holding registers");
@@ -137,7 +137,7 @@ public class ModbusDataSource {
         return state;
     }
 
-    public void setZoneStateByModbusZoneNumber(int number, List<Events> state) {
+    public void setZoneStateByModbusZoneNumber(int number, List<States> state) {
         try {
             ModbusMaster master = ModbusMasterFactory
                     .createModbusMasterRTU(ModbusSerialPort.initSerial(PORT));
@@ -158,21 +158,21 @@ public class ModbusDataSource {
         }
     }
 
-    private static List<Events> getEventsByWord(int word) {
+    private static List<States> getEventsByWord(int word) {
         int elderByte = word >> 8;
         int junByte = word - (elderByte << 8);
 
-        Events event1 = Events.getEventByCode(elderByte);
-        Events event2 = Events.getEventByCode(junByte);
+        States event1 = States.getStateByCode(elderByte);
+        States event2 = States.getStateByCode(junByte);
 
-        List<Events> events = new ArrayList<>();
+        List<States> events = new ArrayList<>();
         events.add(event1);
         events.add(event2);
 
         return events;
     }
 
-    private static int getWordByEvent(List<Events> events) {
+    private static int getWordByEvent(List<States> events) {
         return (events.get(0).getCode() << 8) + events.get(1).getCode();
     }
 }

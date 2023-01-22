@@ -8,13 +8,7 @@ import java.util.Objects;
 @Getter
 @Setter
 public class Zone {
-    @Override
-    public String toString() {
-        return "Zone{" +
-                "configuration=" + configuration +
-                ", state=" + zoneState +
-                '}';
-    }
+
 
     private String zoneName;
 
@@ -40,5 +34,13 @@ public class Zone {
     @Override
     public int hashCode() {
         return Objects.hash(configuration, zoneState);
+    }
+
+    @Override
+    public String toString() {
+        return "Zone{" +
+                "configuration=" + configuration +
+                ", state=" + zoneState +
+                '}';
     }
 }

@@ -6,7 +6,6 @@ import org.apache.log4j.PropertyConfigurator;
 import ru.chislab.fireSystemTester.ModbusDataSource;
 import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
-import ru.chislab.fireSystemTester.enums.Events;
 import ru.chislab.fireSystemTester.zones.Zone;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
@@ -18,6 +17,10 @@ import java.util.Scanner;
 public class ConsoleUIManager {
     private static Scanner scanner = new Scanner(System.in);
     private static ChapterManager chapterManager;
+
+
+
+
     public static void main(String[] args) {
         String LOG4J_CONFIGURATION_PATH = "log4j.properties";
         BasicConfigurator.configure();
@@ -27,6 +30,10 @@ public class ConsoleUIManager {
         chapterManager = new ChapterManager(zoneManager);
         initMenus();
     }
+
+
+
+
 
     public static void initMenus() {
         List<ConsoleUIMenu> chapterMenus = new ArrayList<>();
@@ -49,7 +56,10 @@ public class ConsoleUIManager {
             chapterMenus.add(chapterMenu);
         }
         AvailableChaptersMenu availableChaptersMenu = new AvailableChaptersMenu(scanner, chapterMenus);
-        StartMenu startMenu = new StartMenu(scanner, availableChaptersMenu);
+        List<ConsoleUIMenu> startMenuSubMenus = new ArrayList<>();
+        startMenuSubMenus.add(new ReadZonesFromDeviceMenu(scanner, chapterManager.getZoneManager()));
+        startMenuSubMenus.add(availableChaptersMenu);
+        StartMenu startMenu = new StartMenu(scanner, startMenuSubMenus);
         startMenu.processMenu();
     }
 

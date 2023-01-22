@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.chislab.fireSystemTester.devices.Device;
+import ru.chislab.fireSystemTester.enums.DeviceType;
 import ru.chislab.fireSystemTester.zones.Zone;
 
 import java.util.ArrayList;
@@ -17,8 +18,10 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Chapter {
-//    private ChapterConfiguration configuration;
+
     private int modbusChapterNumber;
+
+    private DeviceType deviceType;
 
     private String chapterName;
     private List<Zone> zones;

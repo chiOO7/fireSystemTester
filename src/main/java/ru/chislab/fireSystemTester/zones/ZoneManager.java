@@ -2,7 +2,8 @@ package ru.chislab.fireSystemTester.zones;
 
 import lombok.Getter;
 import ru.chislab.fireSystemTester.ModbusDataSource;
-import ru.chislab.fireSystemTester.enums.Events;
+import ru.chislab.fireSystemTester.dao.ZoneDao;
+import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 
 import java.util.ArrayList;
@@ -11,13 +12,16 @@ import java.util.List;
 @Getter
 public class ZoneManager {
 
-    private List<Zone> zones;
+    private final List<Zone> zones;
 
-    private ModbusDataSource modbusDataSource;
+    private final ModbusDataSource modbusDataSource;
+
+    private final ZoneDao zoneDao;
 
     public ZoneManager(ModbusDataSource modbusDataSource) {
         this.modbusDataSource = modbusDataSource;
         zones = new ArrayList<>();
+        zoneDao = new ZoneDao();
     }
 
     public void defineZones() {
@@ -26,6 +30,15 @@ public class ZoneManager {
             Zone zone = new Zone(configuration);
             zones.add(zone);
         }
+        zones.stream().forEach(System.out::println);
+    }
+
+    public void saveZonesToStorage() {
+        zoneDao.saveZonesToStorage(zones);
+    }
+
+    public List<Zone> getZonesFromStorage() {
+        return zoneDao.getZonesFromStorage();
     }
 
     public void updateZoneConfigurationByZoneNumber(int number) {
@@ -72,7 +85,7 @@ public class ZoneManager {
         return zoneList;
     }
 
-    public void setZoneStateByZoneNumber(int number, List<Events> state) {
+    public void setZoneStateByZoneNumber(int number, List<States> state) {
         modbusDataSource.setZoneStateByModbusZoneNumber(number, state);
     }
 }
