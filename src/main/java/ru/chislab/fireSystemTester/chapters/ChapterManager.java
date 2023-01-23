@@ -29,9 +29,10 @@ public class ChapterManager {
 
     private void addNewZoneToChapter() {
         for (Zone zone : zoneManager.getZones()) {
-            Chapter chapter = chapters[zone.getModbusChapterNumber()];
-            if (!chapter.getZones().contains(zone)) {
+            Chapter chapter = chapters[zone.getModbusChapterNumber() - 1];
+            if (!chapter.getZones().contains(zone) && (chapter.getModbusChapterNumber() == zone.getModbusChapterNumber())) {
                 chapter.getZones().add(zone);
+                chapter.setDeviceAddress(zone.getDeviceAddress());
             }
         }
     }
@@ -49,8 +50,7 @@ public class ChapterManager {
         return chapters;
     }
 
-    public List<Chapter> getAvailableChaptersFromStorage() {
-        zoneManager.getZonesFromStorage();
+    public List<Chapter> getAvailableChapters() {
         List<Chapter> availableChapters = new ArrayList<>();
         for (Chapter chapter : chapters) {
             if (!chapter.getZones().isEmpty()) availableChapters.add(chapter);

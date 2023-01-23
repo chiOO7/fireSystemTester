@@ -30,7 +30,7 @@ public class ZoneManager {
             Zone zone = new Zone(configuration);
             zones.add(zone);
         }
-        zones.stream().forEach(System.out::println);
+//        zones.stream().forEach(System.out::println);
     }
 
     public void saveZonesToStorage() {
@@ -44,17 +44,6 @@ public class ZoneManager {
     public List<Zone> getZones() {
         return zones;
     }
-
-//    public void updateZoneConfigurationByZoneNumber(int number) {
-//        for (Zone zone : zones) {
-//            if (zone.getConfiguration().getModbusZoneNumber() == number) {
-//                ZoneConfigurationDto settableConfiguration = modbusDataSource.getModbusZoneConfigurationByZoneNumber(number);
-//                if (!zone.getConfiguration().equals(settableConfiguration)) {
-//                    zone.setConfiguration(modbusDataSource.getModbusZoneConfigurationByZoneNumber(number));
-//                }
-//            }
-//        }
-//    }
 
     public void updateZonesState() {
         for (Zone zone : zones) {

@@ -7,6 +7,8 @@ import ru.chislab.fireSystemTester.ModbusDataSource;
 import ru.chislab.fireSystemTester.ModbusDataSourceForTests;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ZoneManagerTest {
@@ -52,6 +54,15 @@ class ZoneManagerTest {
 
     @Test
     void getZonesFromStorage() {
+        zoneManager.readZoneConfigsFromDevice();
+        zoneManager.saveZonesToStorage();
+        List<Zone> zones = zoneManager.getZonesFromStorage();
+        assertEquals(10, zones.size());
+        for (int i = 0; i < 10; i++) {
+            assertEquals(i + 1, zones.get(i).getModbusZoneNumber());
+            assertEquals(i + 1, zones.get(i).getSignalLineNumber());
+            assertEquals(ZoneTypes.SIGNAL_LINE_STATE, zones.get(i).getZoneType());
+        }
     }
 
     @Test

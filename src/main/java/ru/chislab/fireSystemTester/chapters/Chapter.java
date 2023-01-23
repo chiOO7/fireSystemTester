@@ -10,13 +10,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Chapter {
-
     private Integer modbusChapterNumber;
 
     private DeviceType deviceType;
@@ -30,18 +28,5 @@ public class Chapter {
         this.modbusChapterNumber = modbusChapterNumber;
         this.zones = new ArrayList<>();
         this.chapterName = "Имя раздела не установлено";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Chapter chapter = (Chapter) o;
-        return modbusChapterNumber == chapter.modbusChapterNumber;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(modbusChapterNumber);
     }
 }

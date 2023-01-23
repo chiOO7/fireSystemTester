@@ -37,7 +37,7 @@ public class ConsoleUIManager {
 
     public static void initMenus() {
         List<ConsoleUIMenu> chapterMenus = new ArrayList<>();
-        for (Chapter chapter : chapterManager.getAvailableChaptersFromStorage()) {
+        for (Chapter chapter : chapterManager.getAvailableChapters()) {
             List<ConsoleUIMenu> zoneMenus = new ArrayList<>();
             for (Zone zone : chapter.getZones()) {
                 List<ConsoleUIMenu> stateMenus = new ArrayList<>();
