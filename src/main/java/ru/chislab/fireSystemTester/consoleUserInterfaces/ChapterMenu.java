@@ -1,42 +1,41 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.zones.Zone;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChapterMenu extends ConsoleUIMenu{
-    private int chapterNumber;
+    private int chapterMenuNumber;
+    private String chapterMenuName;
+    private ChapterManager chapterManager;
 
-    private String chapterName;
-
-    private ZoneManager zoneManager;
-
-    public ChapterMenu(int number, Scanner scanner, List<ConsoleUIMenu> zoneMenus, ZoneManager zoneManager) {
-        super("Раздел " + number, scanner, zoneMenus);
-        this.chapterNumber = number;
-        this.zoneManager = zoneManager;
-//        this.chapterName = "Имя раздела не установлено";
-    }
-
-    public ChapterMenu(int number, String chapterName, Scanner scanner, List<ConsoleUIMenu> zoneMenus, ZoneManager zoneManager) {
-        super("Раздел " + number, scanner, zoneMenus);
-        this.chapterNumber = number;
-        this.zoneManager = zoneManager;
-        this.chapterName = chapterName;
-    }
-
-    @Override
-    public String toString() {
-        return "Раздел " + chapterNumber + ": " + chapterName;
-    }
+//    public ChapterMenu(String menuName, Scanner scanner, List<ConsoleUIMenu> subMenus, int chapterMenuNumber,
+//                       ChapterManager chapterManager) {
+//        super(menuName, scanner, subMenus);
+//        List<Zone> zones = chapterManager.getChapterByNumber(chapterMenuNumber).getZones();
+//        List<ZoneMenu> zoneMenus = new ArrayList<>();
+//        for (Zone zone : zones) {
+//            ZoneMenu zoneMenu = new ZoneMenu("zm", scanner, chapterManager);
+//        }
+//        this.chapterMenuNumber = chapterMenuNumber;
+//        this.chapterManager = chapterManager;
+//    }
 
     @Override
     protected void printMenuHeader() {
         System.out.println();
-        System.out.println("# " + getMenuName() + ": " + chapterName);
+        System.out.println("# " + getMenuName() + ": " + chapterMenuName);
         System.out.println("0. Назад");
         System.out.println("1. Обновить состояние зон");
     }
@@ -53,24 +52,12 @@ public class ChapterMenu extends ConsoleUIMenu{
     @Override
     public void doSomething(int command) {
         if (command == 1) {
-            List<Zone> zones = zoneManager.getZonesByChapterNumber(chapterNumber);
+            ZoneManager zoneManager = chapterManager.getZoneManager();
+            List<Zone> zones = zoneManager.getZonesByChapterNumber(chapterMenuNumber);
             for (Zone zone : zones) {
                 zoneManager.updateZoneStateByZoneNumber(zone.getModbusZoneNumber());
             }
         }
         else getSubMenus().get(command - 2).processMenu();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ChapterMenu that = (ChapterMenu) o;
-        return chapterNumber == that.chapterNumber;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(chapterNumber);
     }
 }

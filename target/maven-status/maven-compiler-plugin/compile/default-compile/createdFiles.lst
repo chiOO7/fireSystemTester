@@ -3,7 +3,6 @@ ru\chislab\fireSystemTester\ModbusSerialPort.class
 ru\chislab\fireSystemTester\exceptions\ZoneNotFoundException.class
 ru\chislab\fireSystemTester\zones\ZoneState.class
 ru\chislab\fireSystemTester\chapters\ChapterConfiguration.class
-ru\chislab\fireSystemTester\ConsoleMenu$MainMenuCommands.class
 ru\chislab\fireSystemTester\chapters\Chapter.class
 ru\chislab\fireSystemTester\ConsoleMenu.class
 ru\chislab\fireSystemTester\consoleUserInterfaces\ChangeStateMenu.class
@@ -36,7 +35,6 @@ ru\chislab\fireSystemTester\devices\Device.class
 ru\chislab\fireSystemTester\coils\CoilManager.class
 ru\chislab\fireSystemTester\consoleUserInterfaces\ConsoleUIManager.class
 ru\chislab\fireSystemTester\consoleUserInterfaces\ZoneMenu.class
-ru\chislab\fireSystemTester\ConsoleUserInterface$MainMenuCommands.class
 ru\chislab\fireSystemTester\chapters\ChapterManager.class
 ru\chislab\fireSystemTester\enums\States.class
 ru\chislab\fireSystemTester\coils\CoilConfiguration.class

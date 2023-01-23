@@ -1,21 +1,20 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.chislab.fireSystemTester.enums.States;
 
 import java.util.Collections;
 import java.util.Scanner;
 
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class StateMenu extends ConsoleUIMenu{
-
     private int stateNumber;
-    private final States state;
-
-    public StateMenu(States state, Scanner scanner) {
-        super(state.toString(), scanner, Collections.emptyList());
-        this.state = state;
-    }
+    private States state;
 
     @Override
     public String toString() {

@@ -1,21 +1,28 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
 
-    private final ZoneManager zoneManager;
-    public ReadZonesFromDeviceMenu(Scanner scanner, ZoneManager zoneManager) {
-        super("Read Zones", scanner, new ArrayList<>());
-        this.zoneManager = zoneManager;
-    }
+    private ChapterManager chapterManager;
+//    public ReadZonesFromDeviceMenu(Scanner scanner, ChapterManager chapterManager) {
+//        super("Считать конфигурацию с устройства", scanner, new ArrayList<>());
+//        this.chapterManager = chapterManager;
+//    }
 
     @Override
     public void processMenu() {
-        zoneManager.readZoneConfigsFromDevice();
+        chapterManager.initChaptersFromDevice();
         while (true) {
             printMenuHeader();
             int command = getScanner().nextInt();
@@ -28,7 +35,7 @@ public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
     @Override
     public void doSomething(int command) {
         if (command == 1) {
-            zoneManager.saveZonesToStorage();
+            chapterManager.getZoneManager().saveZonesToStorage();
         }
     }
 
