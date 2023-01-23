@@ -55,7 +55,7 @@ public class ChapterMenu extends ConsoleUIMenu{
         if (command == 1) {
             List<Zone> zones = zoneManager.getZonesByChapterNumber(chapterNumber);
             for (Zone zone : zones) {
-                zoneManager.updateZoneStateByZoneNumber(zone.getConfiguration().getModbusZoneNumber());
+                zoneManager.updateZoneStateByZoneNumber(zone.getModbusZoneNumber());
             }
         }
         else getSubMenus().get(command - 2).processMenu();

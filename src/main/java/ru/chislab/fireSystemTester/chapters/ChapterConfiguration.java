@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class ChapterConfiguration {
 
-    private Integer modbusChapterNumber;
-    private Long chapterID;
+//    private Integer modbusChapterNumber;
+//    private Long chapterID;
 
 }

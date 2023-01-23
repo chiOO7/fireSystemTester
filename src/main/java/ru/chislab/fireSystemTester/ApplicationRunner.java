@@ -5,7 +5,6 @@ import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.chislab.fireSystemTester.dao.ZoneDao;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
@@ -31,7 +30,7 @@ public class ApplicationRunner {
         ModbusDataSource dataSource = new ModbusDataSource();
 
         ZoneManager zoneManager = new ZoneManager(dataSource);
-        zoneManager.defineZones();
+        zoneManager.readZoneConfigsFromDevice();
         zoneManager.updateZonesState();
 
 

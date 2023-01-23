@@ -15,7 +15,7 @@ public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
 
     @Override
     public void processMenu() {
-        zoneManager.defineZones();
+        zoneManager.readZoneConfigsFromDevice();
         while (true) {
             printMenuHeader();
             int command = getScanner().nextInt();

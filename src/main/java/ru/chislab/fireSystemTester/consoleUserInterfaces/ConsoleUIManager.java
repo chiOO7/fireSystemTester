@@ -37,7 +37,7 @@ public class ConsoleUIManager {
 
     public static void initMenus() {
         List<ConsoleUIMenu> chapterMenus = new ArrayList<>();
-        for (Chapter chapter : chapterManager.getAvailableChapters()) {
+        for (Chapter chapter : chapterManager.getAvailableChaptersFromStorage()) {
             List<ConsoleUIMenu> zoneMenus = new ArrayList<>();
             for (Zone zone : chapter.getZones()) {
                 List<ConsoleUIMenu> stateMenus = new ArrayList<>();
@@ -48,7 +48,7 @@ public class ConsoleUIManager {
                 }
                 ZoneMenu zoneMenu = new ZoneMenu("Зона ", scanner, stateMenus,
                         chapterManager.getZoneManager());
-                zoneMenu.setZoneNumber(zone.getConfiguration().getModbusZoneNumber());
+                zoneMenu.setZoneNumber(zone.getModbusZoneNumber());
                 zoneMenus.add(zoneMenu);
             }
             ChapterMenu chapterMenu = new ChapterMenu(chapter.getModbusChapterNumber(),

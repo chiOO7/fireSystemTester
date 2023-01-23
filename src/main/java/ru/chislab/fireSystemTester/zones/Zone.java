@@ -1,46 +1,42 @@
 package ru.chislab.fireSystemTester.zones;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import ru.chislab.fireSystemTester.enums.ZoneTypes;
 
 import java.util.Objects;
 
-@Getter
-@Setter
-public class Zone {
 
+@Data
+public class Zone {
+    private Integer modbusZoneNumber;
+
+    private Integer deviceAddress;
+
+    private Integer signalLineNumber;
+
+    private Integer modbusChapterNumber;
+
+    private ZoneTypes zoneType;
 
     private String zoneName;
 
-    private ZoneConfiguration configuration;
-
     private ZoneState zoneState;
 
-    public Zone(ZoneConfiguration configuration) {
-        this.configuration = configuration;
-        this.setZoneName("Имя зоны не установлено");
+    public Zone(ZoneConfigurationDto configuration) {
+        this.modbusZoneNumber = configuration.getModbusZoneNumber();
+        this.deviceAddress = configuration.getDeviceAddress();
+        this.signalLineNumber = configuration.getSignalLineNumber();
+        this.modbusChapterNumber = configuration.getModbusChapterNumber();
+        this.zoneType = configuration.getZoneType();
+        this.setZoneName("zoneName");
     }
 
-
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Zone zone = (Zone) o;
-        return Objects.equals(configuration, zone.configuration);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(configuration, zoneState);
-    }
-
-    @Override
-    public String toString() {
-        return "Zone{" +
-                "configuration=" + configuration +
-                ", state=" + zoneState +
-                '}';
-    }
+//    public Zone(ZoneConfigurationDto configuration, String zoneName) {
+//        this.modbusZoneNumber = configuration.getModbusZoneNumber();
+//        this.deviceAddress = configuration.getDeviceAddress();
+//        this.signalLineNumber = configuration.getSignalLineNumber();
+//        this.modbusChapterNumber = configuration.getModbusChapterNumber();
+//        this.zoneType = configuration.getZoneType();
+//        this.setZoneName(zoneName);
+//    }
 }

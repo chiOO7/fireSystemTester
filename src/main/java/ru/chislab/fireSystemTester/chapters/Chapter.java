@@ -1,9 +1,6 @@
 package ru.chislab.fireSystemTester.chapters;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.chislab.fireSystemTester.devices.Device;
 import ru.chislab.fireSystemTester.enums.DeviceType;
 import ru.chislab.fireSystemTester.zones.Zone;
@@ -17,16 +14,19 @@ import java.util.Objects;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Chapter {
 
-    private int modbusChapterNumber;
+    private Integer modbusChapterNumber;
 
     private DeviceType deviceType;
+
+    private Integer deviceAddress;
 
     private String chapterName;
     private List<Zone> zones;
 
-    public Chapter(int modbusChapterNumber) {
+    public Chapter(Integer modbusChapterNumber) {
         this.modbusChapterNumber = modbusChapterNumber;
         this.zones = new ArrayList<>();
         this.chapterName = "Имя раздела не установлено";

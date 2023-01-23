@@ -20,13 +20,13 @@ public class ZoneManager {
 
     public ZoneManager(ModbusDataSource modbusDataSource) {
         this.modbusDataSource = modbusDataSource;
-        zones = new ArrayList<>();
-        zoneDao = new ZoneDao();
+        this.zones = new ArrayList<>();
+        this.zoneDao = new ZoneDao();
     }
 
-    public void defineZones() {
-        List<ZoneConfiguration> zoneConfigurations = modbusDataSource.getModbusZoneConfigurations();
-        for (ZoneConfiguration configuration : zoneConfigurations) {
+    public void readZoneConfigsFromDevice() {
+        List<ZoneConfigurationDto> zoneConfigurationsDto = modbusDataSource.getModbusZoneConfigurations();
+        for (ZoneConfigurationDto configuration : zoneConfigurationsDto) {
             Zone zone = new Zone(configuration);
             zones.add(zone);
         }
@@ -41,26 +41,30 @@ public class ZoneManager {
         return zoneDao.getZonesFromStorage();
     }
 
-    public void updateZoneConfigurationByZoneNumber(int number) {
-        for (Zone zone : zones) {
-            if (zone.getConfiguration().getModbusZoneNumber() == number) {
-                ZoneConfiguration settableConfiguration = modbusDataSource.getModbusZoneConfigurationByZoneNumber(number);
-                if (!zone.getConfiguration().equals(settableConfiguration)) {
-                    zone.setConfiguration(modbusDataSource.getModbusZoneConfigurationByZoneNumber(number));
-                }
-            }
-        }
+    public List<Zone> getZones() {
+        return zones;
     }
+
+//    public void updateZoneConfigurationByZoneNumber(int number) {
+//        for (Zone zone : zones) {
+//            if (zone.getConfiguration().getModbusZoneNumber() == number) {
+//                ZoneConfigurationDto settableConfiguration = modbusDataSource.getModbusZoneConfigurationByZoneNumber(number);
+//                if (!zone.getConfiguration().equals(settableConfiguration)) {
+//                    zone.setConfiguration(modbusDataSource.getModbusZoneConfigurationByZoneNumber(number));
+//                }
+//            }
+//        }
+//    }
 
     public void updateZonesState() {
         for (Zone zone : zones) {
-            zone.setZoneState(modbusDataSource.getZoneStateByModbusZoneNumber(zone.getConfiguration().getModbusZoneNumber()));
+            zone.setZoneState(modbusDataSource.getZoneStateByModbusZoneNumber(zone.getModbusZoneNumber()));
         }
     }
 
     public void updateZoneStateByZoneNumber(int number) {
         for (Zone zone : zones) {
-            if (zone.getConfiguration().getModbusZoneNumber() == number) {
+            if (zone.getModbusZoneNumber() == number) {
                 zone.setZoneState(modbusDataSource.getZoneStateByModbusZoneNumber(number));
             }
         }
@@ -68,7 +72,7 @@ public class ZoneManager {
 
     public Zone getZoneByZoneNumber(int number) throws ZoneNotFoundException {
         for (Zone zone : zones) {
-            if (zone.getConfiguration().getModbusZoneNumber() == number) {
+            if (zone.getModbusZoneNumber() == number) {
                 return zone;
             }
         }
@@ -78,7 +82,7 @@ public class ZoneManager {
     public List<Zone> getZonesByChapterNumber(int chapterNumber) {
         List<Zone> zoneList = new ArrayList<>();
         for (Zone zone : zones) {
-            if (zone.getConfiguration().getModbusChapterNumber() == chapterNumber) {
+            if (zone.getModbusChapterNumber() == chapterNumber) {
                 zoneList.add(zone);
             }
         }

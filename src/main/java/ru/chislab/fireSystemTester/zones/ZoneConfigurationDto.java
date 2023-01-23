@@ -1,14 +1,13 @@
 package ru.chislab.fireSystemTester.zones;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
 
-@Getter
-@Setter
-@ToString
-public class ZoneConfiguration {
+@Data
+public class ZoneConfigurationDto {
 
     private Integer modbusZoneNumber;
     private Integer deviceAddress;

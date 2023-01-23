@@ -14,7 +14,7 @@ import org.apache.log4j.PropertyConfigurator;
 import ru.chislab.fireSystemTester.ModbusSerialPort;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
-import ru.chislab.fireSystemTester.zones.ZoneConfiguration;
+import ru.chislab.fireSystemTester.zones.ZoneConfigurationDto;
 import ru.chislab.fireSystemTester.zones.ZoneState;
 
 import java.util.ArrayList;
@@ -45,12 +45,12 @@ public class SimpleSlaveRTU {
             ModbusSlave slave = initSlave(slaveId);
             System.out.println();
 
-            List<ZoneConfiguration> configurations = new ArrayList<>();
+            List<ZoneConfigurationDto> configurations = new ArrayList<>();
 
             List<ZoneState> states = new ArrayList<>();
 
             for (int i = 0; i < ZONE_COUNT / 2; i++) {
-                ZoneConfiguration configuration = new ZoneConfiguration();
+                ZoneConfigurationDto configuration = new ZoneConfigurationDto();
                 configuration.setModbusZoneNumber(i + 1);
                 configuration.setDeviceAddress(2);
                 configuration.setSignalLineNumber(i + 1);
@@ -69,7 +69,7 @@ public class SimpleSlaveRTU {
             }
 
             for (int i = ZONE_COUNT / 2; i < ZONE_COUNT; i++) {
-                ZoneConfiguration configuration = new ZoneConfiguration();
+                ZoneConfigurationDto configuration = new ZoneConfigurationDto();
                 configuration.setModbusZoneNumber(i + 1);
                 configuration.setDeviceAddress(3);
                 configuration.setSignalLineNumber(i + 1);
@@ -117,7 +117,7 @@ public class SimpleSlaveRTU {
         return slave;
     }
 
-    private static void setZoneConfigurationRegisters(List<ZoneConfiguration> configurations, DataHolder dataHolder) {
+    private static void setZoneConfigurationRegisters(List<ZoneConfigurationDto> configurations, DataHolder dataHolder) {
         System.out.println("Zone configuration registers:");
         for (int i = 0; i < configurations.size(); i++) {
             try {

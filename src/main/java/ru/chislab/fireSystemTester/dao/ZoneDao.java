@@ -29,7 +29,7 @@ public class ZoneDao {
 
     public Zone getZoneFromStorageByZoneNumber(int number) {
         for (Zone zone : zonesStorage) {
-            if (zone.getConfiguration().getModbusZoneNumber() == number) return zone;
+            if (zone.getModbusZoneNumber() == number) return zone;
         }
         return null;
     }

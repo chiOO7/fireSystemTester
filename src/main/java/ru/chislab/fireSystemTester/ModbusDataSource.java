@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
-import ru.chislab.fireSystemTester.zones.ZoneConfiguration;
+import ru.chislab.fireSystemTester.zones.ZoneConfigurationDto;
 import ru.chislab.fireSystemTester.zones.ZoneState;
 
 import java.util.ArrayList;
@@ -25,9 +25,9 @@ public class ModbusDataSource {
     private static final int ZONE_QUANTITY = 10;
     final static private int ZONE_STATE_HR_OFFSET = 40000;
 
-    public List<ZoneConfiguration> getModbusZoneConfigurations() {
+    public List<ZoneConfigurationDto> getModbusZoneConfigurations() {
 
-        List<ZoneConfiguration> zoneConfigurations = new ArrayList<>();
+        List<ZoneConfigurationDto> zoneConfigurationDtos = new ArrayList<>();
         int[] registerValues = new int[0];
         try {
             ModbusMaster master = ModbusMasterFactory
@@ -50,28 +50,28 @@ public class ModbusDataSource {
 
         if (registerValues.length != 0) {
             for (int i = 0; i < ZONE_QUANTITY; i++) {
-                ZoneConfiguration zoneConfiguration = new ZoneConfiguration();
+                ZoneConfigurationDto zoneConfigurationDto = new ZoneConfigurationDto();
 
-                zoneConfiguration.setModbusZoneNumber(i + 1);
-                zoneConfiguration.setDeviceAddress(registerValues[i * 4]);
-                zoneConfiguration.setSignalLineNumber(registerValues[i * 4 + 1]);
-                zoneConfiguration.setModbusChapterNumber(registerValues[i * 4 + 2]);
-                zoneConfiguration.setZoneType(ZoneTypes.values()[registerValues[i * 4 + 3]]);
-                if (zoneConfiguration.getDeviceAddress() != 0 && zoneConfiguration.getZoneType() != ZoneTypes.EMPTY_TYPE
-                        && zoneConfiguration.getSignalLineNumber() != 0) {
-                    zoneConfigurations.add(zoneConfiguration);
+                zoneConfigurationDto.setModbusZoneNumber(i + 1);
+                zoneConfigurationDto.setDeviceAddress(registerValues[i * 4]);
+                zoneConfigurationDto.setSignalLineNumber(registerValues[i * 4 + 1]);
+                zoneConfigurationDto.setModbusChapterNumber(registerValues[i * 4 + 2]);
+                zoneConfigurationDto.setZoneType(ZoneTypes.values()[registerValues[i * 4 + 3]]);
+                if (zoneConfigurationDto.getDeviceAddress() != 0 && zoneConfigurationDto.getZoneType() != ZoneTypes.EMPTY_TYPE
+                        && zoneConfigurationDto.getSignalLineNumber() != 0) {
+                    zoneConfigurationDtos.add(zoneConfigurationDto);
                 }
             }
         } else {
             logger.info("Input registers do not available");
         }
 
-        return zoneConfigurations;
+        return zoneConfigurationDtos;
     }
 
-    public ZoneConfiguration getModbusZoneConfigurationByZoneNumber(int number) {
+    public ZoneConfigurationDto getModbusZoneConfigurationByZoneNumber(int number) {
 
-        ZoneConfiguration zoneConfiguration = new ZoneConfiguration();
+        ZoneConfigurationDto zoneConfigurationDto = new ZoneConfigurationDto();
         int[] registerValues = new int[0];
         try {
             ModbusMaster master = ModbusMasterFactory
@@ -93,16 +93,16 @@ public class ModbusDataSource {
         }
 
         if (registerValues.length != 0) {
-            zoneConfiguration.setModbusZoneNumber(number);
-            zoneConfiguration.setDeviceAddress(registerValues[0]);
-            zoneConfiguration.setSignalLineNumber(registerValues[1]);
-            zoneConfiguration.setModbusChapterNumber(registerValues[2]);
-            zoneConfiguration.setZoneType(ZoneTypes.values()[registerValues[3]]);
+            zoneConfigurationDto.setModbusZoneNumber(number);
+            zoneConfigurationDto.setDeviceAddress(registerValues[0]);
+            zoneConfigurationDto.setSignalLineNumber(registerValues[1]);
+            zoneConfigurationDto.setModbusChapterNumber(registerValues[2]);
+            zoneConfigurationDto.setZoneType(ZoneTypes.values()[registerValues[3]]);
         } else {
             System.out.println("Do not have input registers");
         }
 
-        return zoneConfiguration;
+        return zoneConfigurationDto;
     }
 
     public ZoneState getZoneStateByModbusZoneNumber(int number) {
