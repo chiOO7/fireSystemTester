@@ -19,13 +19,11 @@ import java.util.Scanner;
 @Data
 @Builder
 public class ConsoleUIManager {
-    private final Scanner scanner;
-    private final ChapterManager chapterManager;
+    private Scanner scanner;
+    private ChapterManager chapterManager;
 
     public ConsoleUIManager() {
-        ModbusDataSource modbusDataSource = new ModbusDataSource();
-        ZoneManager zoneManager = new ZoneManager(modbusDataSource);
-        chapterManager = new ChapterManager(zoneManager);
+        chapterManager = new ChapterManager(new ZoneManager(new ModbusDataSource()));
         scanner = new Scanner(System.in);
     }
 
@@ -34,17 +32,22 @@ public class ConsoleUIManager {
         this.scanner = new Scanner(System.in);
     }
 
-    public static void main(String[] args) throws ZoneNotFoundException {
-        String LOG4J_CONFIGURATION_PATH = "log4j.properties";
-        BasicConfigurator.configure();
-        PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
-
-        ModbusDataSource modbusDataSource = new ModbusDataSource();
-        ZoneManager zoneManager = new ZoneManager(modbusDataSource);
-        ChapterManager chapterManager = new ChapterManager(zoneManager);
-        ConsoleUIManager consoleUIManager = new ConsoleUIManager(chapterManager);
-        consoleUIManager.initMenus();
+    public ConsoleUIManager(ChapterManager chapterManager, Scanner scanner) {
+        this.chapterManager = chapterManager;
+        this.scanner = scanner;
     }
+
+//    public static void main(String[] args) throws ZoneNotFoundException {
+//        String LOG4J_CONFIGURATION_PATH = "log4j.properties";
+//        BasicConfigurator.configure();
+//        PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
+//
+//        ModbusDataSource modbusDataSource = new ModbusDataSource();
+//        ZoneManager zoneManager = new ZoneManager(modbusDataSource);
+//        ChapterManager chapterManager = new ChapterManager(zoneManager);
+//        ConsoleUIManager consoleUIManager = new ConsoleUIManager(chapterManager);
+//        consoleUIManager.initMenus();
+//    }
 
     public List<ConsoleUIMenu> getStateMenusByZoneNumber(int zoneNumber) throws ZoneNotFoundException {
         List<ConsoleUIMenu> stateMenus = new ArrayList<>();
@@ -100,26 +103,36 @@ public class ConsoleUIManager {
         return chapterMenus;
     }
 
-    public StartMenu getStartMenu() throws ZoneNotFoundException {
-        StartMenu startMenu = new StartMenu();
-        startMenu.setMenuName("Start_menu");
-        startMenu.setMenuRowNumber(0);
-        startMenu.setScanner(scanner);
-        startMenu.setChapterManager(this.getChapterManager());
-        List<ConsoleUIMenu> startSubMenus = new ArrayList<>();
-        AvailableFromStorageChaptersMenu availableChaptersFromStorage = new AvailableFromStorageChaptersMenu();
-        availableChaptersFromStorage.setSubMenus(getChapterMenus());
-        availableChaptersFromStorage.setScanner(scanner);
-        availableChaptersFromStorage.setChapterManager(this.getChapterManager());
-        ReadZonesFromDeviceMenu readZonesFromDeviceMenu = new ReadZonesFromDeviceMenu();
-        readZonesFromDeviceMenu.setChapterManager(this.getChapterManager());
-        readZonesFromDeviceMenu.setScanner(scanner);
-        startSubMenus.add(readZonesFromDeviceMenu);
-        startSubMenus.add(availableChaptersFromStorage);
-
-        startMenu.setSubMenus(startSubMenus);
+    public StartMenu getStartMenu() {
+        StartMenu startMenu = new StartMenu("Главное меню");
+        startMenu.setScanner(getScanner());
+        startMenu.getSubMenus().add(getRead___Menu());
+        startMenu.getSubMenus().add(getAvail___Menu());
 
         return startMenu;
+    }
+
+    public ConsoleUIMenu getRead___Menu() {
+        CommonMenu read___Menu = new CommonMenu("Read from dev_");
+        read___Menu.setScanner(getScanner());
+        read___Menu.getSubMenus().add(getRead2___Menu());
+
+        return read___Menu;
+    }
+
+    public ReadZonesFromDeviceMenu getRead2___Menu() {
+        ReadZonesFromDeviceMenu read___Menu = new ReadZonesFromDeviceMenu("Read 0007 from dev_");
+        read___Menu.setScanner(getScanner());
+        read___Menu.setChapterManager(getChapterManager());
+
+        return read___Menu;
+    }
+
+    public ConsoleUIMenu getAvail___Menu() {
+        CommonMenu avail___Menu = new CommonMenu("Avail chaps");
+        avail___Menu.setScanner(getScanner());
+
+        return avail___Menu;
     }
 
 

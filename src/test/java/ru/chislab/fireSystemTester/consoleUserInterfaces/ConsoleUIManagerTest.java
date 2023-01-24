@@ -11,12 +11,14 @@ import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
 import java.util.List;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ConsoleUIManagerTest {
     private ConsoleUIManager consoleUIManager;
     private ChapterManager chapterManager;
+    private Scanner scanner;
 
     @BeforeEach
     void setUp() {
@@ -25,7 +27,7 @@ class ConsoleUIManagerTest {
         chapterManager = new ChapterManager(zoneManager);
         chapterManager.initChaptersFromDevice();
         chapterManager.getZoneManager().updateZonesState();
-        consoleUIManager = new ConsoleUIManager(chapterManager);
+
     }
 
     @AfterEach
@@ -54,6 +56,10 @@ class ConsoleUIManagerTest {
 
     @Test
     void getStartMenu() {
+        scanner = new Scanner("1 1 0 0");
+        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        StartMenu startMenu = consoleUIManager.getStartMenu();
+        startMenu.processMenu();
     }
 
 
