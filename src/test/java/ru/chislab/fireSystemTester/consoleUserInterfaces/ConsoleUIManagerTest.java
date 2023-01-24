@@ -25,8 +25,8 @@ class ConsoleUIManagerTest {
         ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
         ZoneManager zoneManager = new ZoneManager(modbusDataSource);
         chapterManager = new ChapterManager(zoneManager);
-        chapterManager.initChaptersFromDevice();
-        chapterManager.getZoneManager().updateZonesState();
+//        chapterManager.initChaptersFromDevice();
+//        chapterManager.getZoneManager().updateZonesState();
 
     }
 
