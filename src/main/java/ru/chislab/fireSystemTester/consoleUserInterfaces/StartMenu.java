@@ -4,9 +4,7 @@ import lombok.*;
 
 
 @Data
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Builder
+@Builder
 public class StartMenu extends ConsoleUIMenu {
     @Override
     protected void printMenuHeader() {

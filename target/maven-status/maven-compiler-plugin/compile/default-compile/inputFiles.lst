@@ -17,7 +17,6 @@ C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab
 C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\chapters\Chapter.java
 C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\ConsoleUserInterface.java
 C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\consoleUserInterfaces\ChangeStateMenu.java
-C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\consoleUserInterfaces\AvailableChaptersMenu.java
 C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\modbusEmulators\SimpleMasterRTU.java
 C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\ModbusDataSource.java
 C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\OrionEvent.java
@@ -35,6 +34,7 @@ C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab
 C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\devices\Device.java
 C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\consoleUserInterfaces\StateMenu.java
 C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\coils\CoilConfiguration.java
+C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\consoleUserInterfaces\AvailableFromStorageChaptersMenu.java
 C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\consoleUserInterfaces\ConsoleUIManager.java
 C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\User.java
 C:\Users\User\Desktop\fireSystemTester\fireSystemTester\src\main\java\ru\chislab\fireSystemTester\ConsoleMenu.java

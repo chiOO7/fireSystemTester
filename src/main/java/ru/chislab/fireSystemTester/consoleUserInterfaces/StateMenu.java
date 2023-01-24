@@ -1,9 +1,6 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.chislab.fireSystemTester.enums.States;
 
 import java.util.Collections;
@@ -13,12 +10,16 @@ import java.util.Scanner;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StateMenu extends ConsoleUIMenu{
-    private int stateNumber;
+//    private int stateNumber;
     private States state;
+
+//    public States getState() {
+//        return state;
+//    }
 
     @Override
     public String toString() {
-        return "Состояние " + stateNumber + ": " + state;
+        return "Состояние " + getMenuRowNumber() + ": " + state;
     }
 
     @Override

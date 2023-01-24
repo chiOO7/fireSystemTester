@@ -9,7 +9,6 @@ import java.util.Scanner;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@Builder
 public abstract class ConsoleUIMenu {
     private String menuName;
 

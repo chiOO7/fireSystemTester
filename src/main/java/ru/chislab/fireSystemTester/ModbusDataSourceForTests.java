@@ -1,6 +1,10 @@
 package ru.chislab.fireSystemTester;
 
 import com.intelligt.modbus.jlibmodbus.data.DataHolder;
+import com.intelligt.modbus.jlibmodbus.exception.ModbusIOException;
+import com.intelligt.modbus.jlibmodbus.master.ModbusMaster;
+import com.intelligt.modbus.jlibmodbus.master.ModbusMasterFactory;
+import com.intelligt.modbus.jlibmodbus.serial.SerialPortException;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
 import ru.chislab.fireSystemTester.zones.ZoneConfigurationDto;
@@ -58,5 +62,21 @@ public class ModbusDataSourceForTests extends ModbusDataSource {
         }
 
         return configurations;
+    }
+
+    @Override
+    public ZoneState getZoneStateByModbusZoneNumber(int number) {
+        ZoneState state = new ZoneState();
+
+        States state1 = States.FIRE;
+        States state2 = States.BAD_START;
+
+        List<States> states = new ArrayList<>();
+        states.add(state1);
+        states.add(state2);
+
+        state.setStates(states);
+
+        return state;
     }
 }

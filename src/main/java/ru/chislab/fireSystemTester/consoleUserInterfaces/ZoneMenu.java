@@ -11,6 +11,7 @@ import java.util.Scanner;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ZoneMenu extends ConsoleUIMenu{
 
     private int zoneNumber;
