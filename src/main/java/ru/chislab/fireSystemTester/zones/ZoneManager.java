@@ -51,6 +51,13 @@ public class ZoneManager {
         }
     }
 
+    public void updateZonesState(List<Zone> zones) {
+        for (Zone zone : zones) {
+            zone.setZoneState(modbusDataSource.getZoneStateByModbusZoneNumber(zone.getModbusZoneNumber()));
+        }
+    }
+
+
     public void updateZoneStateByZoneNumber(int number) {
         for (Zone zone : zones) {
             if (zone.getModbusZoneNumber() == number) {

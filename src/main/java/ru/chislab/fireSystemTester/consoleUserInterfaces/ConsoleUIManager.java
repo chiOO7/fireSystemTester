@@ -1,8 +1,12 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
+import com.intelligt.modbus.jlibmodbus.Modbus;
 import lombok.*;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.chislab.fireSystemTester.ApplicationRunner;
 import ru.chislab.fireSystemTester.ModbusDataSource;
 import ru.chislab.fireSystemTester.ModbusDataSourceForTests;
 import ru.chislab.fireSystemTester.chapters.Chapter;
@@ -21,6 +25,9 @@ import java.util.Scanner;
 
 @Data
 public class ConsoleUIManager {
+
+    private final static Logger logger = LoggerFactory.getLogger(ApplicationRunner.class.getName());
+    private static final String LOG4J_CONFIGURATION_PATH = "log4j.properties";
     private Scanner scanner;
     private ChapterManager chapterManager;
 
@@ -42,9 +49,9 @@ public class ConsoleUIManager {
     }
 
     public static void main(String[] args) {
-        String LOG4J_CONFIGURATION_PATH = "log4j.properties";
         BasicConfigurator.configure();
         PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
+        Modbus.setLogLevel(Modbus.LogLevel.LEVEL_VERBOSE);
         ModbusDataSource modbusDataSource = new ModbusDataSource();
 //        ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
         ZoneManager zoneManager = new ZoneManager(modbusDataSource);

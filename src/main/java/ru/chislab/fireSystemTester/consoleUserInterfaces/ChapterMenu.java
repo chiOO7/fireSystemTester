@@ -44,7 +44,7 @@ public class ChapterMenu extends ConsoleUIMenu{
     @Override
     public void processMenu() {
         while (true) {
-            getChapterManager().getZoneManager().updateZonesState();
+            getChapterManager().getZoneManager().updateZonesState(getChapterManager().getChapterByNumber(chapterNumber).getZones());
             setSubMenus(getConsoleUIManager().getZonesFromChapterByChapterNumberMenu(chapterNumber));
             printSubMenus();
             int command = getScanner().nextInt();
