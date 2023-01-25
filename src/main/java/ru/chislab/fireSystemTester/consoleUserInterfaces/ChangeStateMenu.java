@@ -19,11 +19,8 @@ public class ChangeStateMenu extends ConsoleUIMenu{
 
     @Override
     public void processMenu() {
-//        ZoneState zoneState = zone.getZoneState();
-//        List<States> states = zone.getZoneState().getStates();
-//        states.get(stateNumber) =
-//        zoneState
-//        zone.setZoneState(zone.getZoneState().getStates().get(stateNumber));
-        System.out.println("CHANGE STATE!!!");
+        List<States> states = zone.getZoneState().getStates();
+        states.set(stateNumber, States.valueOf(getMenuName()));
+        getChapterManager().getZoneManager().setZoneStateByZoneNumber(zone.getModbusZoneNumber(), states);
     }
 }

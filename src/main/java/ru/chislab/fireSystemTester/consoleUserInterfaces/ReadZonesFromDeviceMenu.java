@@ -1,22 +1,14 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
+import java.util.List;
+
 public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
     public ReadZonesFromDeviceMenu(String menuName) {
         super(menuName);
     }
 
-//    @Override
-//    protected void printMenuHeader() {
-//        System.out.println();
-//        System.out.println("# " + getMenuName());
-//        System.out.println("0. Назад");
-//        if (!getSubMenus().isEmpty()) {
-//            System.out.println("1. Обновить состояние зон");
-//        }
-//    }
-
     @Override
-    public void printMenus() {
+    public void printSubMenus() {
         printMenuHeader();
         if (!getSubMenus().isEmpty()) {
             for (int i = 0; i < getSubMenus().size(); i++) {
@@ -25,5 +17,18 @@ public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
             }
         }
         printMenuFooter();
+    }
+
+    @Override
+    public void processMenu() {
+        while (true) {
+            getChapterManager().initChaptersFromDevice();
+            setSubMenus(getConsoleUIManager().getChaptersFromDeviceMenu());
+            printSubMenus();
+            int command = getScanner().nextInt();
+            if (command == -1) System.exit(0);
+            if (command == 0) break;
+            processCommand(command);
+        }
     }
 }

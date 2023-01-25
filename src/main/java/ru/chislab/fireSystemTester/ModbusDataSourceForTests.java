@@ -7,6 +7,7 @@ import com.intelligt.modbus.jlibmodbus.master.ModbusMasterFactory;
 import com.intelligt.modbus.jlibmodbus.serial.SerialPortException;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
+import ru.chislab.fireSystemTester.zones.Zone;
 import ru.chislab.fireSystemTester.zones.ZoneConfigurationDto;
 import ru.chislab.fireSystemTester.zones.ZoneState;
 
@@ -17,11 +18,17 @@ public class ModbusDataSourceForTests extends ModbusDataSource {
 
     private final int ZONE_COUNT = 10;
 
+    private List<ZoneState> zoneStates = new ArrayList<>(10);
+
     @Override
     public List<ZoneConfigurationDto> getModbusZoneConfigurations() {
         List<ZoneConfigurationDto> configurations = new ArrayList<>();
 
-        List<ZoneState> states = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            ZoneState zoneState = new ZoneState();
+            zoneStates.add(zoneState);
+        }
 
         for (int i = 0; i < ZONE_COUNT / 2; i++) {
             ZoneConfigurationDto configuration = new ZoneConfigurationDto();
@@ -37,9 +44,7 @@ public class ModbusDataSourceForTests extends ModbusDataSource {
             List<States> events = new ArrayList<>();
             events.add(event1);
             events.add(event2);
-            ZoneState state = new ZoneState();
-            state.setStates(events);
-            states.add(state);
+            zoneStates.get(i).setStates(events);
         }
 
         for (int i = ZONE_COUNT / 2; i < ZONE_COUNT; i++) {
@@ -56,9 +61,7 @@ public class ModbusDataSourceForTests extends ModbusDataSource {
             List<States> events = new ArrayList<>();
             events.add(event1);
             events.add(event2);
-            ZoneState state = new ZoneState();
-            state.setStates(events);
-            states.add(state);
+            zoneStates.get(i).setStates(events);
         }
 
         return configurations;
@@ -66,17 +69,11 @@ public class ModbusDataSourceForTests extends ModbusDataSource {
 
     @Override
     public ZoneState getZoneStateByModbusZoneNumber(int number) {
-        ZoneState state = new ZoneState();
+        return zoneStates.get(number - 1);
+    }
 
-        States state1 = States.FIRE;
-        States state2 = States.BAD_START;
-
-        List<States> states = new ArrayList<>();
-        states.add(state1);
-        states.add(state2);
-
-        state.setStates(states);
-
-        return state;
+    @Override
+    public void setZoneStateByModbusZoneNumber(int number, List<States> state) {
+        zoneStates.get(number - 1).setStates(state);
     }
 }

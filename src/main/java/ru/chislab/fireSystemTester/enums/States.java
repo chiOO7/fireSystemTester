@@ -1,5 +1,9 @@
 package ru.chislab.fireSystemTester.enums;
 
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+
 public enum States {
 
     RESTORING_THE_220V_NETWORK(1),
@@ -143,6 +147,8 @@ public enum States {
         }
         return state;
     }
+
+
 
     private int code;
 

@@ -8,8 +8,12 @@ public class ZoneMenu extends ConsoleUIMenu{
 
     private String zoneName = "Zone name not set";
 
-    public ZoneMenu(String menuName) {
+    private int zoneNumber;
+
+    public ZoneMenu(String menuName, int zoneNumber) {
+
         super(menuName);
+        this.zoneNumber = zoneNumber;
     }
 
     @Override
@@ -28,12 +32,25 @@ public class ZoneMenu extends ConsoleUIMenu{
     }
 
     @Override
-    public void printMenus() {
+    public void printSubMenus() {
         printMenuHeader();
         for (int i = 0; i < getSubMenus().size(); i++) {
             StateMenu stateMenu = (StateMenu) getSubMenus().get(i);
             System.out.println((i + 2) + ". " + stateMenu.getMenuName());
         }
         printMenuFooter();
+    }
+
+    @Override
+    public void processMenu() {
+        while (true) {
+            getChapterManager().getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
+            setSubMenus(getConsoleUIManager().getStatesFromZoneByZoneNumberMenu(zoneNumber));
+            printSubMenus();
+            int command = getScanner().nextInt();
+            if (command == -1) System.exit(0);
+            if (command == 0) break;
+            processCommand(command);
+        }
     }
 }

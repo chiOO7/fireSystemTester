@@ -16,13 +16,14 @@ public abstract class ConsoleUIMenu {
     private Scanner scanner;
     private ChapterManager chapterManager;
     private List<ConsoleUIMenu> subMenus = new ArrayList<>();
+    private ConsoleUIManager consoleUIManager;
     public ConsoleUIMenu(String menuName) {
         this.menuName = menuName;
     }
 
     public void processMenu() {
         while (true) {
-            printMenus();
+            printSubMenus();
             int command = scanner.nextInt();
             if (command == -1) System.exit(0);
             if (command == 0) break;
@@ -40,7 +41,7 @@ public abstract class ConsoleUIMenu {
         System.out.print("Введите номер команды: ");
     }
 
-    public void printMenus() {
+    public void printSubMenus() {
         printMenuHeader();
         if (!subMenus.isEmpty()) {
             for (int i = 0; i < subMenus.size(); i++) {
@@ -62,5 +63,9 @@ public abstract class ConsoleUIMenu {
 
     public void addSubMenus(List<ConsoleUIMenu> subMenus) {
         getSubMenus().addAll(subMenus);
+    }
+
+    public void changeSubMenus(List<ConsoleUIMenu> subMenus) {
+        this.subMenus = subMenus;
     }
 }

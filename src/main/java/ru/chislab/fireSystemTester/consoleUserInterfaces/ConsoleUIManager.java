@@ -1,7 +1,10 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 import lombok.*;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.PropertyConfigurator;
 import ru.chislab.fireSystemTester.ModbusDataSource;
+import ru.chislab.fireSystemTester.ModbusDataSourceForTests;
 import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.enums.States;
@@ -12,6 +15,7 @@ import ru.chislab.fireSystemTester.zones.ZoneState;
 
 import java.io.Console;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -19,6 +23,8 @@ import java.util.Scanner;
 public class ConsoleUIManager {
     private Scanner scanner;
     private ChapterManager chapterManager;
+
+    EnumSet<States> settableStates = EnumSet.of(States.DISARMING_INPUT, States.ARMING_INPUT);
 
     public ConsoleUIManager() {
         chapterManager = new ChapterManager(new ZoneManager(new ModbusDataSource()));
@@ -35,17 +41,19 @@ public class ConsoleUIManager {
         this.scanner = scanner;
     }
 
-//    public static void main(String[] args) throws ZoneNotFoundException {
-//        String LOG4J_CONFIGURATION_PATH = "log4j.properties";
-//        BasicConfigurator.configure();
-//        PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
-//
-//        ModbusDataSource modbusDataSource = new ModbusDataSource();
-//        ZoneManager zoneManager = new ZoneManager(modbusDataSource);
-//        ChapterManager chapterManager = new ChapterManager(zoneManager);
-//        ConsoleUIManager consoleUIManager = new ConsoleUIManager(chapterManager);
-//        consoleUIManager.initMenus();
-//    }
+    public static void main(String[] args) {
+        String LOG4J_CONFIGURATION_PATH = "log4j.properties";
+        BasicConfigurator.configure();
+        PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
+        ModbusDataSource modbusDataSource = new ModbusDataSource();
+//        ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
+        ZoneManager zoneManager = new ZoneManager(modbusDataSource);
+        ChapterManager chapterManager = new ChapterManager(zoneManager);
+        ConsoleUIManager consoleUIManager = new ConsoleUIManager(chapterManager);
+
+        StartMenu startMenu = consoleUIManager.getStartMenu();
+        startMenu.processMenu();
+    }
 
     public StartMenu getStartMenu() {
         StartMenu startMenu = new StartMenu("Главное меню");
@@ -60,9 +68,7 @@ public class ConsoleUIManager {
         ReadZonesFromDeviceMenu readZonesFromDeviceMenu = new ReadZonesFromDeviceMenu("Считанные из устройства разделы");
         readZonesFromDeviceMenu.setScanner(getScanner());
         readZonesFromDeviceMenu.setChapterManager(getChapterManager());
-        getChapterManager().initChaptersFromDevice();
-        getChapterManager().getZoneManager().updateZonesState();
-        readZonesFromDeviceMenu.addSubMenus(getChaptersFromDeviceMenu());
+        readZonesFromDeviceMenu.setConsoleUIManager(this);
 
         return readZonesFromDeviceMenu;
     }
@@ -71,9 +77,10 @@ public class ConsoleUIManager {
         List<ConsoleUIMenu> chaptersFromDeviceMenu = new ArrayList<>();
         List<Chapter> chapters = getChapterManager().getAvailableChapters();
         for (int i = 0; i < chapters.size(); i++) {
-            ChapterMenu chapterMenu = new ChapterMenu("Раздел " + (i + 1));
+            ChapterMenu chapterMenu = new ChapterMenu("Раздел " + (i + 1), chapters.get(i).getModbusChapterNumber());
             chapterMenu.setScanner(getScanner());
-            chapterMenu.addSubMenus(getZonesFromChapterByChapterNumberMenu(chapters.get(i).getModbusChapterNumber()));
+            chapterMenu.setChapterManager(getChapterManager());
+            chapterMenu.setConsoleUIManager(this);
             chaptersFromDeviceMenu.add(chapterMenu);
         }
 
@@ -84,9 +91,10 @@ public class ConsoleUIManager {
         List<ConsoleUIMenu> zonesFromChapterMenu = new ArrayList<>();
         List<Zone> zones = getChapterManager().getChapterByNumber(number).getZones();
         for (int i = 0; i < zones.size(); i++) {
-            ZoneMenu zoneMenu = new ZoneMenu("Зона " + (zones.get(i).getModbusZoneNumber()));
+            ZoneMenu zoneMenu = new ZoneMenu("Зона " + (zones.get(i).getModbusZoneNumber()), zones.get(i).getModbusZoneNumber());
             zoneMenu.setScanner(getScanner());
-            zoneMenu.addSubMenus(getStatesFromZoneByZoneNumberMenu(zones.get(i).getModbusZoneNumber()));
+            zoneMenu.setChapterManager(getChapterManager());
+            zoneMenu.setConsoleUIManager(this);
             zonesFromChapterMenu.add(zoneMenu);
         }
 
@@ -104,9 +112,10 @@ public class ConsoleUIManager {
                         zone);
                 stateMenu.setScanner(getScanner());
                 List<ConsoleUIMenu> changeStateMenus = new ArrayList<>();
-                for (States settableState : States.values()) {
+                for (States settableState : settableStates) {
                     ChangeStateMenu changeStateMenu = new ChangeStateMenu(settableState.name(), zone, i);
                     changeStateMenu.setScanner(getScanner());
+                    changeStateMenu.setChapterManager(getChapterManager());
                     changeStateMenus.add(changeStateMenu);
                 }
                 stateMenu.addSubMenus(changeStateMenus);
@@ -122,13 +131,13 @@ public class ConsoleUIManager {
 
     public ConsoleUIMenu getAvailableFromStorageChaptersMenu() {
         CommonMenu availableFromStorageChaptersMenu = new CommonMenu("Доступные из базы данных разделы");
-        availableFromStorageChaptersMenu.setScanner(getScanner());
+//        availableFromStorageChaptersMenu.setScanner(getScanner());
 
         return availableFromStorageChaptersMenu;
     }
 
-    public void initMenus() throws ZoneNotFoundException {
-        StartMenu startMenu = getStartMenu();
-        startMenu.processMenu();
-    }
+//    public void initMenus() throws ZoneNotFoundException {
+//        StartMenu startMenu = getStartMenu();
+//        startMenu.processMenu();
+//    }
 }

@@ -6,10 +6,14 @@ import lombok.Data;
 
 @Data
 public class ChapterMenu extends ConsoleUIMenu{
+
+    private int chapterNumber;
     private String chapterName = "Name of ch not set";
 
-    public ChapterMenu(String menuName) {
+    public ChapterMenu(String menuName, int chapterNumber) {
+
         super(menuName);
+        this.chapterNumber = chapterNumber;
     }
 
     @Override
@@ -28,12 +32,25 @@ public class ChapterMenu extends ConsoleUIMenu{
     }
 
     @Override
-    public void printMenus() {
+    public void printSubMenus() {
         printMenuHeader();
         for (int i = 0; i < getSubMenus().size(); i++) {
             ZoneMenu zoneMenu = (ZoneMenu) getSubMenus().get(i);
             System.out.println((i + 2) + ". " + zoneMenu.getMenuName() + ": " + zoneMenu.getZoneName());
         }
         printMenuFooter();
+    }
+
+    @Override
+    public void processMenu() {
+        while (true) {
+            getChapterManager().getZoneManager().updateZonesState();
+            setSubMenus(getConsoleUIManager().getZonesFromChapterByChapterNumberMenu(chapterNumber));
+            printSubMenus();
+            int command = getScanner().nextInt();
+            if (command == -1) System.exit(0);
+            if (command == 0) break;
+            processCommand(command);
+        }
     }
 }

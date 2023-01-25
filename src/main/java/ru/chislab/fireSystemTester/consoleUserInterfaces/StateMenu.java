@@ -1,14 +1,11 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 import lombok.*;
-import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.zones.Zone;
-
-import java.util.Collections;
-import java.util.Scanner;
 
 @Data
 public class StateMenu extends ConsoleUIMenu{
+
     private Zone zone;
     public StateMenu(String menuName, Zone zone) {
         super(menuName);
@@ -17,7 +14,7 @@ public class StateMenu extends ConsoleUIMenu{
 
     @Override
     public void processMenu() {
-            printMenus();
+            printSubMenus();
             int command = getScanner().nextInt();
             if (command == -1) System.exit(0);
             if (command == 0) return;
