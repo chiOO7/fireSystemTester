@@ -12,15 +12,10 @@ import java.util.Scanner;
 @NoArgsConstructor
 public abstract class ConsoleUIMenu {
     private String menuName;
-
     private int menuRowNumber;
-
     private Scanner scanner;
-
     private ChapterManager chapterManager;
-
     private List<ConsoleUIMenu> subMenus = new ArrayList<>();
-
     public ConsoleUIMenu(String menuName) {
         this.menuName = menuName;
     }
@@ -31,7 +26,7 @@ public abstract class ConsoleUIMenu {
             int command = scanner.nextInt();
             if (command == -1) System.exit(0);
             if (command == 0) break;
-            doSomething(command);
+            processCommand(command);
         }
     }
 
@@ -55,9 +50,17 @@ public abstract class ConsoleUIMenu {
         printMenuFooter();
     }
 
-    public void doSomething(int command) {
+    public void processCommand(int command) {
         if (!subMenus.isEmpty()) {
             subMenus.get(command - 1).processMenu();
         }
+    }
+
+    public void addSubMenu(ConsoleUIMenu subMenu) {
+        getSubMenus().add(subMenu);
+    }
+
+    public void addSubMenus(List<ConsoleUIMenu> subMenus) {
+        getSubMenus().addAll(subMenus);
     }
 }

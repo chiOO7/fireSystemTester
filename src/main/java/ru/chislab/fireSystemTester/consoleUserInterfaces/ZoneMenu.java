@@ -1,26 +1,15 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 import lombok.*;
-import ru.chislab.fireSystemTester.chapters.ChapterManager;
-import ru.chislab.fireSystemTester.zones.ZoneManager;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class ZoneMenu extends ConsoleUIMenu{
 
-    private int zoneNumber;
-    private String zoneName;
-    private ZoneManager zoneManager;
+    private String zoneName = "Zone name not set";
 
-    @Override
-    public String toString() {
-            return "Зона " + zoneNumber + ": " + zoneName;
+    public ZoneMenu(String menuName) {
+        super(menuName);
     }
 
     @Override
@@ -32,27 +21,19 @@ public class ZoneMenu extends ConsoleUIMenu{
     }
 
     @Override
-    public void printMenus() {
-        printMenuHeader();
-        for (int i = 0; i < getSubMenus().size(); i++) {
-            System.out.println((i + 2) + ". " + getSubMenus().get(i));
+    public void processCommand(int command) {
+        if (!getSubMenus().isEmpty()) {
+            getSubMenus().get(command - 2).processMenu();
         }
-        printMenuFooter();
     }
 
     @Override
-    public void doSomething(int command) {
-        if (command == 1) zoneManager.updateZoneStateByZoneNumber(zoneNumber);
-        else getSubMenus().get(command - 2).processMenu();
+    public void printMenus() {
+        printMenuHeader();
+        for (int i = 0; i < getSubMenus().size(); i++) {
+            StateMenu stateMenu = (StateMenu) getSubMenus().get(i);
+            System.out.println((i + 2) + ". " + stateMenu.getMenuName());
+        }
+        printMenuFooter();
     }
-
-//    public ZoneMenu(String menuName, Scanner scanner, ChapterManager chapterManager) {
-//        super(menuName, scanner, new ArrayList<>());
-//
-//        try {
-//            zoneName = zoneManager.getZoneByZoneNumber(zoneNumber).getZoneName();
-//        } catch (ZoneNotFoundException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 }

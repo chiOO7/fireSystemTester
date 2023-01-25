@@ -1,24 +1,29 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import ru.chislab.fireSystemTester.chapters.ChapterManager;
-import ru.chislab.fireSystemTester.zones.ZoneManager;
-
-import java.sql.SQLOutput;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-
-
 public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
-    @Override
-    public void processMenu() {
-        getChapterManager().initChaptersFromDevice();
-    }
-
     public ReadZonesFromDeviceMenu(String menuName) {
         super(menuName);
+    }
+
+//    @Override
+//    protected void printMenuHeader() {
+//        System.out.println();
+//        System.out.println("# " + getMenuName());
+//        System.out.println("0. Назад");
+//        if (!getSubMenus().isEmpty()) {
+//            System.out.println("1. Обновить состояние зон");
+//        }
+//    }
+
+    @Override
+    public void printMenus() {
+        printMenuHeader();
+        if (!getSubMenus().isEmpty()) {
+            for (int i = 0; i < getSubMenus().size(); i++) {
+                ChapterMenu chapterMenu = (ChapterMenu) getSubMenus().get(i);
+                System.out.println((i + 1) + ". " + chapterMenu.getMenuName() + ": " + chapterMenu.getChapterName());
+            }
+        }
+        printMenuFooter();
     }
 }

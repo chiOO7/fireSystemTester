@@ -25,6 +25,7 @@ public class ChapterManager {
     public void initChaptersFromDevice() {
         zoneManager.readZoneConfigsFromDevice();
         addNewZoneToChapter();
+
     }
 
     private void addNewZoneToChapter() {

@@ -25,9 +25,6 @@ class ConsoleUIManagerTest {
         ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
         ZoneManager zoneManager = new ZoneManager(modbusDataSource);
         chapterManager = new ChapterManager(zoneManager);
-//        chapterManager.initChaptersFromDevice();
-//        chapterManager.getZoneManager().updateZonesState();
-
     }
 
     @AfterEach
@@ -35,48 +32,58 @@ class ConsoleUIManagerTest {
     }
 
     @Test
-    void getStateMenusByZoneNumber() throws ZoneNotFoundException {
-        List<ConsoleUIMenu> consoleUIMenus = consoleUIManager.getStateMenusByZoneNumber(1);
-        StateMenu stateMenu1 = (StateMenu) consoleUIMenus.get(0);
-        StateMenu stateMenu2 = (StateMenu) consoleUIMenus.get(1);
-        assertEquals(1, stateMenu1.getMenuRowNumber());
-        assertEquals(2, stateMenu2.getMenuRowNumber());
-        assertEquals(States.FIRE, stateMenu1.getState());
-        assertEquals(States.BAD_START, stateMenu2.getState());
-        System.out.println();
-    }
-
-    @Test
-    void getZoneMenusByChapterNumber() {
-    }
-
-    @Test
-    void getChapterMenus() {
-    }
-
-    @Test
     void getStartMenu() {
-        scanner = new Scanner("1 1 0 0");
+        scanner = new Scanner("0");
         consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
     }
 
-
-
     @Test
-    void testGetStateMenusByZoneNumber() {
+    void getReadZonesFromDeviceMenu() {
+        scanner = new Scanner("1 0 0");
+        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        StartMenu startMenu = consoleUIManager.getStartMenu();
+        startMenu.processMenu();
     }
 
     @Test
-    void testGetZoneMenusByChapterNumber() {
+    void getAvailableFromStorageChaptersMenu() {
+        scanner = new Scanner("2 0 0");
+        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        StartMenu startMenu = consoleUIManager.getStartMenu();
+        startMenu.processMenu();
     }
 
     @Test
-    void testGetChapterMenus() {
+    void getChaptersFromDeviceMenu() {
+        scanner = new Scanner("1 2 0 0 0");
+        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        StartMenu startMenu = consoleUIManager.getStartMenu();
+        startMenu.processMenu();
     }
 
     @Test
-    void testGetStartMenu() {
+    void getZonesFromChapterByChapterNumberMenu() {
+        scanner = new Scanner("1 2 2 0 0 0 0 0");
+        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        StartMenu startMenu = consoleUIManager.getStartMenu();
+        startMenu.processMenu();
+    }
+
+    @Test
+    void getStatesFromZoneByZoneNumberMenu() {
+        scanner = new Scanner("1 2 2 2 0 0 0 0 0");
+        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        StartMenu startMenu = consoleUIManager.getStartMenu();
+        startMenu.processMenu();
+    }
+
+    @Test
+    void getChangeStatesFromZoneByZoneNumberMenu() {
+        scanner = new Scanner("1 2 2 2 2 0 0 0 0 0 0 0");
+        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        StartMenu startMenu = consoleUIManager.getStartMenu();
+        startMenu.processMenu();
     }
 }
