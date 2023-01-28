@@ -3,17 +3,12 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.chislab.fireSystemTester.ModbusDataSource;
-import ru.chislab.fireSystemTester.ModbusDataSourceForTests;
+import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
+import ru.chislab.fireSystemTester.modbus.ModbusDataSourceForTests;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
-import ru.chislab.fireSystemTester.enums.States;
-import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
-import java.util.List;
 import java.util.Scanner;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ConsoleUIManagerTest {
     private ConsoleUIManager consoleUIManager;

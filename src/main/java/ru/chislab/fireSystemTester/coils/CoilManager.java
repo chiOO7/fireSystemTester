@@ -1,7 +1,5 @@
 package ru.chislab.fireSystemTester.coils;
 
-import ru.chislab.fireSystemTester.coils.Coil;
-
 import java.util.List;
 
 public class CoilManager {

@@ -1,7 +1,7 @@
 package ru.chislab.fireSystemTester.zones;
 
 import lombok.Getter;
-import ru.chislab.fireSystemTester.ModbusDataSource;
+import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.dao.ZoneDao;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;

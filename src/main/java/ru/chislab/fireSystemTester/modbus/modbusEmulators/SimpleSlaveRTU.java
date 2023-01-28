@@ -1,4 +1,4 @@
-package ru.chislab.fireSystemTester.modbusEmulators;
+package ru.chislab.fireSystemTester.modbus.modbusEmulators;
 
 
 import com.intelligt.modbus.jlibmodbus.data.DataHolder;
@@ -11,7 +11,7 @@ import com.intelligt.modbus.jlibmodbus.slave.ModbusSlave;
 import com.intelligt.modbus.jlibmodbus.slave.ModbusSlaveFactory;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.PropertyConfigurator;
-import ru.chislab.fireSystemTester.ModbusSerialPort;
+import ru.chislab.fireSystemTester.modbus.ModbusSerialPort;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
 import ru.chislab.fireSystemTester.zones.ZoneConfigurationDto;

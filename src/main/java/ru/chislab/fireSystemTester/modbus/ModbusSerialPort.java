@@ -1,4 +1,4 @@
-package ru.chislab.fireSystemTester;
+package ru.chislab.fireSystemTester.modbus;
 
 
 import com.intelligt.modbus.jlibmodbus.serial.SerialParameters;
@@ -31,7 +31,6 @@ public class ModbusSerialPort {
 
     public static SerialParameters initSerial(String portName) {
         SerialParameters serialParameters = new SerialParameters();
-            // you can choose the one of those you need
             serialParameters.setDevice(portName);
             serialParameters.setBaudRate(com.intelligt.modbus.jlibmodbus.serial.SerialPort.BaudRate.BAUD_RATE_9600);
             serialParameters.setDataBits(8);

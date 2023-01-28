@@ -1,4 +1,4 @@
-package ru.chislab.fireSystemTester.modbusEmulators;
+package ru.chislab.fireSystemTester.modbus.modbusEmulators;
 
 import com.intelligt.modbus.jlibmodbus.Modbus;
 import com.intelligt.modbus.jlibmodbus.exception.ModbusIOException;

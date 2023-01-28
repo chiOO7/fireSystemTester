@@ -1,17 +1,15 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
-import lombok.*;
+import lombok.Getter;
 
-
-@Data
+@Getter
 public class ZoneMenu extends ConsoleUIMenu{
 
     private String zoneName = "Zone name not set";
 
-    private int zoneNumber;
+    private final int zoneNumber;
 
     public ZoneMenu(String menuName, int zoneNumber) {
-
         super(menuName);
         this.zoneNumber = zoneNumber;
     }

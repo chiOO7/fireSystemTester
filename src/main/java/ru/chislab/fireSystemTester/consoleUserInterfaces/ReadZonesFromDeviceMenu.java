@@ -1,6 +1,5 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
-import java.util.List;
 
 public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
     public ReadZonesFromDeviceMenu(String menuName) {

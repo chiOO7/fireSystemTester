@@ -19,7 +19,6 @@ public class ChapterDao {
         for (Zone zone : zoneManager.getZones()) {
             int chapterNumber = zone.getModbusChapterNumber();
             if (!chapters.contains(new Chapter(chapterNumber))) {
-//                Chapter chapter = new Chapter(chapterNumber);
                 chapters.add(new Chapter(chapterNumber));
             }
         }

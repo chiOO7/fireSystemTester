@@ -1,4 +1,4 @@
-package ru.chislab.fireSystemTester;
+package ru.chislab.fireSystemTester.modbus;
 
 import com.intelligt.modbus.jlibmodbus.exception.ModbusIOException;
 import com.intelligt.modbus.jlibmodbus.master.ModbusMaster;
@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
+import ru.chislab.fireSystemTester.modbus.ModbusSerialPort;
 import ru.chislab.fireSystemTester.zones.ZoneConfigurationDto;
 import ru.chislab.fireSystemTester.zones.ZoneState;
 

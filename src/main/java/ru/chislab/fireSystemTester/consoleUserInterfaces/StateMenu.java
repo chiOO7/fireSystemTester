@@ -1,12 +1,11 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
-import lombok.*;
+
 import ru.chislab.fireSystemTester.zones.Zone;
 
-@Data
 public class StateMenu extends ConsoleUIMenu{
 
-    private Zone zone;
+    private final Zone zone;
     public StateMenu(String menuName, Zone zone) {
         super(menuName);
         this.zone = zone;

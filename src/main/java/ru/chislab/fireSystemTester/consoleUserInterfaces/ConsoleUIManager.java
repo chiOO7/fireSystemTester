@@ -7,8 +7,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.chislab.fireSystemTester.ApplicationRunner;
-import ru.chislab.fireSystemTester.ModbusDataSource;
-import ru.chislab.fireSystemTester.ModbusDataSourceForTests;
+import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.enums.States;
@@ -17,7 +16,6 @@ import ru.chislab.fireSystemTester.zones.Zone;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 import ru.chislab.fireSystemTester.zones.ZoneState;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
@@ -142,9 +140,4 @@ public class ConsoleUIManager {
 
         return availableFromStorageChaptersMenu;
     }
-
-//    public void initMenus() throws ZoneNotFoundException {
-//        StartMenu startMenu = getStartMenu();
-//        startMenu.processMenu();
-//    }
 }
