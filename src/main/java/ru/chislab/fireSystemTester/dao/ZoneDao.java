@@ -16,7 +16,7 @@ public class ZoneDao {
         for (Zone zone : zones) {
             if (!zonesStorage.contains(zone)) zonesStorage.add(zone);
         }
-        zonesStorage.stream().forEach(System.out::println);
+        //zonesStorage.stream().forEach(System.out::println);
     }
 
     public void saveZoneToStorage(Zone zone) {

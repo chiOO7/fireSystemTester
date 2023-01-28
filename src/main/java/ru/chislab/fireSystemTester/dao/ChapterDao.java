@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ChapterDao {
     private final ZoneManager zoneManager;
-    private final ChapterManager chapterManager;
+//    private final ChapterManager chapterManager;
 
     public List<Chapter> getAvailableChapters() {
         List<Chapter> chapters = new ArrayList<>();

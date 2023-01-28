@@ -20,7 +20,7 @@ public class ModbusDataSource {
 
     private final static Logger logger = LoggerFactory.getLogger("ModbusDataSource");
 
-    private static final String PORT = "COM1";
+    private static final String PORT = "COM2";
     private static final int SLAVE_ID = 1;
     private static final int OFFSET = 0;
     private static final int ZONE_QUANTITY = 10;

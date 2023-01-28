@@ -49,7 +49,7 @@ public class ConsoleUIManager {
     public static void main(String[] args) {
         BasicConfigurator.configure();
         PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
-        Modbus.setLogLevel(Modbus.LogLevel.LEVEL_VERBOSE);
+        Modbus.setLogLevel(Modbus.LogLevel.LEVEL_WARNINGS);
         ModbusDataSource modbusDataSource = new ModbusDataSource();
 //        ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
         ZoneManager zoneManager = new ZoneManager(modbusDataSource);

@@ -1,6 +1,7 @@
 package ru.chislab.fireSystemTester.modbus.modbusEmulators;
 
 
+import com.intelligt.modbus.jlibmodbus.Modbus;
 import com.intelligt.modbus.jlibmodbus.data.DataHolder;
 import com.intelligt.modbus.jlibmodbus.data.SimpleDataHolderBuilder;
 import com.intelligt.modbus.jlibmodbus.exception.IllegalDataAddressException;
@@ -19,13 +20,12 @@ import ru.chislab.fireSystemTester.zones.ZoneState;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class SimpleSlaveRTU {
+public class S2000PPEmulator {
     final static private int slaveId = 1;
     final static private int ZONE_COUNT = 10;
-    final static private int INPUT_REGISTERS_TABLE_SIZE = ZONE_COUNT * 4;
-    final static private int HOLDING_REGISTERS_TABLE_SIZE = ZONE_COUNT;
+//    final static private int INPUT_REGISTERS_TABLE_SIZE = ZONE_COUNT * 4;
+//    final static private int HOLDING_REGISTERS_TABLE_SIZE = ZONE_COUNT;
     final static private int ZONE_STATE_HR_OFFSET = 40000;
     final static private String PORT = "COM3";
 
@@ -37,9 +37,9 @@ public class SimpleSlaveRTU {
 
 
         PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
-        Scanner scanner = new Scanner(System.in);
+//        Scanner scanner = new Scanner(System.in);
 
-//        Modbus.setLogLevel(Modbus.LogLevel.LEVEL_DEBUG);
+        Modbus.setLogLevel(Modbus.LogLevel.LEVEL_DEBUG);
 
         try {
             ModbusSlave slave = initSlave(slaveId);
@@ -146,6 +146,7 @@ public class SimpleSlaveRTU {
                 throw new RuntimeException(e);
             }
         }
+        System.out.println();
     }
 
     private static int getWordByEvents(List<States> events) {
@@ -155,7 +156,7 @@ public class SimpleSlaveRTU {
 
     private static String addSpaces(int n) {
         int count = 0;
-        int temp = 10000 * n;
+//        int temp = 10000 * n;
         if (n < 10) {
             count = 4;
         } else if (n < 100) {
@@ -166,9 +167,7 @@ public class SimpleSlaveRTU {
             count = 1;
         }
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < count; i++) {
-            builder.append("0");
-        }
+        builder.append("0".repeat(count));
         return builder.toString() + n;
     }
 }

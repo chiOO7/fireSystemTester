@@ -27,19 +27,27 @@ class ConsoleUIManagerTest {
     }
 
     @Test
-    void getStartMenu() {
+    void showStartMenuTest() {
+        System.out.println("Start of show start menu TEST");
         scanner = new Scanner("0");
         consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
+        System.out.println();
+        System.out.println();
+        System.out.println("End of show start menu TEST");
     }
 
     @Test
-    void getReadZonesFromDeviceMenu() {
+    void enterToReadingFromDeviceChaptersMenuTest() {
+        System.out.println("Start of enter to reading from device chapters menu TEST");
         scanner = new Scanner("1 0 0");
         consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
+        System.out.println();
+        System.out.println();
+        System.out.println("End of enter to reading from device chapters menu TEST");
     }
 
     @Test
