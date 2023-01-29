@@ -3,8 +3,8 @@ package ru.chislab.fireSystemTester.zones;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.chislab.fireSystemTester.ModbusDataSource;
-import ru.chislab.fireSystemTester.ModbusDataSourceForTests;
+import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
+import ru.chislab.fireSystemTester.modbus.ModbusDataSourceForTests;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
 
 import java.util.List;
@@ -56,7 +56,9 @@ class ZoneManagerTest {
     void getZonesFromStorage() {
         zoneManager.readZoneConfigsFromDevice();
         zoneManager.saveZonesToStorage();
-        List<Zone> zones = zoneManager.getZonesFromStorage();
+        zoneManager.clearZones();
+        zoneManager.getZonesFromStorage();
+        List<Zone> zones = zoneManager.getZones();
         assertEquals(10, zones.size());
         for (int i = 0; i < 10; i++) {
             assertEquals(i + 1, zones.get(i).getModbusZoneNumber());

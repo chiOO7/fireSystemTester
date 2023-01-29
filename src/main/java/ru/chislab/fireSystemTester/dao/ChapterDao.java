@@ -12,14 +12,13 @@ import java.util.List;
 @AllArgsConstructor
 public class ChapterDao {
     private final ZoneManager zoneManager;
-    private final ChapterManager chapterManager;
+//    private final ChapterManager chapterManager;
 
     public List<Chapter> getAvailableChapters() {
         List<Chapter> chapters = new ArrayList<>();
         for (Zone zone : zoneManager.getZones()) {
             int chapterNumber = zone.getModbusChapterNumber();
             if (!chapters.contains(new Chapter(chapterNumber))) {
-//                Chapter chapter = new Chapter(chapterNumber);
                 chapters.add(new Chapter(chapterNumber));
             }
         }

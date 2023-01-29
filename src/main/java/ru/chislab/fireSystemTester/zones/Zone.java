@@ -3,10 +3,8 @@ package ru.chislab.fireSystemTester.zones;
 import lombok.*;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
 
-import java.util.Objects;
-
-
 @Data
+@EqualsAndHashCode(exclude = "zoneState")
 public class Zone {
     private Integer modbusZoneNumber;
 
@@ -30,13 +28,4 @@ public class Zone {
         this.zoneType = configuration.getZoneType();
         this.setZoneName("zoneName");
     }
-
-//    public Zone(ZoneConfigurationDto configuration, String zoneName) {
-//        this.modbusZoneNumber = configuration.getModbusZoneNumber();
-//        this.deviceAddress = configuration.getDeviceAddress();
-//        this.signalLineNumber = configuration.getSignalLineNumber();
-//        this.modbusChapterNumber = configuration.getModbusChapterNumber();
-//        this.zoneType = configuration.getZoneType();
-//        this.setZoneName(zoneName);
-//    }
 }

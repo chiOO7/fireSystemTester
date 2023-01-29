@@ -25,6 +25,7 @@ public abstract class ConsoleUIMenu {
         while (true) {
             printSubMenus();
             int command = scanner.nextInt();
+            System.out.println();
             if (command == -1) System.exit(0);
             if (command == 0) break;
             processCommand(command);
@@ -32,7 +33,6 @@ public abstract class ConsoleUIMenu {
     }
 
     protected void printMenuHeader() {
-        System.out.println();
         System.out.println("# " + menuName + ":");
         System.out.println("0. Назад");
     }
@@ -65,7 +65,7 @@ public abstract class ConsoleUIMenu {
         getSubMenus().addAll(subMenus);
     }
 
-    public void changeSubMenus(List<ConsoleUIMenu> subMenus) {
-        this.subMenus = subMenus;
-    }
+//    public void changeSubMenus(List<ConsoleUIMenu> subMenus) {
+//        this.subMenus = subMenus;
+//    }
 }

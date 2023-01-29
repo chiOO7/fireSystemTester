@@ -6,10 +6,8 @@ public class StartMenu extends ConsoleUIMenu {
         super(menuName);
     }
 
-
     @Override
     protected void printMenuHeader() {
-        System.out.println();
         System.out.println("# " + getMenuName() + ":");
         System.out.println("0. Выход из программы");
     }

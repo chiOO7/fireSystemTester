@@ -1,7 +1,7 @@
 package ru.chislab.fireSystemTester.zones;
 
 import lombok.Getter;
-import ru.chislab.fireSystemTester.ModbusDataSource;
+import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.dao.ZoneDao;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
@@ -28,28 +28,33 @@ public class ZoneManager {
         List<ZoneConfigurationDto> zoneConfigurationsDto = modbusDataSource.getModbusZoneConfigurations();
         for (ZoneConfigurationDto configuration : zoneConfigurationsDto) {
             Zone zone = new Zone(configuration);
-            zones.add(zone);
+            if (!zones.contains(zone)) {
+                zones.add(zone);
+            }
         }
-//        zones.stream().forEach(System.out::println);
+    }
+
+    public void clearZones() {
+        zones.clear();
     }
 
     public void saveZonesToStorage() {
         zoneDao.saveZonesToStorage(zones);
     }
 
-    public List<Zone> getZonesFromStorage() {
-        return zoneDao.getZonesFromStorage();
+    public void getZonesFromStorage() {
+        this.zones.addAll(zoneDao.getZonesFromStorage());
     }
 
     public List<Zone> getZones() {
         return zones;
     }
 
-    public void updateZonesState() {
-        for (Zone zone : zones) {
-            zone.setZoneState(modbusDataSource.getZoneStateByModbusZoneNumber(zone.getModbusZoneNumber()));
-        }
-    }
+//    public void updateZonesState() {
+//        for (Zone zone : zones) {
+//            zone.setZoneState(modbusDataSource.getZoneStateByModbusZoneNumber(zone.getModbusZoneNumber()));
+//        }
+//    }
 
     public void updateZonesState(List<Zone> zones) {
         for (Zone zone : zones) {
@@ -75,15 +80,15 @@ public class ZoneManager {
         throw new ZoneNotFoundException("Zone not found or connection with С2000-ПП failed");
     }
 
-    public List<Zone> getZonesByChapterNumber(int chapterNumber) {
-        List<Zone> zoneList = new ArrayList<>();
-        for (Zone zone : zones) {
-            if (zone.getModbusChapterNumber() == chapterNumber) {
-                zoneList.add(zone);
-            }
-        }
-        return zoneList;
-    }
+//    public List<Zone> getZonesByChapterNumber(int chapterNumber) {
+//        List<Zone> zoneList = new ArrayList<>();
+//        for (Zone zone : zones) {
+//            if (zone.getModbusChapterNumber() == chapterNumber) {
+//                zoneList.add(zone);
+//            }
+//        }
+//        return zoneList;
+//    }
 
     public void setZoneStateByZoneNumber(int number, List<States> state) {
         modbusDataSource.setZoneStateByModbusZoneNumber(number, state);

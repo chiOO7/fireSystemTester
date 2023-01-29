@@ -1,24 +1,21 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
-import lombok.*;
+import lombok.Getter;
 
-
-@Data
+@Getter
 public class ZoneMenu extends ConsoleUIMenu{
 
     private String zoneName = "Zone name not set";
 
-    private int zoneNumber;
+    private final int zoneNumber;
 
     public ZoneMenu(String menuName, int zoneNumber) {
-
         super(menuName);
         this.zoneNumber = zoneNumber;
     }
 
     @Override
     protected void printMenuHeader() {
-        System.out.println();
         System.out.println("# " + getMenuName() + ": " + zoneName);
         System.out.println("0. Назад");
         System.out.println("1. Обновить состояние зоны");
@@ -26,7 +23,7 @@ public class ZoneMenu extends ConsoleUIMenu{
 
     @Override
     public void processCommand(int command) {
-        if (!getSubMenus().isEmpty()) {
+        if (!getSubMenus().isEmpty() && command > 1) {
             getSubMenus().get(command - 2).processMenu();
         }
     }
@@ -48,8 +45,12 @@ public class ZoneMenu extends ConsoleUIMenu{
             setSubMenus(getConsoleUIManager().getStatesFromZoneByZoneNumberMenu(zoneNumber));
             printSubMenus();
             int command = getScanner().nextInt();
+            System.out.println();
             if (command == -1) System.exit(0);
             if (command == 0) break;
+            if (command == 1) {
+                getChapterManager().getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
+            }
             processCommand(command);
         }
     }

@@ -1,13 +1,12 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 
-import lombok.Data;
+import lombok.Getter;
 
-
-@Data
+@Getter
 public class ChapterMenu extends ConsoleUIMenu{
 
-    private int chapterNumber;
+    private final int chapterNumber;
     private String chapterName = "Name of ch not set";
 
     public ChapterMenu(String menuName, int chapterNumber) {
@@ -18,7 +17,6 @@ public class ChapterMenu extends ConsoleUIMenu{
 
     @Override
     protected void printMenuHeader() {
-        System.out.println();
         System.out.println("# " + getMenuName() + ": " + chapterName);
         System.out.println("0. Назад");
         System.out.println("1. Обновить состояние зон");
@@ -26,7 +24,7 @@ public class ChapterMenu extends ConsoleUIMenu{
 
     @Override
     public void processCommand(int command) {
-        if (!getSubMenus().isEmpty()) {
+        if (!getSubMenus().isEmpty() && command > 1) {
             getSubMenus().get(command - 2).processMenu();
         }
     }
@@ -44,12 +42,18 @@ public class ChapterMenu extends ConsoleUIMenu{
     @Override
     public void processMenu() {
         while (true) {
-            getChapterManager().getZoneManager().updateZonesState(getChapterManager().getChapterByNumber(chapterNumber).getZones());
+            getChapterManager().getZoneManager().updateZonesState(getChapterManager()
+                    .getChapterByNumber(chapterNumber).getZones());
             setSubMenus(getConsoleUIManager().getZonesFromChapterByChapterNumberMenu(chapterNumber));
             printSubMenus();
             int command = getScanner().nextInt();
+            System.out.println();
             if (command == -1) System.exit(0);
             if (command == 0) break;
+            if (command == 1) {
+                getChapterManager().getZoneManager().updateZonesState(getChapterManager()
+                        .getChapterByNumber(chapterNumber).getZones());
+            }
             processCommand(command);
         }
     }

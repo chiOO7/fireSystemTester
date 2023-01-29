@@ -2,15 +2,14 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.zones.Zone;
-import ru.chislab.fireSystemTester.zones.ZoneState;
 
 import java.util.List;
 
 public class ChangeStateMenu extends ConsoleUIMenu{
 
-    private Zone zone;
+    private final Zone zone;
 
-    private int stateNumber;
+    private final int stateNumber;
     public ChangeStateMenu(String menuName, Zone zone, int stateNumber) {
         super(menuName);
         this.zone = zone;

@@ -3,8 +3,8 @@ package ru.chislab.fireSystemTester.chapters;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.chislab.fireSystemTester.ModbusDataSource;
-import ru.chislab.fireSystemTester.ModbusDataSourceForTests;
+import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
+import ru.chislab.fireSystemTester.modbus.ModbusDataSourceForTests;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
