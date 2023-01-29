@@ -15,6 +15,17 @@ public class ChapterManager {
 
     public ChapterManager(ZoneManager zoneManager) {
         this.zoneManager = zoneManager;
+        reInitChapters();
+    }
+
+    public void initChaptersFromDevice() {
+        reInitChapters();
+        zoneManager.clearZones();
+        zoneManager.readZoneConfigsFromDevice();
+        addNewZoneToChapter();
+    }
+
+    public void reInitChapters() {
         for (int i = 0; i < chapters.length; i++) {
             chapters[i] = new Chapter();
             chapters[i].setModbusChapterNumber(i + 1);
@@ -22,16 +33,10 @@ public class ChapterManager {
         }
     }
 
-    public void initChaptersFromDevice() {
-        zoneManager.readZoneConfigsFromDevice();
-        addNewZoneToChapter();
-
-    }
-
     private void addNewZoneToChapter() {
         for (Zone zone : zoneManager.getZones()) {
             Chapter chapter = chapters[zone.getModbusChapterNumber() - 1];
-            if (!chapter.getZones().contains(zone) && (chapter.getModbusChapterNumber() == zone.getModbusChapterNumber())) {
+            if (!chapter.getZones().contains(zone) && (chapter.getModbusChapterNumber().equals(zone.getModbusChapterNumber()))) {
                 chapter.getZones().add(zone);
                 chapter.setDeviceAddress(zone.getDeviceAddress());
             }
@@ -39,6 +44,8 @@ public class ChapterManager {
     }
 
     public void initChaptersFromStorage() {
+        reInitChapters();
+        zoneManager.clearZones();
         zoneManager.getZonesFromStorage();
         addNewZoneToChapter();
     }
@@ -47,9 +54,9 @@ public class ChapterManager {
         return chapters[number - 1];
     }
 
-    public Chapter[] getChapters() {
-        return chapters;
-    }
+//    public Chapter[] getChapters() {
+//        return chapters;
+//    }
 
     public List<Chapter> getAvailableChapters() {
         List<Chapter> availableChapters = new ArrayList<>();

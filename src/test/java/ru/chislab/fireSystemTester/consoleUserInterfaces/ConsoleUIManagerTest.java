@@ -27,6 +27,7 @@ class ConsoleUIManagerTest {
     }
 
     @Test
+    //getStartMenu()
     void showStartMenuTest() {
         System.out.println("Start of show start menu TEST");
         scanner = new Scanner("0");
@@ -39,6 +40,7 @@ class ConsoleUIManagerTest {
     }
 
     @Test
+    //getReadZonesFromDeviceMenu()
     void enterToReadingFromDeviceChaptersMenuTest() {
         System.out.println("Start of enter to reading from device chapters menu TEST");
         scanner = new Scanner("1 0 0");
@@ -51,42 +53,67 @@ class ConsoleUIManagerTest {
     }
 
     @Test
-    void getAvailableFromStorageChaptersMenu() {
-//        scanner = new Scanner("2 0 0");
-//        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
-//        StartMenu startMenu = consoleUIManager.getStartMenu();
-//        startMenu.processMenu();
+    //getAvailableFromStorageChaptersMenu()
+    void enterToAvailableFromStorageChaptersMenuTest() {
+        enterToReadingFromDeviceChaptersMenuTest();
+        System.out.println("Start of enter to available from storage chapters menu TEST");
+        scanner = new Scanner("2 0 0 0");
+        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        StartMenu startMenu = consoleUIManager.getStartMenu();
+        startMenu.processMenu();
+        System.out.println();
+        System.out.println();
+        System.out.println("End of enter to available from storage chapters menu TEST");
     }
 
     @Test
-    void getChaptersFromDeviceMenu() {
+    //getChaptersFromDeviceMenu()
+    void enterToChapterMenuTest() {
+        System.out.println("Start of enter to chapter menu TEST");
         scanner = new Scanner("1 2 0 0 0");
         consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
+        System.out.println();
+        System.out.println();
+        System.out.println("End of enter to chapter menu TEST");
     }
 
     @Test
-    void getZonesFromChapterByChapterNumberMenu() {
+    //getZonesFromChapterByChapterNumberMenu(int number)
+    void enterToZoneMenuTest() {
+        System.out.println("Start of enter to zone menu TEST");
         scanner = new Scanner("1 2 2 0 0 0 0 0");
         consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
+        System.out.println();
+        System.out.println();
+        System.out.println("End of enter to zone menu TEST");
     }
 
     @Test
-    void getStatesFromZoneByZoneNumberMenu() {
+    //getStatesFromZoneByZoneNumberMenu(int number)
+    void enterToZoneStateMenuTest() {
+        System.out.println("Start of enter to zone state menu TEST");
         scanner = new Scanner("1 2 2 2 0 0 0 0 0");
         consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
+        System.out.println();
+        System.out.println();
+        System.out.println("End of enter to zone test menu TEST");
     }
 
     @Test
-    void getChangeStatesFromZoneByZoneNumberMenu() {
+    void changeZoneStateTest() {
+        System.out.println("Start of change zone state TEST");
         scanner = new Scanner("1 2 2 2 2 0 0 0 0 0 0 0");
         consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
+        System.out.println();
+        System.out.println();
+        System.out.println("End of change zone state TEST");
     }
 }

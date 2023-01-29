@@ -4,6 +4,7 @@ import lombok.*;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
 
 @Data
+@EqualsAndHashCode(exclude = "zoneState")
 public class Zone {
     private Integer modbusZoneNumber;
 

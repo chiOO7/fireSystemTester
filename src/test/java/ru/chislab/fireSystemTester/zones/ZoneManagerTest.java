@@ -56,7 +56,9 @@ class ZoneManagerTest {
     void getZonesFromStorage() {
         zoneManager.readZoneConfigsFromDevice();
         zoneManager.saveZonesToStorage();
-        List<Zone> zones = zoneManager.getZonesFromStorage();
+        zoneManager.clearZones();
+        zoneManager.getZonesFromStorage();
+        List<Zone> zones = zoneManager.getZones();
         assertEquals(10, zones.size());
         for (int i = 0; i < 10; i++) {
             assertEquals(i + 1, zones.get(i).getModbusZoneNumber());

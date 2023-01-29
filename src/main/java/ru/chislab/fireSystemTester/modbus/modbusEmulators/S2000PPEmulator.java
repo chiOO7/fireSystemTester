@@ -101,7 +101,7 @@ public class S2000PPEmulator {
     }
 
     private static ModbusSlave initSlave(int slaveId) {
-        ModbusSlave slave = null;
+        ModbusSlave slave;
         try {
             slave = ModbusSlaveFactory.createModbusSlaveRTU(ModbusSerialPort.initSerial(PORT));
         } catch (SerialPortException e) {
@@ -156,7 +156,6 @@ public class S2000PPEmulator {
 
     private static String addSpaces(int n) {
         int count = 0;
-//        int temp = 10000 * n;
         if (n < 10) {
             count = 4;
         } else if (n < 100) {
@@ -166,8 +165,6 @@ public class S2000PPEmulator {
         } else if (n < 10000) {
             count = 1;
         }
-        StringBuilder builder = new StringBuilder();
-        builder.append("0".repeat(count));
-        return builder.toString() + n;
+        return "0".repeat(count) + n;
     }
 }
