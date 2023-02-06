@@ -7,6 +7,7 @@ import com.intelligt.modbus.jlibmodbus.data.SimpleDataHolderBuilder;
 import com.intelligt.modbus.jlibmodbus.exception.IllegalDataAddressException;
 import com.intelligt.modbus.jlibmodbus.exception.IllegalDataValueException;
 import com.intelligt.modbus.jlibmodbus.exception.ModbusIOException;
+import com.intelligt.modbus.jlibmodbus.serial.SerialParameters;
 import com.intelligt.modbus.jlibmodbus.serial.SerialPortException;
 import com.intelligt.modbus.jlibmodbus.slave.ModbusSlave;
 import com.intelligt.modbus.jlibmodbus.slave.ModbusSlaveFactory;
@@ -22,70 +23,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class S2000PPEmulator {
-    final static private int slaveId = 1;
-    final static private int ZONE_COUNT = 10;
-//    final static private int INPUT_REGISTERS_TABLE_SIZE = ZONE_COUNT * 4;
+    final static public int ZONE_COUNT = 10;
+    //    final static private int INPUT_REGISTERS_TABLE_SIZE = ZONE_COUNT * 4;
 //    final static private int HOLDING_REGISTERS_TABLE_SIZE = ZONE_COUNT;
     final static private int ZONE_STATE_HR_OFFSET = 40000;
-    final static private String PORT = "COM3";
+//    static private String PORT = "COM";
 
     private final static String LOG4J_CONFIGURATION_PATH = "log4j.properties";
 
     public static void main(String[] argv) {
 
+        final int SLAVE_ID = 1;
+
+        if (argv.length == 0) {
+            System.out.println("Input port number with start emulator 3");
+            return;
+        }
+
+        if (argv[0].matches("\\D")) {
+            System.out.println("Input port number with start emulator 3");
+            return;
+        }
+
+        final String PORT = "COM" + argv[0];
+
         BasicConfigurator.configure();
 
-
         PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
-//        Scanner scanner = new Scanner(System.in);
 
         Modbus.setLogLevel(Modbus.LogLevel.LEVEL_DEBUG);
 
         try {
-            ModbusSlave slave = initSlave(slaveId);
+            ModbusSlave slave = initSlave(SLAVE_ID, PORT);
             System.out.println();
 
             List<ZoneConfigurationDto> configurations = new ArrayList<>();
 
             List<ZoneState> states = new ArrayList<>();
 
-            for (int i = 0; i < ZONE_COUNT / 2; i++) {
-                ZoneConfigurationDto configuration = new ZoneConfigurationDto();
-                configuration.setModbusZoneNumber(i + 1);
-                configuration.setDeviceAddress(2);
-                configuration.setSignalLineNumber(i + 1);
-                configuration.setModbusChapterNumber(1);
-                configuration.setZoneType(ZoneTypes.SIGNAL_LINE_STATE);
-                configurations.add(configuration);
+            configurations.addAll(initZoneConfigurations(0, ZONE_COUNT / 2, 2, 1));
+            configurations.addAll(initZoneConfigurations(ZONE_COUNT / 2, ZONE_COUNT, 3, 2));
 
-                States event1 = States.values()[i];
-                States event2 = States.values()[i + 1];
-                List<States> events = new ArrayList<>();
-                events.add(event1);
-                events.add(event2);
-                ZoneState state = new ZoneState();
-                state.setStates(events);
-                states.add(state);
-            }
-
-            for (int i = ZONE_COUNT / 2; i < ZONE_COUNT; i++) {
-                ZoneConfigurationDto configuration = new ZoneConfigurationDto();
-                configuration.setModbusZoneNumber(i + 1);
-                configuration.setDeviceAddress(3);
-                configuration.setSignalLineNumber(i + 1);
-                configuration.setModbusChapterNumber(2);
-                configuration.setZoneType(ZoneTypes.SIGNAL_LINE_STATE);
-                configurations.add(configuration);
-
-                States event1 = States.values()[i];
-                States event2 = States.values()[i + 1];
-                List<States> events = new ArrayList<>();
-                events.add(event1);
-                events.add(event2);
-                ZoneState state = new ZoneState();
-                state.setStates(events);
-                states.add(state);
-            }
+            states.addAll(initZoneStates(0, ZONE_COUNT / 2));
+            states.addAll(initZoneStates(ZONE_COUNT / 2, ZONE_COUNT));
 
             DataHolder dataHolder = slave.getDataHolder();
 
@@ -100,10 +80,40 @@ public class S2000PPEmulator {
         }
     }
 
-    private static ModbusSlave initSlave(int slaveId) {
+    public static List<ZoneConfigurationDto> initZoneConfigurations(int start, int end, int devAddr, int chaptNumb) {
+        List<ZoneConfigurationDto> configurations = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            ZoneConfigurationDto configuration = new ZoneConfigurationDto();
+            configuration.setModbusZoneNumber(i + 1);
+            configuration.setDeviceAddress(devAddr);
+            configuration.setSignalLineNumber(i + 1);
+            configuration.setModbusChapterNumber(chaptNumb);
+            configuration.setZoneType(ZoneTypes.SIGNAL_LINE_STATE);
+            configurations.add(configuration);
+        }
+        return configurations;
+    }
+
+    public static List<ZoneState> initZoneStates(int start, int end) {
+        List<ZoneState> states = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            States event1 = States.values()[i];
+            States event2 = States.values()[i + 1];
+            List<States> events = new ArrayList<>();
+            events.add(event1);
+            events.add(event2);
+            ZoneState state = new ZoneState();
+            state.setStates(events);
+            states.add(state);
+        }
+        return states;
+    }
+
+
+    private static ModbusSlave initSlave(int slaveId, String port) {
         ModbusSlave slave;
         try {
-            slave = ModbusSlaveFactory.createModbusSlaveRTU(ModbusSerialPort.initSerial(PORT));
+            slave = ModbusSlaveFactory.createModbusSlaveRTU(initPort(port));
         } catch (SerialPortException e) {
             throw new RuntimeException(e);
         }
@@ -115,6 +125,10 @@ public class S2000PPEmulator {
         slave.setDataHolder(new SimpleDataHolderBuilder(ZONE_STATE_HR_OFFSET + ZONE_COUNT));
 
         return slave;
+    }
+
+    private static SerialParameters initPort(String port) {
+        return ModbusSerialPort.initSerial(port);
     }
 
     private static void setZoneConfigurationRegisters(List<ZoneConfigurationDto> configurations, DataHolder dataHolder) {

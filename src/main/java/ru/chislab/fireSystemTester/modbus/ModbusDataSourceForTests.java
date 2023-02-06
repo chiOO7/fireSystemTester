@@ -1,7 +1,7 @@
 package ru.chislab.fireSystemTester.modbus;
 
 import ru.chislab.fireSystemTester.enums.States;
-import ru.chislab.fireSystemTester.enums.ZoneTypes;
+import ru.chislab.fireSystemTester.modbus.modbusEmulators.S2000PPEmulator;
 import ru.chislab.fireSystemTester.zones.ZoneConfigurationDto;
 import ru.chislab.fireSystemTester.zones.ZoneState;
 
@@ -10,53 +10,23 @@ import java.util.List;
 
 public class ModbusDataSourceForTests extends ModbusDataSource {
 
-    private final int ZONE_COUNT = 10;
+    public ModbusDataSourceForTests() {
+        super("", 0);
+    }
 
-    private List<ZoneState> zoneStates = new ArrayList<>(10);
+    private final List<ZoneState> zoneStates = new ArrayList<>(10);
 
     @Override
     public List<ZoneConfigurationDto> getModbusZoneConfigurations() {
         List<ZoneConfigurationDto> configurations = new ArrayList<>();
 
+        configurations.addAll(S2000PPEmulator.initZoneConfigurations(0, S2000PPEmulator.ZONE_COUNT / 2,
+                2, 1));
+        configurations.addAll(S2000PPEmulator.initZoneConfigurations(S2000PPEmulator.ZONE_COUNT / 2,
+                S2000PPEmulator.ZONE_COUNT, 3, 2));
 
-        for (int i = 0; i < 10; i++) {
-            ZoneState zoneState = new ZoneState();
-            zoneStates.add(zoneState);
-        }
-
-        for (int i = 0; i < ZONE_COUNT / 2; i++) {
-            ZoneConfigurationDto configuration = new ZoneConfigurationDto();
-            configuration.setModbusZoneNumber(i + 1);
-            configuration.setDeviceAddress(2);
-            configuration.setSignalLineNumber(i + 1);
-            configuration.setModbusChapterNumber(1);
-            configuration.setZoneType(ZoneTypes.SIGNAL_LINE_STATE);
-            configurations.add(configuration);
-
-            States event1 = States.values()[i];
-            States event2 = States.values()[i + 1];
-            List<States> events = new ArrayList<>();
-            events.add(event1);
-            events.add(event2);
-            zoneStates.get(i).setStates(events);
-        }
-
-        for (int i = ZONE_COUNT / 2; i < ZONE_COUNT; i++) {
-            ZoneConfigurationDto configuration = new ZoneConfigurationDto();
-            configuration.setModbusZoneNumber(i + 1);
-            configuration.setDeviceAddress(3);
-            configuration.setSignalLineNumber(i + 1);
-            configuration.setModbusChapterNumber(2);
-            configuration.setZoneType(ZoneTypes.SIGNAL_LINE_STATE);
-            configurations.add(configuration);
-
-            States event1 = States.values()[i];
-            States event2 = States.values()[i + 1];
-            List<States> events = new ArrayList<>();
-            events.add(event1);
-            events.add(event2);
-            zoneStates.get(i).setStates(events);
-        }
+        zoneStates.addAll(S2000PPEmulator.initZoneStates(0, S2000PPEmulator.ZONE_COUNT / 2));
+        zoneStates.addAll(S2000PPEmulator.initZoneStates(S2000PPEmulator.ZONE_COUNT / 2, S2000PPEmulator.ZONE_COUNT));
 
         return configurations;
     }

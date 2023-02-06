@@ -97,9 +97,7 @@ public class ConsoleUIManager {
             ZoneState state = zone.getZoneState();
 
             for (int i = 0; i < state.getStates().size(); i++) {
-                StateMenu stateMenu = new StateMenu("Состояние " + (i + 1) + ": " + state.getStates().get(i)
-//                        ,zone
-                );
+                StateMenu stateMenu = new StateMenu("Состояние " + (i + 1) + ": " + state.getStates().get(i));
                 stateMenu.setScanner(getScanner());
                 List<ConsoleUIMenu> changeStateMenus = new ArrayList<>();
                 for (States settableState : settableStates) {

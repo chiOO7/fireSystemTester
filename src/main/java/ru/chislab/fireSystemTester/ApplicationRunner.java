@@ -17,6 +17,10 @@ public class ApplicationRunner {
 
     private final static Logger logger = LoggerFactory.getLogger(ApplicationRunner.class.getName());
 
+    private static final String PORT = "COM2";
+
+    private static final int SLAVE_ID = 1;
+
 
     public static void main(String[] args) {
 
@@ -24,7 +28,7 @@ public class ApplicationRunner {
         PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
         Modbus.setLogLevel(Modbus.LogLevel.LEVEL_WARNINGS);
         logger.info("Application start");
-        ModbusDataSource modbusDataSource = new ModbusDataSource();
+        ModbusDataSource modbusDataSource = new ModbusDataSource(PORT, SLAVE_ID);
 //        ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
         ZoneManager zoneManager = new ZoneManager(modbusDataSource);
         ChapterManager chapterManager = new ChapterManager(zoneManager);

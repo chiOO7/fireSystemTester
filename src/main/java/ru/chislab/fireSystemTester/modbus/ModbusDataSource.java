@@ -14,16 +14,21 @@ import ru.chislab.fireSystemTester.zones.ZoneState;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ModbusDataSource {
 
     private final static Logger logger = LoggerFactory.getLogger("ModbusDataSource");
 
-    private static final String PORT = "COM2";
-    private static final int SLAVE_ID = 1;
     private static final int OFFSET = 0;
     private static final int ZONE_QUANTITY = 10;
     final static private int ZONE_STATE_HR_OFFSET = 40000;
+
+    private final String PORT;
+    private final int SLAVE_ID;
+
+    public ModbusDataSource(String PORT, int SLAVE_ID) {
+        this.PORT = PORT;
+        this.SLAVE_ID = SLAVE_ID;
+    }
 
     public List<ZoneConfigurationDto> getModbusZoneConfigurations() {
 

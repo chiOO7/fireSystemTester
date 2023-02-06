@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: ru.chislab.fireSystemTester.consoleUserInterfaces.ConsoleUIManagerTest
 -------------------------------------------------------------------------------
-Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.141 s - in ru.chislab.fireSystemTester.consoleUserInterfaces.ConsoleUIManagerTest
+Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.22 s - in ru.chislab.fireSystemTester.consoleUserInterfaces.ConsoleUIManagerTest
