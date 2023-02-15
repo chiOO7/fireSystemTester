@@ -83,12 +83,22 @@ public class S2000PPEmulator {
     public static List<ZoneConfigurationDto> initZoneConfigurations(int start, int end, int devAddr, int chaptNumb) {
         List<ZoneConfigurationDto> configurations = new ArrayList<>();
         for (int i = start; i < end; i++) {
-            ZoneConfigurationDto configuration = new ZoneConfigurationDto();
-            configuration.setModbusZoneNumber(i + 1);
-            configuration.setDeviceAddress(devAddr);
-            configuration.setSignalLineNumber(i + 1);
-            configuration.setModbusChapterNumber(chaptNumb);
-            configuration.setZoneType(ZoneTypes.SIGNAL_LINE_STATE);
+//            ZoneConfigurationDto configuration = new ZoneConfigurationDto();
+//            configuration.setModbusZoneNumber(i + 1);
+//            configuration.setDeviceAddress(devAddr);
+//            configuration.setSignalLineNumber(i + 1);
+//            configuration.setModbusChapterNumber(chaptNumb);
+//            configuration.setZoneType(ZoneTypes.SIGNAL_LINE_STATE);
+//            configurations.add(configuration);
+
+            ZoneConfigurationDto configuration = ZoneConfigurationDto.builder()
+                    .modbusZoneNumber(i + 1)
+                    .deviceAddress(devAddr)
+                    .signalLineNumber(i + 1)
+                    .modbusChapterNumber(chaptNumb)
+                    .zoneType(ZoneTypes.SIGNAL_LINE_STATE)
+                    .build();
+
             configurations.add(configuration);
         }
         return configurations;

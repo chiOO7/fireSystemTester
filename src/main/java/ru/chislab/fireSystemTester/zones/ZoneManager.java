@@ -11,19 +11,14 @@ import java.util.List;
 
 @Getter
 public class ZoneManager {
-
     private final List<Zone> zones;
-
     private final ModbusDataSource modbusDataSource;
-
     private final ZoneDao zoneDao;
-
     public ZoneManager(ModbusDataSource modbusDataSource) {
         this.modbusDataSource = modbusDataSource;
         this.zones = new ArrayList<>();
         this.zoneDao = new ZoneDao();
     }
-
     public void readZoneConfigsFromDevice() {
         List<ZoneConfigurationDto> zoneConfigurationsDto = modbusDataSource.getModbusZoneConfigurations();
         for (ZoneConfigurationDto configuration : zoneConfigurationsDto) {

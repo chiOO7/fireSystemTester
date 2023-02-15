@@ -15,13 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModbusDataSource {
-
     private final static Logger logger = LoggerFactory.getLogger("ModbusDataSource");
-
     private static final int OFFSET = 0;
     private static final int ZONE_QUANTITY = 10;
     final static private int ZONE_STATE_HR_OFFSET = 40000;
-
     private final String PORT;
     private final int SLAVE_ID;
 
@@ -31,7 +28,6 @@ public class ModbusDataSource {
     }
 
     public List<ZoneConfigurationDto> getModbusZoneConfigurations() {
-
         List<ZoneConfigurationDto> zoneConfigurationsDto = new ArrayList<>();
         int[] registerValues = new int[0];
         try {
@@ -46,7 +42,7 @@ public class ModbusDataSource {
                 try {
                     master.disconnect();
                 } catch (ModbusIOException e1) {
-                    e1.printStackTrace();
+                    logger.error(e1.getMessage());
                 }
             }
         } catch (SerialPortException | ModbusIOException e) {
@@ -55,13 +51,20 @@ public class ModbusDataSource {
 
         if (registerValues.length != 0) {
             for (int i = 0; i < ZONE_QUANTITY; i++) {
-                ZoneConfigurationDto zoneConfigurationDto = new ZoneConfigurationDto();
+//                ZoneConfigurationDto zoneConfigurationDto = new ZoneConfigurationDto();
+//                zoneConfigurationDto.setModbusZoneNumber(i + 1);
+//                zoneConfigurationDto.setDeviceAddress(registerValues[i * 4]);
+//                zoneConfigurationDto.setSignalLineNumber(registerValues[i * 4 + 1]);
+//                zoneConfigurationDto.setModbusChapterNumber(registerValues[i * 4 + 2]);
+//                zoneConfigurationDto.setZoneType(ZoneTypes.values()[registerValues[i * 4 + 3]]);
+                ZoneConfigurationDto zoneConfigurationDto = ZoneConfigurationDto.builder()
+                        .modbusZoneNumber(i + 1)
+                        .deviceAddress(registerValues[i * 4])
+                        .signalLineNumber(registerValues[i * 4 + 1])
+                        .modbusChapterNumber(registerValues[i * 4 + 2])
+                        .zoneType(ZoneTypes.values()[registerValues[i * 4 + 3]])
+                        .build();
 
-                zoneConfigurationDto.setModbusZoneNumber(i + 1);
-                zoneConfigurationDto.setDeviceAddress(registerValues[i * 4]);
-                zoneConfigurationDto.setSignalLineNumber(registerValues[i * 4 + 1]);
-                zoneConfigurationDto.setModbusChapterNumber(registerValues[i * 4 + 2]);
-                zoneConfigurationDto.setZoneType(ZoneTypes.values()[registerValues[i * 4 + 3]]);
                 if (zoneConfigurationDto.getDeviceAddress() != 0 && zoneConfigurationDto.getZoneType() != ZoneTypes.EMPTY_TYPE
                         && zoneConfigurationDto.getSignalLineNumber() != 0) {
                     zoneConfigurationsDto.add(zoneConfigurationDto);
@@ -121,12 +124,12 @@ public class ModbusDataSource {
             try {
                 registerValues = master.readHoldingRegisters(SLAVE_ID, number + ZONE_STATE_HR_OFFSET - 1, 1);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
             } finally {
                 try {
                     master.disconnect();
                 } catch (ModbusIOException e1) {
-                    e1.printStackTrace();
+                    logger.error(e1.getMessage());
                 }
             }
         } catch (SerialPortException | ModbusIOException e) {
@@ -155,7 +158,7 @@ public class ModbusDataSource {
                 try {
                     master.disconnect();
                 } catch (ModbusIOException e1) {
-                    e1.printStackTrace();
+                    logger.error(e1.getMessage());
                 }
             }
         } catch (SerialPortException | ModbusIOException e) {
@@ -178,6 +181,6 @@ public class ModbusDataSource {
     }
 
     private static int getWordByEvent(List<States> events) {
-        return (events.get(0).getCode() << 8) + events.get(1).getCode();
+        return (events.get(0).getCode() << 8) | events.get(1).getCode();
     }
 }

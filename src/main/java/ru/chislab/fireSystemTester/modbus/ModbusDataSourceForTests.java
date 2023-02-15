@@ -9,13 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModbusDataSourceForTests extends ModbusDataSource {
-
     public ModbusDataSourceForTests() {
         super("", 0);
     }
-
     private final List<ZoneState> zoneStates = new ArrayList<>(10);
-
     @Override
     public List<ZoneConfigurationDto> getModbusZoneConfigurations() {
         List<ZoneConfigurationDto> configurations = new ArrayList<>();
