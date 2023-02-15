@@ -66,9 +66,11 @@ public class ConsoleUIManager {
         List<ConsoleUIMenu> chaptersFromDeviceMenu = new ArrayList<>();
         List<Chapter> chapters = getChapterManager().getAvailableChapters();
         for (int i = 0; i < chapters.size(); i++) {
-            ChapterMenu chapterMenu = new ChapterMenu("Раздел " + (i + 1), chapters.get(i).getModbusChapterNumber());
+            ChapterMenu chapterMenu = new ChapterMenu("Раздел " + (i + 1),
+                    chapters.get(i).getModbusChapterNumber(),
+                    chapterManager);
             chapterMenu.setScanner(getScanner());
-            chapterMenu.setChapterManager(getChapterManager());
+            //chapterMenu.setChapterManager(getChapterManager());
             chapterMenu.setConsoleUIManager(this);
             chaptersFromDeviceMenu.add(chapterMenu);
         }

@@ -19,7 +19,10 @@ class ConsoleUIManagerTest {
     void setUp() {
         ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
         ZoneManager zoneManager = new ZoneManager(modbusDataSource);
+
         chapterManager = new ChapterManager(zoneManager);
+        chapterManager.initChaptersFromDevice();
+        consoleUIManager = new ConsoleUIManager(chapterManager);
     }
 
     @AfterEach
@@ -31,7 +34,8 @@ class ConsoleUIManagerTest {
     void showStartMenuTest() {
         System.out.println("Start of show start menu TEST");
         scanner = new Scanner("0");
-        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
         System.out.println();
@@ -44,7 +48,8 @@ class ConsoleUIManagerTest {
     void enterToReadingFromDeviceChaptersMenuTest() {
         System.out.println("Start of enter to reading from device chapters menu TEST");
         scanner = new Scanner("1 0 0");
-        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
         System.out.println();
@@ -58,7 +63,8 @@ class ConsoleUIManagerTest {
         enterToReadingFromDeviceChaptersMenuTest();
         System.out.println("Start of enter to available from storage chapters menu TEST");
         scanner = new Scanner("2 0 0 0");
-        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
         System.out.println();
@@ -71,7 +77,8 @@ class ConsoleUIManagerTest {
     void enterToChapterMenuTest() {
         System.out.println("Start of enter to chapter menu TEST");
         scanner = new Scanner("1 2 0 0 0");
-        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
         System.out.println();
@@ -84,7 +91,8 @@ class ConsoleUIManagerTest {
     void enterToZoneMenuTest() {
         System.out.println("Start of enter to zone menu TEST");
         scanner = new Scanner("1 2 2 0 0 0 0 0");
-        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
         System.out.println();
@@ -97,7 +105,8 @@ class ConsoleUIManagerTest {
     void enterToZoneStateMenuTest() {
         System.out.println("Start of enter to zone state menu TEST");
         scanner = new Scanner("1 2 2 2 0 0 0 0 0");
-        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
         System.out.println();
@@ -109,7 +118,8 @@ class ConsoleUIManagerTest {
     void changeZoneStateTest() {
         System.out.println("Start of change zone state TEST");
         scanner = new Scanner("1 2 2 2 2 0 0 0 0 0 0 0");
-        consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+        consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
         System.out.println();

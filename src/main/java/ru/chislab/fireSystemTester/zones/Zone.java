@@ -26,6 +26,6 @@ public class Zone {
         this.signalLineNumber = configuration.getSignalLineNumber();
         this.modbusChapterNumber = configuration.getModbusChapterNumber();
         this.zoneType = configuration.getZoneType();
-        this.setZoneName("zoneName");
+        this.zoneName = "Имя зоны не задано";
     }
 }

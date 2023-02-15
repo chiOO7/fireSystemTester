@@ -27,15 +27,16 @@ public class ChapterManager {
 
     public void reInitChapters() {
         for (int i = 0; i < chapters.length; i++) {
-            chapters[i] = new Chapter();
-            chapters[i].setModbusChapterNumber(i + 1);
-            chapters[i].setZones(new ArrayList<>());
+            chapters[i] = new Chapter(i + 1);
+//            chapters[i].setModbusChapterNumber(i + 1);
+//            chapters[i].setZones(new ArrayList<>());
         }
     }
 
     private void addNewZoneToChapter() {
         for (Zone zone : zoneManager.getZones()) {
             Chapter chapter = chapters[zone.getModbusChapterNumber() - 1];
+            chapter.setDeviceAddress(zone.getDeviceAddress());
             if (!chapter.getZones().contains(zone) && (chapter.getModbusChapterNumber().equals(zone.getModbusChapterNumber()))) {
                 chapter.getZones().add(zone);
                 chapter.setDeviceAddress(zone.getDeviceAddress());

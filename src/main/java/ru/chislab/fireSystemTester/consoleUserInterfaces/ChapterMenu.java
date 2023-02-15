@@ -2,17 +2,18 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 
 import lombok.Getter;
+import ru.chislab.fireSystemTester.chapters.ChapterManager;
 
 @Getter
 public class ChapterMenu extends ConsoleUIMenu{
 
     private final int chapterNumber;
-    private String chapterName = "Name of ch not set";
+    private String chapterName;
 
-    public ChapterMenu(String menuName, int chapterNumber) {
-
+    public ChapterMenu(String menuName, int chapterNumber, ChapterManager chapterManager) {
         super(menuName);
         this.chapterNumber = chapterNumber;
+        this.chapterName = chapterManager.getChapterByNumber(chapterNumber).getChapterName();
     }
 
     @Override
