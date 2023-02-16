@@ -1,17 +1,23 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 import lombok.Getter;
+import ru.chislab.fireSystemTester.chapters.ChapterManager;
+import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 
 @Getter
 public class ZoneMenu extends ConsoleUIMenu{
 
-    private String zoneName = "Zone name not set";
+    private final ChapterManager chapterManager;
+
+    private String zoneName;
 
     private final int zoneNumber;
 
-    public ZoneMenu(String menuName, int zoneNumber) {
+    public ZoneMenu(String menuName, int zoneNumber, ChapterManager chapterManager) throws ZoneNotFoundException {
         super(menuName);
         this.zoneNumber = zoneNumber;
+        this.chapterManager = chapterManager;
+        this.zoneName = chapterManager.getZoneManager().getZoneByZoneNumber(zoneNumber).getZoneName();
     }
 
     @Override

@@ -7,12 +7,15 @@ import ru.chislab.fireSystemTester.chapters.ChapterManager;
 @Getter
 public class ChapterMenu extends ConsoleUIMenu{
 
+
+    private final ChapterManager chapterManager;
     private final int chapterNumber;
     private String chapterName;
 
     public ChapterMenu(String menuName, int chapterNumber, ChapterManager chapterManager) {
         super(menuName);
         this.chapterNumber = chapterNumber;
+        this.chapterManager = chapterManager;
         this.chapterName = chapterManager.getChapterByNumber(chapterNumber).getChapterName();
     }
 

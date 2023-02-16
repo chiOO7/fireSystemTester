@@ -82,9 +82,15 @@ public class ConsoleUIManager {
         List<ConsoleUIMenu> zonesFromChapterMenu = new ArrayList<>();
         List<Zone> zones = getChapterManager().getChapterByNumber(number).getZones();
         for (Zone zone : zones) {
-            ZoneMenu zoneMenu = new ZoneMenu("Зона " + (zone.getModbusZoneNumber()), zone.getModbusZoneNumber());
+            ZoneMenu zoneMenu = null;
+            try {
+                zoneMenu = new ZoneMenu("Зона " + (zone.getModbusZoneNumber()),
+                        zone.getModbusZoneNumber(), chapterManager);
+            } catch (ZoneNotFoundException e) {
+                logger.error(e.getMessage());
+            }
             zoneMenu.setScanner(getScanner());
-            zoneMenu.setChapterManager(getChapterManager());
+           // zoneMenu.setChapterManager(getChapterManager());
             zoneMenu.setConsoleUIManager(this);
             zonesFromChapterMenu.add(zoneMenu);
         }

@@ -1,16 +1,8 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
-
-//import ru.chislab.fireSystemTester.zones.Zone;
-
 public class StateMenu extends ConsoleUIMenu{
-
-//    private final Zone zone;
-    public StateMenu(String menuName
-//            , Zone zone
-    ) {
+    public StateMenu(String menuName) {
         super(menuName);
-//        this.zone = zone;
     }
 
     @Override
