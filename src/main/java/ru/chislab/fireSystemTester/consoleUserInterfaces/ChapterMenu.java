@@ -23,13 +23,14 @@ public class ChapterMenu extends ConsoleUIMenu{
     protected void printMenuHeader() {
         System.out.println("# " + getMenuName() + ": " + chapterName);
         System.out.println("0. Назад");
-        System.out.println("1. Обновить состояние зон");
+        System.out.println("1. Задать имя раздела");
+        System.out.println("2. Обновить состояние зон");
     }
 
     @Override
     public void processCommand(int command) {
-        if (!getSubMenus().isEmpty() && command > 1) {
-            getSubMenus().get(command - 2).processMenu();
+        if (!getSubMenus().isEmpty() && command > 2) {
+            getSubMenus().get(command - 3).processMenu();
         }
     }
 
@@ -38,7 +39,7 @@ public class ChapterMenu extends ConsoleUIMenu{
         printMenuHeader();
         for (int i = 0; i < getSubMenus().size(); i++) {
             ZoneMenu zoneMenu = (ZoneMenu) getSubMenus().get(i);
-            System.out.println((i + 2) + ". " + zoneMenu.getMenuName() + ": " + zoneMenu.getZoneName());
+            System.out.println((i + 3) + ". " + zoneMenu.getMenuName() + ": " + zoneMenu.getZoneName());
         }
         printMenuFooter();
     }
@@ -55,6 +56,11 @@ public class ChapterMenu extends ConsoleUIMenu{
             if (command == -1) System.exit(0);
             if (command == 0) break;
             if (command == 1) {
+                System.out.println("Введите новое имя раздела:");
+                String newName = getScanner().nextLine();
+                break;
+            }
+            if (command == 2) {
                 getChapterManager().getZoneManager().updateZonesState(getChapterManager()
                         .getChapterByNumber(chapterNumber).getZones());
             }
