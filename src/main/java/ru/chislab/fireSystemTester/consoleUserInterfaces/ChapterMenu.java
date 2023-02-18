@@ -2,7 +2,9 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 
 import lombok.Getter;
+import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
+
 
 @Getter
 public class ChapterMenu extends ConsoleUIMenu{
@@ -10,7 +12,7 @@ public class ChapterMenu extends ConsoleUIMenu{
 
     private final ChapterManager chapterManager;
     private final int chapterNumber;
-    private String chapterName;
+    private final String chapterName;
 
     public ChapterMenu(String menuName, int chapterNumber, ChapterManager chapterManager) {
         super(menuName);
@@ -57,7 +59,9 @@ public class ChapterMenu extends ConsoleUIMenu{
             if (command == 0) break;
             if (command == 1) {
                 System.out.println("Введите новое имя раздела:");
-                String newName = getScanner().nextLine();
+                int newName = getScanner().nextInt();
+                Chapter chapter = getChapterManager().getChapterByNumber(chapterNumber);
+                chapter.setChapterName(String.valueOf(newName));
                 break;
             }
             if (command == 2) {

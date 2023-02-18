@@ -3,13 +3,14 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 import lombok.Getter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
+import ru.chislab.fireSystemTester.zones.Zone;
 
 @Getter
 public class ZoneMenu extends ConsoleUIMenu{
 
     private final ChapterManager chapterManager;
 
-    private String zoneName;
+    private final String zoneName;
 
     private final int zoneNumber;
 
@@ -24,13 +25,14 @@ public class ZoneMenu extends ConsoleUIMenu{
     protected void printMenuHeader() {
         System.out.println("# " + getMenuName() + ": " + zoneName);
         System.out.println("0. Назад");
-        System.out.println("1. Обновить состояние зоны");
+        System.out.println("1. Задать наименование зоны");
+        System.out.println("2. Обновить состояние зоны");
     }
 
     @Override
     public void processCommand(int command) {
-        if (!getSubMenus().isEmpty() && command > 1) {
-            getSubMenus().get(command - 2).processMenu();
+        if (!getSubMenus().isEmpty() && command > 2) {
+            getSubMenus().get(command - 3).processMenu();
         }
     }
 
@@ -39,7 +41,7 @@ public class ZoneMenu extends ConsoleUIMenu{
         printMenuHeader();
         for (int i = 0; i < getSubMenus().size(); i++) {
             StateMenu stateMenu = (StateMenu) getSubMenus().get(i);
-            System.out.println((i + 2) + ". " + stateMenu.getMenuName());
+            System.out.println((i + 3) + ". " + stateMenu.getMenuName());
         }
         printMenuFooter();
     }
@@ -55,6 +57,17 @@ public class ZoneMenu extends ConsoleUIMenu{
             if (command == -1) System.exit(0);
             if (command == 0) break;
             if (command == 1) {
+                System.out.println("Введите новое имя зоны:");
+                int newName = getScanner().nextInt();
+                try {
+                    Zone zone = getChapterManager().getZoneManager().getZoneByZoneNumber(zoneNumber);
+                    zone.setZoneName(String.valueOf(newName));
+                } catch (ZoneNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            }
+            if (command == 2) {
                 getChapterManager().getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
             }
             processCommand(command);

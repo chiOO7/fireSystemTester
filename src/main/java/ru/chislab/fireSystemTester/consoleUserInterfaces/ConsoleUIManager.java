@@ -39,10 +39,10 @@ public class ConsoleUIManager {
         this.scanner = new Scanner(System.in);
     }
 
-    public ConsoleUIManager(ChapterManager chapterManager, Scanner scanner) {
-        this.chapterManager = chapterManager;
-        this.scanner = scanner;
-    }
+//    public ConsoleUIManager(ChapterManager chapterManager, Scanner scanner) {
+//        this.chapterManager = chapterManager;
+//        this.scanner = scanner;
+//    }
 
     public StartMenu getStartMenu() {
         StartMenu startMenu = new StartMenu("Главное меню");
@@ -70,7 +70,6 @@ public class ConsoleUIManager {
                     chapters.get(i).getModbusChapterNumber(),
                     chapterManager);
             chapterMenu.setScanner(getScanner());
-            //chapterMenu.setChapterManager(getChapterManager());
             chapterMenu.setConsoleUIManager(this);
             chaptersFromDeviceMenu.add(chapterMenu);
         }
@@ -90,7 +89,6 @@ public class ConsoleUIManager {
                 logger.error(e.getMessage());
             }
             zoneMenu.setScanner(getScanner());
-           // zoneMenu.setChapterManager(getChapterManager());
             zoneMenu.setConsoleUIManager(this);
             zonesFromChapterMenu.add(zoneMenu);
         }

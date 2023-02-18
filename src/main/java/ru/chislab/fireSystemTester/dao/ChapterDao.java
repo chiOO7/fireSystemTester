@@ -1,35 +1,18 @@
 package ru.chislab.fireSystemTester.dao;
 
-import lombok.AllArgsConstructor;
+
+import lombok.Data;
 import ru.chislab.fireSystemTester.chapters.Chapter;
-import ru.chislab.fireSystemTester.chapters.ChapterManager;
-import ru.chislab.fireSystemTester.zones.Zone;
-import ru.chislab.fireSystemTester.zones.ZoneManager;
 
-import java.util.ArrayList;
-import java.util.List;
+@Data
 
-@AllArgsConstructor
 public class ChapterDao {
-    private final ZoneManager zoneManager;
-//    private final ChapterManager chapterManager;
 
-    public List<Chapter> getAvailableChapters() {
-        List<Chapter> chapters = new ArrayList<>();
-        for (Zone zone : zoneManager.getZones()) {
-            int chapterNumber = zone.getModbusChapterNumber();
-            if (!chapters.contains(new Chapter(chapterNumber))) {
-                chapters.add(new Chapter(chapterNumber));
-            }
-        }
+    private static final int CHAPTERS_COUNT = 64;
 
-        for (Zone zone : zoneManager.getZones()) {
-            for (Chapter chapter : chapters) {
-                if (zone.getModbusChapterNumber() == chapter.getModbusChapterNumber()) {
-                    chapter.getZones().add(zone);
-                }
-            }
-        }
-        return chapters;
+    public final Chapter[] chapters = new Chapter[CHAPTERS_COUNT];
+
+    public void saveChaptersToStorage(Chapter[] chapters) {
+        System.arraycopy(chapters, 0, this.chapters, 0, CHAPTERS_COUNT);
     }
 }

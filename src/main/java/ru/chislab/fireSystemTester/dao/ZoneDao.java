@@ -18,18 +18,8 @@ public class ZoneDao {
         }
     }
 
-//    public void saveZoneToStorage(Zone zone) {
-//        if (!zonesStorage.contains(zone)) zonesStorage.add(zone);
-//    }
-
     public List<Zone> getZonesFromStorage() {
         return zonesStorage;
     }
 
-//    public Zone getZoneFromStorageByZoneNumber(int number) {
-//        for (Zone zone : zonesStorage) {
-//            if (zone.getModbusZoneNumber() == number) return zone;
-//        }
-//        return null;
-//    }
 }

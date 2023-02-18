@@ -7,7 +7,7 @@ import ru.chislab.fireSystemTester.zones.Zone;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
+
 @Data
 public class Chapter {
     private Integer modbusChapterNumber;

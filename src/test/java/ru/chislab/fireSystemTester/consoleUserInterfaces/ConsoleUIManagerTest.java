@@ -90,7 +90,7 @@ class ConsoleUIManagerTest {
     //getZonesFromChapterByChapterNumberMenu(int number)
     void enterToZoneMenuTest() {
         System.out.println("Start of enter to zone menu TEST");
-        scanner = new Scanner("1 2 2 0 0 0 0 0");
+        scanner = new Scanner("1 2 3 0 0 0 0 0");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
@@ -104,7 +104,7 @@ class ConsoleUIManagerTest {
     //getStatesFromZoneByZoneNumberMenu(int number)
     void enterToZoneStateMenuTest() {
         System.out.println("Start of enter to zone state menu TEST");
-        scanner = new Scanner("1 2 2 2 0 0 0 0 0");
+        scanner = new Scanner("1 2 3 3 0 0 0 0 0");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
@@ -117,7 +117,7 @@ class ConsoleUIManagerTest {
     @Test
     void changeZoneStateTest() {
         System.out.println("Start of change zone state TEST");
-        scanner = new Scanner("1 2 2 2 2 0 0 0 0 0 0 0");
+        scanner = new Scanner("1 2 3 3 2 0 0 0 0 0 0 0");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();

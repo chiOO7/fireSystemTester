@@ -1,6 +1,7 @@
 package ru.chislab.fireSystemTester.chapters;
 
 import lombok.Getter;
+import ru.chislab.fireSystemTester.dao.ChapterDao;
 import ru.chislab.fireSystemTester.zones.Zone;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
@@ -10,12 +11,22 @@ import java.util.List;
 @Getter
 public class ChapterManager {
     private static final int CHAPTERS_COUNT = 64;
-    private static final Chapter[] chapters = new Chapter[CHAPTERS_COUNT];
+    private final Chapter[] chapters = new Chapter[CHAPTERS_COUNT];
     private final ZoneManager zoneManager;
+    private final ChapterDao chapterDao;
 
     public ChapterManager(ZoneManager zoneManager) {
         this.zoneManager = zoneManager;
+        chapterDao = new ChapterDao();
         reInitChapters();
+    }
+
+    public void saveChaptersToStorage() {
+        chapterDao.saveChaptersToStorage(chapters);
+    }
+
+    public void getChaptersFromStorage() {
+        System.arraycopy(chapterDao.getChapters(), 0, chapters, 0, CHAPTERS_COUNT);
     }
 
     public void initChaptersFromDevice() {
@@ -28,8 +39,6 @@ public class ChapterManager {
     public void reInitChapters() {
         for (int i = 0; i < chapters.length; i++) {
             chapters[i] = new Chapter(i + 1);
-//            chapters[i].setModbusChapterNumber(i + 1);
-//            chapters[i].setZones(new ArrayList<>());
         }
     }
 
@@ -45,7 +54,8 @@ public class ChapterManager {
     }
 
     public void initChaptersFromStorage() {
-        reInitChapters();
+        //reInitChapters();
+        getChaptersFromStorage();
         zoneManager.clearZones();
         zoneManager.getZonesFromStorage();
         addNewZoneToChapter();
@@ -54,10 +64,6 @@ public class ChapterManager {
     public Chapter getChapterByNumber(int number) {
         return chapters[number - 1];
     }
-
-//    public Chapter[] getChapters() {
-//        return chapters;
-//    }
 
     public List<Chapter> getAvailableChapters() {
         List<Chapter> availableChapters = new ArrayList<>();
