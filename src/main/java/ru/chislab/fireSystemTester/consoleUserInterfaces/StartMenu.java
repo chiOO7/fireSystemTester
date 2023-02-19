@@ -1,9 +1,29 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
+import ru.chislab.fireSystemTester.chapters.ChapterManager;
 
 public class StartMenu extends ConsoleUIMenu {
-    public StartMenu(String menuName) {
+
+    private final ChapterManager chapterManager;
+
+    public StartMenu(String menuName, ChapterManager chapterManager) {
         super(menuName);
+        this.chapterManager = chapterManager;
+    }
+
+    @Override
+    public void processMenu() {
+        while (true) {
+            printSubMenus();
+            int command = getScanner().nextInt();
+            System.out.println();
+            if (command == -1) System.exit(0);
+            if (command == 0) break;
+            if (command == 1) {
+                chapterManager.initChaptersFromDevice();
+            }
+            processCommand(command);
+        }
     }
 
     @Override

@@ -1,6 +1,8 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
+
 public class StateMenu extends ConsoleUIMenu{
+
     public StateMenu(String menuName) {
         super(menuName);
     }

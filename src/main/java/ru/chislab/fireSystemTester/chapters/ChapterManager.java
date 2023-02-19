@@ -68,7 +68,9 @@ public class ChapterManager {
     public List<Chapter> getAvailableChapters() {
         List<Chapter> availableChapters = new ArrayList<>();
         for (Chapter chapter : chapters) {
-            if (!chapter.getZones().isEmpty()) availableChapters.add(chapter);
+            if (chapter != null) {
+                if (!chapter.getZones().isEmpty()) availableChapters.add(chapter);
+            }
         }
         return availableChapters;
     }

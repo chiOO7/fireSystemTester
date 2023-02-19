@@ -65,7 +65,4 @@ public abstract class ConsoleUIMenu {
         getSubMenus().addAll(subMenus);
     }
 
-//    public void changeSubMenus(List<ConsoleUIMenu> subMenus) {
-//        this.subMenus = subMenus;
-//    }
 }

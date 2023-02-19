@@ -21,7 +21,6 @@ public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
     @Override
     public void processMenu() {
         while (true) {
-            getChapterManager().initChaptersFromDevice();
             setSubMenus(getConsoleUIManager().getChaptersFromDeviceMenu());
             printSubMenus();
             int command = getScanner().nextInt();

@@ -29,23 +29,15 @@ public class ConsoleUIManager {
 
     EnumSet<States> settableStates = EnumSet.of(States.DISARMING_INPUT, States.ARMING_INPUT);
 
-//    public ConsoleUIManager() {
-//        chapterManager = new ChapterManager(new ZoneManager(new ModbusDataSource()));
-//        scanner = new Scanner(System.in);
-//    }
 
     public ConsoleUIManager(ChapterManager chapterManager) {
         this.chapterManager = chapterManager;
         this.scanner = new Scanner(System.in);
     }
 
-//    public ConsoleUIManager(ChapterManager chapterManager, Scanner scanner) {
-//        this.chapterManager = chapterManager;
-//        this.scanner = scanner;
-//    }
 
     public StartMenu getStartMenu() {
-        StartMenu startMenu = new StartMenu("Главное меню");
+        StartMenu startMenu = new StartMenu("Главное меню", chapterManager);
         startMenu.setScanner(getScanner());
         startMenu.addSubMenu(getReadZonesFromDeviceMenu());
         startMenu.addSubMenu(getAvailableFromStorageChaptersMenu());
@@ -88,7 +80,7 @@ public class ConsoleUIManager {
             } catch (ZoneNotFoundException e) {
                 logger.error(e.getMessage());
             }
-            zoneMenu.setScanner(getScanner());
+            zoneMenu.setScanner(scanner);
             zoneMenu.setConsoleUIManager(this);
             zonesFromChapterMenu.add(zoneMenu);
         }

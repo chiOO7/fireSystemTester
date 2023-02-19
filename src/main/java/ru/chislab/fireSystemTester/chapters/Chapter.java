@@ -9,6 +9,7 @@ import java.util.List;
 
 
 @Data
+@EqualsAndHashCode(exclude = "chapterName")
 public class Chapter {
     private Integer modbusChapterNumber;
     private DeviceType deviceType;

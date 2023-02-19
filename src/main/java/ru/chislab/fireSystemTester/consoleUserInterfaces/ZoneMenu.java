@@ -49,7 +49,7 @@ public class ZoneMenu extends ConsoleUIMenu{
     @Override
     public void processMenu() {
         while (true) {
-            getChapterManager().getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
+            chapterManager.getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
             setSubMenus(getConsoleUIManager().getStatesFromZoneByZoneNumberMenu(zoneNumber));
             printSubMenus();
             int command = getScanner().nextInt();
@@ -60,7 +60,7 @@ public class ZoneMenu extends ConsoleUIMenu{
                 System.out.println("Введите новое имя зоны:");
                 int newName = getScanner().nextInt();
                 try {
-                    Zone zone = getChapterManager().getZoneManager().getZoneByZoneNumber(zoneNumber);
+                    Zone zone = chapterManager.getZoneManager().getZoneByZoneNumber(zoneNumber);
                     zone.setZoneName(String.valueOf(newName));
                 } catch (ZoneNotFoundException e) {
                     throw new RuntimeException(e);
@@ -68,7 +68,7 @@ public class ZoneMenu extends ConsoleUIMenu{
                 break;
             }
             if (command == 2) {
-                getChapterManager().getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
+                chapterManager.getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
             }
             processCommand(command);
         }
