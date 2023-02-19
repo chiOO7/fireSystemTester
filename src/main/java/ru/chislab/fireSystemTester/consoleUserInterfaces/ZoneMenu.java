@@ -30,7 +30,7 @@ public class ZoneMenu extends ConsoleUIMenu{
     }
 
     @Override
-    public void processCommand(int command) {
+    public void processCommand(int command) throws ZoneNotFoundException {
         if (!getSubMenus().isEmpty() && command > 2) {
             getSubMenus().get(command - 3).processMenu();
         }
@@ -47,7 +47,7 @@ public class ZoneMenu extends ConsoleUIMenu{
     }
 
     @Override
-    public void processMenu() {
+    public void processMenu() throws ZoneNotFoundException {
         while (true) {
             chapterManager.getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
             setSubMenus(getConsoleUIManager().getStatesFromZoneByZoneNumberMenu(zoneNumber));

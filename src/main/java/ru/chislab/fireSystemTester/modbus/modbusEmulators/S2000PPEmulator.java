@@ -11,8 +11,10 @@ import com.intelligt.modbus.jlibmodbus.serial.SerialParameters;
 import com.intelligt.modbus.jlibmodbus.serial.SerialPortException;
 import com.intelligt.modbus.jlibmodbus.slave.ModbusSlave;
 import com.intelligt.modbus.jlibmodbus.slave.ModbusSlaveFactory;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.PropertyConfigurator;
+//import org.apache.log4j.BasicConfigurator;
+//import org.apache.log4j.PropertyConfigurator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.chislab.fireSystemTester.modbus.ModbusSerialPort;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
@@ -29,7 +31,9 @@ public class S2000PPEmulator {
     final static private int ZONE_STATE_HR_OFFSET = 40000;
 //    static private String PORT = "COM";
 
-    private final static String LOG4J_CONFIGURATION_PATH = "log4j.properties";
+    private static final Logger logger = LoggerFactory.getLogger(S2000PPEmulator.class);
+
+    //private final static String LOG4J_CONFIGURATION_PATH = "log4j.properties";
 
     public static void main(String[] argv) {
 
@@ -47,9 +51,9 @@ public class S2000PPEmulator {
 
         final String PORT = "COM" + argv[0];
 
-        BasicConfigurator.configure();
-
-        PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
+//        BasicConfigurator.configure();
+//
+//        PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
 
         Modbus.setLogLevel(Modbus.LogLevel.LEVEL_DEBUG);
 
@@ -83,14 +87,6 @@ public class S2000PPEmulator {
     public static List<ZoneConfigurationDto> initZoneConfigurations(int start, int end, int devAddr, int chaptNumb) {
         List<ZoneConfigurationDto> configurations = new ArrayList<>();
         for (int i = start; i < end; i++) {
-//            ZoneConfigurationDto configuration = new ZoneConfigurationDto();
-//            configuration.setModbusZoneNumber(i + 1);
-//            configuration.setDeviceAddress(devAddr);
-//            configuration.setSignalLineNumber(i + 1);
-//            configuration.setModbusChapterNumber(chaptNumb);
-//            configuration.setZoneType(ZoneTypes.SIGNAL_LINE_STATE);
-//            configurations.add(configuration);
-
             ZoneConfigurationDto configuration = ZoneConfigurationDto.builder()
                     .modbusZoneNumber(i + 1)
                     .deviceAddress(devAddr)
@@ -125,6 +121,7 @@ public class S2000PPEmulator {
         try {
             slave = ModbusSlaveFactory.createModbusSlaveRTU(initPort(port));
         } catch (SerialPortException e) {
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -155,7 +152,7 @@ public class S2000PPEmulator {
                         + addSpaces(i * 4 + 3) + ": " + dataHolder.getInputRegisters().get(i * 4 + 3)
                 );
             } catch (IllegalDataAddressException | IllegalDataValueException e) {
-                throw new RuntimeException(e);
+                logger.error(e.getMessage());
             }
         }
     }
@@ -167,7 +164,7 @@ public class S2000PPEmulator {
                 dataHolder.getHoldingRegisters().set(i + ZONE_STATE_HR_OFFSET, getWordByEvents(states.get(i).getStates()));
                 System.out.println((i + ZONE_STATE_HR_OFFSET) + ": " + dataHolder.getHoldingRegisters().get(i + ZONE_STATE_HR_OFFSET));
             } catch (IllegalDataAddressException | IllegalDataValueException e) {
-                throw new RuntimeException(e);
+                logger.error(e.getMessage());
             }
         }
         System.out.println();

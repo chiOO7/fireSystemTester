@@ -29,21 +29,26 @@
         <slf4j.version>2.0.6</slf4j.version>
         <source.plugin.version>3.2.1</source.plugin.version>
         <surefire.version>2.22.2</surefire.version>
+        <hibernate.version>6.1.7.Final</hibernate.version>
+        <posgres.version>42.5.4</posgres.version>
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>org.avaje.composite</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>io.github.flyingdew</groupId>
             <artifactId>jlibmodbus</artifactId>
@@ -55,22 +60,34 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>io.github.java-native</groupId>
             <artifactId>jssc</artifactId>
             <version>${jssc.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-reload4j</artifactId>
             <version>${slf4j.version}</version>
+<!--            <type>pom</type>-->
+<!--            <scope>test</scope>-->
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.slf4j</groupId>-->
-<!--            <artifactId>slf4j-log4j12</artifactId>-->
-<!--            <version>2.0.6</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+<!--            <type>pom</type>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${posgres.version}</version>
+            <scope>runtime</scope>
+        </dependency>
 
     </dependencies>
 

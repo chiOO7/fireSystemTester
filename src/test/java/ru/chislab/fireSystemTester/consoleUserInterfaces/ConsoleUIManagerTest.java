@@ -3,6 +3,7 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSourceForTests;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
@@ -31,7 +32,7 @@ class ConsoleUIManagerTest {
 
     @Test
     //getStartMenu()
-    void showStartMenuTest() {
+    void showStartMenuTest() throws ZoneNotFoundException {
         System.out.println("Start of show start menu TEST");
         scanner = new Scanner("0");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
@@ -45,7 +46,7 @@ class ConsoleUIManagerTest {
 
     @Test
     //getReadZonesFromDeviceMenu()
-    void enterToReadingFromDeviceChaptersMenuTest() {
+    void enterToReadingFromDeviceChaptersMenuTest() throws ZoneNotFoundException {
         System.out.println("Start of enter to reading from device chapters menu TEST");
         scanner = new Scanner("1 0 0");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
@@ -59,7 +60,7 @@ class ConsoleUIManagerTest {
 
     @Test
     //getAvailableFromStorageChaptersMenu()
-    void enterToAvailableFromStorageChaptersMenuTest() {
+    void enterToAvailableFromStorageChaptersMenuTest() throws ZoneNotFoundException {
         enterToReadingFromDeviceChaptersMenuTest();
         System.out.println("Start of enter to available from storage chapters menu TEST");
         scanner = new Scanner("2 0 0 0");
@@ -74,7 +75,7 @@ class ConsoleUIManagerTest {
 
     @Test
     //getChaptersFromDeviceMenu()
-    void enterToChapterMenuTest() {
+    void enterToChapterMenuTest() throws ZoneNotFoundException {
         System.out.println("Start of enter to chapter menu TEST");
         scanner = new Scanner("1 2 0 0 0");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
@@ -88,7 +89,7 @@ class ConsoleUIManagerTest {
 
     @Test
     //getZonesFromChapterByChapterNumberMenu(int number)
-    void enterToZoneMenuTest() {
+    void enterToZoneMenuTest() throws ZoneNotFoundException {
         System.out.println("Start of enter to zone menu TEST");
         scanner = new Scanner("1 2 3 0 0 0 0 0");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
@@ -102,7 +103,7 @@ class ConsoleUIManagerTest {
 
     @Test
     //getStatesFromZoneByZoneNumberMenu(int number)
-    void enterToZoneStateMenuTest() {
+    void enterToZoneStateMenuTest() throws ZoneNotFoundException {
         System.out.println("Start of enter to zone state menu TEST");
         scanner = new Scanner("1 2 3 3 0 0 0 0 0");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
@@ -115,7 +116,7 @@ class ConsoleUIManagerTest {
     }
 
     @Test
-    void changeZoneStateTest() {
+    void changeZoneStateTest() throws ZoneNotFoundException {
         System.out.println("Start of change zone state TEST");
         scanner = new Scanner("1 2 3 3 2 0 0 0 0 0 0 0");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);

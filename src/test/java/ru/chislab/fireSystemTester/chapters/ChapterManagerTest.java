@@ -48,6 +48,7 @@ class ChapterManagerTest {
     void initChaptersFromStorage() {
         zoneManager.readZoneConfigsFromDevice();
         zoneManager.getZoneDao().saveZonesToStorage(zoneManager.getZones());
+        chapterManager.saveChaptersToStorage();
         chapterManager.initChaptersFromStorage();
         List<Chapter> chapters = chapterManager.getAvailableChapters();
         assertEquals(2, chapters.size());

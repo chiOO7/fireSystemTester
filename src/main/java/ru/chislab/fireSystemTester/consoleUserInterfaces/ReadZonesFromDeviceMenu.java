@@ -1,6 +1,8 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 
+import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
+
 public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
     public ReadZonesFromDeviceMenu(String menuName) {
         super(menuName);
@@ -19,7 +21,7 @@ public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
     }
 
     @Override
-    public void processMenu() {
+    public void processMenu() throws ZoneNotFoundException {
         while (true) {
             setSubMenus(getConsoleUIManager().getChaptersFromDeviceMenu());
             printSubMenus();
@@ -43,7 +45,7 @@ public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
     }
 
     @Override
-    public void processCommand(int command) {
+    public void processCommand(int command) throws ZoneNotFoundException {
         if (!getSubMenus().isEmpty() && command > 1) {
             getSubMenus().get(command - 2).processMenu();
         }

@@ -22,8 +22,8 @@ import java.util.Scanner;
 @Data
 public class ConsoleUIManager {
 
-    private final static Logger logger = LoggerFactory.getLogger(ApplicationRunner.class.getName());
-    private static final String LOG4J_CONFIGURATION_PATH = "log4j.properties";
+    private final static Logger logger = LoggerFactory.getLogger(ApplicationRunner.class);
+//    private static final String LOG4J_CONFIGURATION_PATH = "log4j.properties";
     private Scanner scanner;
     private ChapterManager chapterManager;
 
@@ -69,17 +69,15 @@ public class ConsoleUIManager {
         return chaptersFromDeviceMenu;
     }
 
-    public List<ConsoleUIMenu> getZonesFromChapterByChapterNumberMenu(int number) {
+    public List<ConsoleUIMenu> getZonesFromChapterByChapterNumberMenu(int number) throws ZoneNotFoundException {
         List<ConsoleUIMenu> zonesFromChapterMenu = new ArrayList<>();
         List<Zone> zones = getChapterManager().getChapterByNumber(number).getZones();
         for (Zone zone : zones) {
             ZoneMenu zoneMenu = null;
-            try {
+
                 zoneMenu = new ZoneMenu("Зона " + (zone.getModbusZoneNumber()),
                         zone.getModbusZoneNumber(), chapterManager);
-            } catch (ZoneNotFoundException e) {
-                logger.error(e.getMessage());
-            }
+
             zoneMenu.setScanner(scanner);
             zoneMenu.setConsoleUIManager(this);
             zonesFromChapterMenu.add(zoneMenu);

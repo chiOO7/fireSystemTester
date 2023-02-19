@@ -1,5 +1,7 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
+import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
+
 public class AvailableFromStorageChaptersMenu extends ConsoleUIMenu {
     public AvailableFromStorageChaptersMenu(String menuName) {
         super(menuName);
@@ -18,7 +20,7 @@ public class AvailableFromStorageChaptersMenu extends ConsoleUIMenu {
     }
 
     @Override
-    public void processMenu() {
+    public void processMenu() throws ZoneNotFoundException {
         while (true) {
             getChapterManager().initChaptersFromStorage();
             setSubMenus(getConsoleUIManager().getChaptersFromDeviceMenu());
