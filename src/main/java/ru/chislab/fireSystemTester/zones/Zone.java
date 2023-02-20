@@ -27,7 +27,7 @@ public class Zone {
     private Integer modbusChapterNumber;
 
     @ManyToOne
-    @JoinColumn(name = "zones")
+    @JoinColumn(name = "chapter_number")
     private Chapter chapter;
 
     @Column(name = "zone_type")

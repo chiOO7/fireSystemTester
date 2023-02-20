@@ -15,18 +15,29 @@ public class ChapterManager {
     private final ZoneManager zoneManager;
     private final ChapterDao chapterDao;
 
+    public ChapterManager(ZoneManager zoneManager, ChapterDao chapterDao) {
+        this.zoneManager = zoneManager;
+        this.chapterDao = chapterDao;
+        reInitChapters();
+    }
+
     public ChapterManager(ZoneManager zoneManager) {
         this.zoneManager = zoneManager;
-        chapterDao = new ChapterDao();
+        this.chapterDao = null;
         reInitChapters();
     }
 
     public void saveChaptersToStorage() {
-        chapterDao.saveChaptersToStorage(chapters);
+        chapterDao.saveChaptersToStorage(getAvailableChapters());
     }
 
     public void getChaptersFromStorage() {
-        System.arraycopy(chapterDao.getChapters(), 0, chapters, 0, CHAPTERS_COUNT);
+        List<Chapter> chaptersFromStorage = chapterDao.getChaptersFromStorage();
+        zoneManager.clearZones();
+        for (Chapter chapter : chaptersFromStorage) {
+            chapters[chapter.getModbusChapterNumber() - 1] = chapter;
+            zoneManager.getZones().addAll(chapters[chapter.getModbusChapterNumber() - 1].getZones());
+        }
     }
 
     public void initChaptersFromDevice() {
@@ -56,9 +67,9 @@ public class ChapterManager {
     public void initChaptersFromStorage() {
         //reInitChapters();
         getChaptersFromStorage();
-        zoneManager.clearZones();
-        zoneManager.getZonesFromStorage();
-        addNewZoneToChapter();
+//        zoneManager.clearZones();
+//        zoneManager.getZonesFromStorage();
+//        addNewZoneToChapter();
     }
 
     public Chapter getChapterByNumber(int number) {

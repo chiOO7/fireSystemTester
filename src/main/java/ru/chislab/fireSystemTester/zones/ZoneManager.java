@@ -1,5 +1,6 @@
 package ru.chislab.fireSystemTester.zones;
 
+import lombok.Data;
 import lombok.Getter;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.dao.ZoneDao;
@@ -9,16 +10,23 @@ import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Getter
+@Data
 public class ZoneManager {
     private final List<Zone> zones;
     private final ModbusDataSource modbusDataSource;
     private final ZoneDao zoneDao;
+    public ZoneManager(ModbusDataSource modbusDataSource, ZoneDao zoneDao) {
+        this.modbusDataSource = modbusDataSource;
+        this.zones = new ArrayList<>();
+        this.zoneDao = zoneDao;
+    }
+
     public ZoneManager(ModbusDataSource modbusDataSource) {
         this.modbusDataSource = modbusDataSource;
         this.zones = new ArrayList<>();
-        this.zoneDao = new ZoneDao();
+        this.zoneDao = null;
     }
+
     public void readZoneConfigsFromDevice() {
         List<ZoneConfigurationDto> zoneConfigurationsDto = modbusDataSource.getModbusZoneConfigurations();
         for (ZoneConfigurationDto configuration : zoneConfigurationsDto) {
@@ -51,6 +59,9 @@ public class ZoneManager {
         }
     }
 
+    public void updateZone(Zone zone) {
+        zoneDao.updateZone(zone);
+    }
 
     public void updateZoneStateByZoneNumber(int number) {
         for (Zone zone : zones) {

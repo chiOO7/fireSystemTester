@@ -9,9 +9,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.consoleUserInterfaces.ConsoleUIManager;
 import ru.chislab.fireSystemTester.consoleUserInterfaces.StartMenu;
+import ru.chislab.fireSystemTester.dao.ChapterDao;
+import ru.chislab.fireSystemTester.dao.ZoneDao;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
@@ -25,21 +28,17 @@ public class ApplicationRunner {
 
     private static final int SLAVE_ID = 1;
 
+//    private static SessionFactory sessionFactory;
+
+    private static ZoneDao zoneDao;
+
+    private static ChapterDao chapterDao;
 
     public static void main(String[] args) throws ZoneNotFoundException {
 
         Modbus.setLogLevel(Modbus.LogLevel.LEVEL_WARNINGS);
 
         logger.info("Application start");
-
-        ModbusDataSource modbusDataSource = new ModbusDataSource(PORT, SLAVE_ID);
-//        ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
-        ZoneManager zoneManager = new ZoneManager(modbusDataSource);
-        ChapterManager chapterManager = new ChapterManager(zoneManager);
-        ConsoleUIManager consoleUIManager = new ConsoleUIManager(chapterManager);
-
-        StartMenu startMenu = consoleUIManager.getStartMenu();
-        startMenu.processMenu();
 
         Configuration configuration = new Configuration();
 
@@ -48,8 +47,22 @@ public class ApplicationRunner {
         @Cleanup
         SessionFactory sessionFactory = configuration.buildSessionFactory();
 
-        @Cleanup
-        Session session = sessionFactory.openSession();
+        zoneDao = new ZoneDao(sessionFactory);
+
+        chapterDao = new ChapterDao(sessionFactory);
+
+        ModbusDataSource modbusDataSource = new ModbusDataSource(PORT, SLAVE_ID);
+//        ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
+        ZoneManager zoneManager = new ZoneManager(modbusDataSource, zoneDao);
+        ChapterManager chapterManager = new ChapterManager(zoneManager, chapterDao);
+        ConsoleUIManager consoleUIManager = new ConsoleUIManager(chapterManager);
+
+        StartMenu startMenu = consoleUIManager.getStartMenu();
+        startMenu.processMenu();
+
+
+
+
 
         logger.info("Application ends");
     }

@@ -30,7 +30,7 @@ public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
             if (command == -1) System.exit(0);
             if (command == 0) break;
             if (command == 1) {
-                getChapterManager().getZoneManager().saveZonesToStorage();
+//                getChapterManager().getZoneManager().saveZonesToStorage();
                 getChapterManager().saveChaptersToStorage();
             }
             processCommand(command);

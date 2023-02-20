@@ -62,6 +62,7 @@ public class ZoneMenu extends ConsoleUIMenu{
                 try {
                     Zone zone = chapterManager.getZoneManager().getZoneByZoneNumber(zoneNumber);
                     zone.setZoneName(String.valueOf(newName));
+                    chapterManager.getZoneManager().updateZone(zone);
                 } catch (ZoneNotFoundException e) {
                     throw new RuntimeException(e);
                 }
