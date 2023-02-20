@@ -28,8 +28,6 @@ public class ApplicationRunner {
 
     public static void main(String[] args) throws ZoneNotFoundException {
 
-//        BasicConfigurator.configure();
-//        PropertyConfigurator.configure(LOG4J_CONFIGURATION_PATH);
         Modbus.setLogLevel(Modbus.LogLevel.LEVEL_WARNINGS);
 
         logger.info("Application start");
