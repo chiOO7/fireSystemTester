@@ -20,21 +20,21 @@ public class Zone {
     @Transient
     private Integer deviceAddress;
 
-    @Column(name = "signal_line_number")
+    @Column(name = "signal_line_number", nullable = false)
     private Integer signalLineNumber;
 
     @Transient
     private Integer modbusChapterNumber;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chapter_number")
     private Chapter chapter;
 
-    @Column(name = "zone_type")
+    @Column(name = "zone_type", nullable = false, length = 64)
     @Enumerated(EnumType.STRING)
     private ZoneTypes zoneType;
 
-    @Column(name = "zone_name")
+    @Column(name = "zone_name", length = 128)
     private String zoneName;
 
     @Transient

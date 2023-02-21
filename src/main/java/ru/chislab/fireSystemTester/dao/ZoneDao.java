@@ -13,12 +13,6 @@ public class ZoneDao {
 
     private final SessionFactory sessionFactory;
 
-//    private final List<Zone> zonesStorage;
-
-//    public ZoneDao() {
-//        zonesStorage = new ArrayList<>();
-//    }
-
     public void saveZonesToStorage(List<Zone> zones) {
         Session session = sessionFactory.openSession();
 
@@ -29,7 +23,7 @@ public class ZoneDao {
         session.getTransaction().commit();
     }
 
-    public List getZonesFromStorage() {
+    public List<Zone> getZonesFromStorage() {
         Session session = sessionFactory.openSession();
 
         session.beginTransaction();

@@ -44,11 +44,12 @@ class ZoneManagerTest {
     void saveZonesToStorage() {
         zoneManager.readZoneConfigsFromDevice();
         zoneManager.saveZonesToStorage();
-        assertEquals(10, zoneManager.getZoneDao().getZonesFromStorage().size());
+        List<Zone> zonesFromStorage = zoneManager.getZoneDao().getZonesFromStorage();
+        assertEquals(10, zonesFromStorage.size());
         for (int i = 0; i < 10; i++) {
-            assertEquals(i + 1, zoneManager.getZoneDao().getZonesFromStorage().get(i).getModbusZoneNumber());
-            assertEquals(i + 1, zoneManager.getZoneDao().getZonesFromStorage().get(i).getSignalLineNumber());
-            assertEquals(ZoneTypes.SIGNAL_LINE_STATE, zoneManager.getZoneDao().getZonesFromStorage().get(i).getZoneType());
+            assertEquals(i + 1, zonesFromStorage.get(i).getModbusZoneNumber());
+            assertEquals(i + 1, zonesFromStorage.get(i).getSignalLineNumber());
+            assertEquals(ZoneTypes.SIGNAL_LINE_STATE, zonesFromStorage.get(i).getZoneType());
         }
     }
 

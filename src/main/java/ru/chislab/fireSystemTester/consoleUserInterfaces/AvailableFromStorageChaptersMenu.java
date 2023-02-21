@@ -23,7 +23,7 @@ public class AvailableFromStorageChaptersMenu extends ConsoleUIMenu {
     public void processMenu() throws ZoneNotFoundException {
         while (true) {
             getChapterManager().initChaptersFromStorage();
-            setSubMenus(getConsoleUIManager().getChaptersFromDeviceMenu());
+            setSubMenus(getConsoleUIManager().getChaptersFromDbMenu());
             printSubMenus();
             int command = getScanner().nextInt();
             System.out.println();

@@ -2,8 +2,6 @@ package ru.chislab.fireSystemTester.chapters;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
 import ru.chislab.fireSystemTester.enums.DeviceType;
 import ru.chislab.fireSystemTester.zones.Zone;
 
@@ -23,17 +21,17 @@ public class Chapter {
     @Column(name = "chapter_number")
     private Integer modbusChapterNumber;
 
-    @Column(name = "device_type")
+    @Column(name = "device_type", length = 64)
     @Enumerated(EnumType.STRING)
     private DeviceType deviceType;
 
-    @Column(name = "device_address")
+    @Column(name = "device_address", nullable = false)
     private Integer deviceAddress;
 
-    @Column(name = "chapter_name")
+    @Column(name = "chapter_name", length = 128)
     private String chapterName;
 
-    @OneToMany(cascade = {CascadeType.ALL})
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "chapter_number")
     private List<Zone> zones;
 

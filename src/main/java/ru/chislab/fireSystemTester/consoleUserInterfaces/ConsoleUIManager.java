@@ -69,14 +69,42 @@ public class ConsoleUIManager {
         return chaptersFromDeviceMenu;
     }
 
+    public List<ConsoleUIMenu> getChaptersFromDbMenu() {
+        List<ConsoleUIMenu> chaptersMenu = new ArrayList<>();
+        List<Chapter> chapters = getChapterManager().getAvailableChapters();
+        for (int i = 0; i < chapters.size(); i++) {
+            ChapterMenuDb chapterMenu = new ChapterMenuDb("Раздел " + (i + 1),
+                    chapters.get(i).getModbusChapterNumber(),
+                    chapterManager);
+            chapterMenu.setScanner(getScanner());
+            chapterMenu.setConsoleUIManager(this);
+            chaptersMenu.add(chapterMenu);
+        }
+
+        return chaptersMenu;
+    }
+
     public List<ConsoleUIMenu> getZonesFromChapterByChapterNumberMenu(int number) throws ZoneNotFoundException {
         List<ConsoleUIMenu> zonesFromChapterMenu = new ArrayList<>();
         List<Zone> zones = getChapterManager().getChapterByNumber(number).getZones();
         for (Zone zone : zones) {
-            ZoneMenu zoneMenu = null;
-
-                zoneMenu = new ZoneMenu("Зона " + (zone.getModbusZoneNumber()),
+            ZoneMenu zoneMenu = new ZoneMenu("Зона " + (zone.getModbusZoneNumber()),
                         zone.getModbusZoneNumber(), chapterManager);
+
+            zoneMenu.setScanner(scanner);
+            zoneMenu.setConsoleUIManager(this);
+            zonesFromChapterMenu.add(zoneMenu);
+        }
+
+        return zonesFromChapterMenu;
+    }
+
+    public List<ConsoleUIMenu> getZonesFromDbByChapterNumberMenu(int chapterNumber) throws ZoneNotFoundException {
+        List<ConsoleUIMenu> zonesFromChapterMenu = new ArrayList<>();
+        List<Zone> zones = getChapterManager().getChapterByNumber(chapterNumber).getZones();
+        for (Zone zone : zones) {
+            ZoneMenuDb zoneMenu = new ZoneMenuDb("Зона " + (zone.getModbusZoneNumber()),
+                    zone.getModbusZoneNumber(), chapterManager);
 
             zoneMenu.setScanner(scanner);
             zoneMenu.setConsoleUIManager(this);
@@ -123,4 +151,6 @@ public class ConsoleUIManager {
 
         return availableFromStorageChaptersMenu;
     }
+
+
 }

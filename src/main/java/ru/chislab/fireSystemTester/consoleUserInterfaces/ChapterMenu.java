@@ -60,9 +60,9 @@ public class ChapterMenu extends ConsoleUIMenu{
             if (command == 0) break;
             if (command == 1) {
                 System.out.println("Введите новое имя раздела:");
-                int newName = getScanner().nextInt();
+                String newName = getScanner().next();
                 Chapter chapter = getChapterManager().getChapterByNumber(chapterNumber);
-                chapter.setChapterName(String.valueOf(newName));
+                chapter.setChapterName(newName);
                 break;
             }
             if (command == 2) {

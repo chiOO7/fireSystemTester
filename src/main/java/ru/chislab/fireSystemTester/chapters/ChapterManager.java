@@ -47,6 +47,10 @@ public class ChapterManager {
         addNewZoneToChapter();
     }
 
+    public void updateChapter(Chapter chapter) {
+        chapterDao.updateChapter(chapter);
+    }
+
     public void reInitChapters() {
         for (int i = 0; i < chapters.length; i++) {
             chapters[i] = new Chapter(i + 1);

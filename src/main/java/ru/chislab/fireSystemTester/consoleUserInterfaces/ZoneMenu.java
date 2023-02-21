@@ -58,11 +58,10 @@ public class ZoneMenu extends ConsoleUIMenu{
             if (command == 0) break;
             if (command == 1) {
                 System.out.println("Введите новое имя зоны:");
-                int newName = getScanner().nextInt();
+                String newName = getScanner().next();
                 try {
                     Zone zone = chapterManager.getZoneManager().getZoneByZoneNumber(zoneNumber);
-                    zone.setZoneName(String.valueOf(newName));
-                    chapterManager.getZoneManager().updateZone(zone);
+                    zone.setZoneName(newName);
                 } catch (ZoneNotFoundException e) {
                     throw new RuntimeException(e);
                 }
