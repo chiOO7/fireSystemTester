@@ -5,6 +5,7 @@ import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.zones.Zone;
 
+
 @Getter
 public class ZoneMenu extends ConsoleUIMenu{
 
@@ -48,17 +49,15 @@ public class ZoneMenu extends ConsoleUIMenu{
 
     @Override
     public void processMenu() throws ZoneNotFoundException {
+        chapterManager.getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
+        setSubMenus(getConsoleUIManager().getStatesFromZoneByZoneNumberMenu(zoneNumber));
         while (true) {
-            chapterManager.getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
-            setSubMenus(getConsoleUIManager().getStatesFromZoneByZoneNumberMenu(zoneNumber));
-            printSubMenus();
-            int command = getScanner().nextInt();
-            System.out.println();
-            if (command == -1) System.exit(0);
+            int command = checkCommand();
             if (command == 0) break;
             if (command == 1) {
                 System.out.println("Введите новое имя зоны:");
-                String newName = getScanner().next();
+                String newName = getScanner().nextLine();
+                newName += getScanner().nextLine();
                 try {
                     Zone zone = chapterManager.getZoneManager().getZoneByZoneNumber(zoneNumber);
                     zone.setZoneName(newName);
@@ -67,9 +66,8 @@ public class ZoneMenu extends ConsoleUIMenu{
                 }
                 break;
             }
-            if (command == 2) {
-                chapterManager.getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
-            }
+            if (command == 2) chapterManager.getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
+
             processCommand(command);
         }
     }

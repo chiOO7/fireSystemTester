@@ -18,16 +18,30 @@ public abstract class ConsoleUIMenu {
     private ChapterManager chapterManager;
     private List<ConsoleUIMenu> subMenus = new ArrayList<>();
     private ConsoleUIManager consoleUIManager;
+
     public ConsoleUIMenu(String menuName) {
         this.menuName = menuName;
+    }
+
+
+    public int checkCommand() {
+        String commandStr;
+        int command = -2;
+        commandStr = getScanner().next();
+        commandStr += getScanner().nextLine();
+        if (commandStr.matches("^-?\\d$")) {
+            command = Integer.parseInt(commandStr);
+        }
+        System.out.println();
+        if (command == -1) System.exit(0);
+
+        return command;
     }
 
     public void processMenu() throws ZoneNotFoundException {
         while (true) {
             printSubMenus();
-            int command = scanner.nextInt();
-            System.out.println();
-            if (command == -1) System.exit(0);
+            int command = checkCommand();
             if (command == 0) break;
             processCommand(command);
         }
@@ -53,9 +67,9 @@ public abstract class ConsoleUIMenu {
     }
 
     public void processCommand(int command) throws ZoneNotFoundException {
-        if (!subMenus.isEmpty()) {
+        if (!subMenus.isEmpty() && subMenus.size() >= command - 1 && command > 0) {
             subMenus.get(command - 1).processMenu();
-        }
+        } else System.out.println("Введите номер пункта меню");
     }
 
     public void addSubMenu(ConsoleUIMenu subMenu) {

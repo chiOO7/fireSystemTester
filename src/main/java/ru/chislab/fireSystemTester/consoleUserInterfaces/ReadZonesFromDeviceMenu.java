@@ -22,20 +22,17 @@ public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
 
     @Override
     public void processMenu() throws ZoneNotFoundException {
+
         while (true) {
             setSubMenus(getConsoleUIManager().getChaptersFromDeviceMenu());
             printSubMenus();
-            int command = getScanner().nextInt();
-            System.out.println();
-            if (command == -1) System.exit(0);
+            int command = checkCommand();
             if (command == 0) break;
-            if (command == 1) {
-//                getChapterManager().getZoneManager().saveZonesToStorage();
-                getChapterManager().saveChaptersToStorage();
-            }
+            if (command == 1) getChapterManager().saveChaptersToStorage();
             processCommand(command);
         }
     }
+
 
     @Override
     protected void printMenuHeader() {
