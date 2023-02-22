@@ -31,6 +31,8 @@
         <surefire.version>2.22.2</surefire.version>
         <hibernate.version>6.1.7.Final</hibernate.version>
         <posgres.version>42.5.4</posgres.version>
+        <hikariCP.version>5.0.1</hikariCP.version>
+        <hiber-hikary.version>6.1.7.Final</hiber-hikary.version>
     </properties>
 
     <dependencies>
@@ -87,6 +89,19 @@
             <artifactId>postgresql</artifactId>
             <version>${posgres.version}</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-hikaricp</artifactId>
+            <version>${hiber-hikary.version}</version>
+<!--            <type>pom</type>-->
+        </dependency>
+
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${hikariCP.version}</version>
         </dependency>
 
     </dependencies>

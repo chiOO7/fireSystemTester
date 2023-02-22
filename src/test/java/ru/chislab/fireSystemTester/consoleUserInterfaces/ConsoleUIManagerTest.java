@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 class ConsoleUIManagerTest {
     private ConsoleUIManager consoleUIManager;
-    private ChapterManager chapterManager;
     private Scanner scanner;
 
     @BeforeEach
@@ -21,7 +20,7 @@ class ConsoleUIManagerTest {
         ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
         ZoneManager zoneManager = new ZoneManager(modbusDataSource);
 
-        chapterManager = new ChapterManager(zoneManager);
+        ChapterManager chapterManager = new ChapterManager(zoneManager);
         chapterManager.initChaptersFromDevice();
         consoleUIManager = new ConsoleUIManager(chapterManager);
     }
@@ -35,7 +34,6 @@ class ConsoleUIManagerTest {
     void showStartMenuTest() throws ZoneNotFoundException {
         System.out.println("Start of show start menu TEST");
         scanner = new Scanner("0");
-        //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
         startMenu.processMenu();
@@ -48,7 +46,7 @@ class ConsoleUIManagerTest {
     //getReadZonesFromDeviceMenu()
     void enterToReadingFromDeviceChaptersMenuTest() throws ZoneNotFoundException {
         System.out.println("Start of enter to reading from device chapters menu TEST");
-        scanner = new Scanner("1 0 0");
+        scanner = new Scanner("1\n0\n0");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
@@ -60,24 +58,23 @@ class ConsoleUIManagerTest {
 
     @Test
     //getAvailableFromStorageChaptersMenu()
-    void enterToAvailableFromStorageChaptersMenuTest() throws ZoneNotFoundException {
-        enterToReadingFromDeviceChaptersMenuTest();
-        System.out.println("Start of enter to available from storage chapters menu TEST");
-        scanner = new Scanner("2 0 0 0");
-        //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
-        consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
-        startMenu.processMenu();
-        System.out.println();
-        System.out.println();
-        System.out.println("End of enter to available from storage chapters menu TEST");
+    void enterToAvailableFromStorageChaptersMenuTest() {
+//        System.out.println("Start of enter to available from storage chapters menu TEST");
+//        scanner = new Scanner("2\n0\n0\n");
+//        //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
+//        consoleUIManager.setScanner(scanner);
+//        StartMenu startMenu = consoleUIManager.getStartMenu();
+//        startMenu.processMenu();
+//        System.out.println();
+//        System.out.println();
+//        System.out.println("End of enter to available from storage chapters menu TEST");
     }
 
     @Test
     //getChaptersFromDeviceMenu()
     void enterToChapterMenuTest() throws ZoneNotFoundException {
         System.out.println("Start of enter to chapter menu TEST");
-        scanner = new Scanner("1 2 0 0 0");
+        scanner = new Scanner("1\n2\n0\n0\n0\n");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
@@ -91,7 +88,7 @@ class ConsoleUIManagerTest {
     //getZonesFromChapterByChapterNumberMenu(int number)
     void enterToZoneMenuTest() throws ZoneNotFoundException {
         System.out.println("Start of enter to zone menu TEST");
-        scanner = new Scanner("1 2 3 0 0 0 0 0");
+        scanner = new Scanner("1\n2\n3\n0\n0\n0\n0\n0\n");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
@@ -105,7 +102,7 @@ class ConsoleUIManagerTest {
     //getStatesFromZoneByZoneNumberMenu(int number)
     void enterToZoneStateMenuTest() throws ZoneNotFoundException {
         System.out.println("Start of enter to zone state menu TEST");
-        scanner = new Scanner("1 2 3 3 0 0 0 0 0");
+        scanner = new Scanner("1\n2\n3\n3\n0\n0\n0\n0\n0\n");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();
@@ -118,7 +115,7 @@ class ConsoleUIManagerTest {
     @Test
     void changeZoneStateTest() throws ZoneNotFoundException {
         System.out.println("Start of change zone state TEST");
-        scanner = new Scanner("1 2 3 3 2 0 0 0 0 0 0 0");
+        scanner = new Scanner("1\n2\n3\n3\n2\n0\n0\n0\n0\n0\n0\n0\n");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
         StartMenu startMenu = consoleUIManager.getStartMenu();

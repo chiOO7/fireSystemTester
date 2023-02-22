@@ -31,7 +31,7 @@ public class ChapterManager {
         chapterDao.saveChaptersToStorage(getAvailableChapters());
     }
 
-    public void getChaptersFromStorage() {
+    public void initChaptersFromStorage() {
         List<Chapter> chaptersFromStorage = chapterDao.getChaptersFromStorage();
         zoneManager.clearZones();
         for (Chapter chapter : chaptersFromStorage) {
@@ -68,14 +68,6 @@ public class ChapterManager {
         }
     }
 
-    public void initChaptersFromStorage() {
-        //reInitChapters();
-        getChaptersFromStorage();
-//        zoneManager.clearZones();
-//        zoneManager.getZonesFromStorage();
-//        addNewZoneToChapter();
-    }
-
     public Chapter getChapterByNumber(int number) {
         return chapters[number - 1];
     }
@@ -88,6 +80,10 @@ public class ChapterManager {
             }
         }
         return availableChapters;
+    }
+
+    public List<Chapter> getAvailableChaptersFromDb() {
+        return chapterDao.getChaptersFromStorage();
     }
 }
 

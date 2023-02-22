@@ -6,10 +6,8 @@ import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 
-
-
 @Getter
-public class ChapterMenu extends ConsoleUIMenu{
+public class ChapterMenu extends ConsoleUIMenu {
 
 
     private final ChapterManager chapterManager;
@@ -50,21 +48,15 @@ public class ChapterMenu extends ConsoleUIMenu{
 
     @Override
     public void processMenu() throws ZoneNotFoundException {
-        getChapterManager().getZoneManager().updateZonesState(getChapterManager()
-                .getChapterByNumber(chapterNumber).getZones());
-        setSubMenus(getConsoleUIManager().getZonesFromChapterByChapterNumberMenu(chapterNumber));
         while (true) {
-//            getChapterManager().getZoneManager().updateZonesState(getChapterManager()
-//                    .getChapterByNumber(chapterNumber).getZones());
-//            setSubMenus(getConsoleUIManager().getZonesFromChapterByChapterNumberMenu(chapterNumber));
-            printSubMenus();
+            getChapterManager().getZoneManager().updateZonesState(getChapterManager()
+                    .getChapterByNumber(chapterNumber).getZones());
+            setSubMenus(getConsoleUIManager().getZonesFromChapterByChapterNumberMenu(chapterNumber));
             int command = checkCommand();
             if (command == 0) break;
             if (command == 1) {
                 System.out.println("Введите новое имя раздела:");
                 String newName = getScanner().nextLine();
-//                newName += getScanner().nextLine();
-//                String newName = getScanner().next();
                 Chapter chapter = getChapterManager().getChapterByNumber(chapterNumber);
                 chapter.setChapterName(newName);
                 break;

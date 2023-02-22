@@ -11,7 +11,6 @@ public class StateMenu extends ConsoleUIMenu {
 
     @Override
     public void processMenu() throws ZoneNotFoundException {
-        printSubMenus();
         int command = checkCommand();
         if (command == 0) return;
         processCommand(command);

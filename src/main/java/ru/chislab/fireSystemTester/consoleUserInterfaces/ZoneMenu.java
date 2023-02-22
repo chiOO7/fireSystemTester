@@ -7,12 +7,10 @@ import ru.chislab.fireSystemTester.zones.Zone;
 
 
 @Getter
-public class ZoneMenu extends ConsoleUIMenu{
+public class ZoneMenu extends ConsoleUIMenu {
 
     private final ChapterManager chapterManager;
-
     private final String zoneName;
-
     private final int zoneNumber;
 
     public ZoneMenu(String menuName, int zoneNumber, ChapterManager chapterManager) throws ZoneNotFoundException {
@@ -49,15 +47,14 @@ public class ZoneMenu extends ConsoleUIMenu{
 
     @Override
     public void processMenu() throws ZoneNotFoundException {
-        chapterManager.getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
-        setSubMenus(getConsoleUIManager().getStatesFromZoneByZoneNumberMenu(zoneNumber));
         while (true) {
+            chapterManager.getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
+            setSubMenus(getConsoleUIManager().getStatesFromZoneByZoneNumberMenu(zoneNumber));
             int command = checkCommand();
             if (command == 0) break;
             if (command == 1) {
                 System.out.println("Введите новое имя зоны:");
                 String newName = getScanner().nextLine();
-                newName += getScanner().nextLine();
                 try {
                     Zone zone = chapterManager.getZoneManager().getZoneByZoneNumber(zoneNumber);
                     zone.setZoneName(newName);
@@ -67,7 +64,6 @@ public class ZoneMenu extends ConsoleUIMenu{
                 break;
             }
             if (command == 2) chapterManager.getZoneManager().updateZoneStateByZoneNumber(zoneNumber);
-
             processCommand(command);
         }
     }

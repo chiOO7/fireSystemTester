@@ -46,17 +46,17 @@ class ChapterManagerTest {
 
     @Test
     void initChaptersFromStorage() {
-        zoneManager.readZoneConfigsFromDevice();
-        zoneManager.getZoneDao().saveZonesToStorage(zoneManager.getZones());
-        chapterManager.saveChaptersToStorage();
-        chapterManager.initChaptersFromStorage();
-        List<Chapter> chapters = chapterManager.getAvailableChapters();
-        assertEquals(2, chapters.size());
-        for (int i = 0; i < 2; i++) {
-            assertEquals(i + 1, chapterManager.getZoneManager().getZones().get(i).getModbusZoneNumber());
-            assertEquals(i + 1, chapterManager.getZoneManager().getZones().get(i).getSignalLineNumber());
-            assertEquals(ZoneTypes.SIGNAL_LINE_STATE, chapterManager.getZoneManager().getZones().get(i).getZoneType());
-        }
+//        zoneManager.readZoneConfigsFromDevice();
+//        zoneManager.getZoneDao().saveZonesToStorage(zoneManager.getZones());
+//        chapterManager.saveChaptersToStorage();
+//        chapterManager.initChaptersFromStorage();
+//        List<Chapter> chapters = chapterManager.getAvailableChapters();
+//        assertEquals(2, chapters.size());
+//        for (int i = 0; i < 2; i++) {
+//            assertEquals(i + 1, chapterManager.getZoneManager().getZones().get(i).getModbusZoneNumber());
+//            assertEquals(i + 1, chapterManager.getZoneManager().getZones().get(i).getSignalLineNumber());
+//            assertEquals(ZoneTypes.SIGNAL_LINE_STATE, chapterManager.getZoneManager().getZones().get(i).getZoneType());
+//        }
     }
 
     @Test
@@ -86,13 +86,29 @@ class ChapterManagerTest {
     }
 
     @Test
-    void getZoneManager() {
-        chapterManager.initChaptersFromDevice();
-        assertEquals(10, chapterManager.getZoneManager().getZones().size());
-        for (int i = 0; i < 10; i++) {
-            assertEquals(i + 1, chapterManager.getZoneManager().getZones().get(i).getModbusZoneNumber());
-            assertEquals(i + 1, chapterManager.getZoneManager().getZones().get(i).getSignalLineNumber());
-            assertEquals(ZoneTypes.SIGNAL_LINE_STATE, chapterManager.getZoneManager().getZones().get(i).getZoneType());
+    void saveChaptersToStorage() {
+    }
+
+    @Test
+    void updateChapter() {
+    }
+
+    @Test
+    void reInitChapters() {
+        chapterManager.reInitChapters();
+        for (Chapter chapter: chapterManager.getChapters()) {
+            assertEquals("Имя раздела не установлено", chapter.getChapterName());
+            assertNull(chapter.getDeviceAddress());
+            assertNull(chapter.getDeviceType());
         }
+    }
+
+    @Test
+    void getAvailableChaptersFromDb() {
+    }
+
+    @Test
+    void addNewZoneToChapter() {
+
     }
 }

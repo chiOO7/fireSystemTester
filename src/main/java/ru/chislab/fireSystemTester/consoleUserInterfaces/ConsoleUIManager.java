@@ -5,13 +5,11 @@ import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.chislab.fireSystemTester.ApplicationRunner;
-//import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.zones.Zone;
-//import ru.chislab.fireSystemTester.zones.ZoneManager;
 import ru.chislab.fireSystemTester.zones.ZoneState;
 
 import java.util.ArrayList;
@@ -23,12 +21,10 @@ import java.util.Scanner;
 public class ConsoleUIManager {
 
     private final static Logger logger = LoggerFactory.getLogger(ApplicationRunner.class);
-//    private static final String LOG4J_CONFIGURATION_PATH = "log4j.properties";
     private Scanner scanner;
     private ChapterManager chapterManager;
 
     EnumSet<States> settableStates = EnumSet.of(States.DISARMING_INPUT, States.ARMING_INPUT);
-
 
     public ConsoleUIManager(ChapterManager chapterManager) {
         this.chapterManager = chapterManager;
@@ -71,7 +67,7 @@ public class ConsoleUIManager {
 
     public List<ConsoleUIMenu> getChaptersFromDbMenu() {
         List<ConsoleUIMenu> chaptersMenu = new ArrayList<>();
-        List<Chapter> chapters = getChapterManager().getAvailableChapters();
+        List<Chapter> chapters = getChapterManager().getAvailableChaptersFromDb();
         for (int i = 0; i < chapters.size(); i++) {
             ChapterMenuDb chapterMenu = new ChapterMenuDb("Раздел " + (i + 1),
                     chapters.get(i).getModbusChapterNumber(),
@@ -90,7 +86,6 @@ public class ConsoleUIManager {
         for (Zone zone : zones) {
             ZoneMenu zoneMenu = new ZoneMenu("Зона " + (zone.getModbusZoneNumber()),
                         zone.getModbusZoneNumber(), chapterManager);
-
             zoneMenu.setScanner(scanner);
             zoneMenu.setConsoleUIManager(this);
             zonesFromChapterMenu.add(zoneMenu);
@@ -105,7 +100,6 @@ public class ConsoleUIManager {
         for (Zone zone : zones) {
             ZoneMenuDb zoneMenu = new ZoneMenuDb("Зона " + (zone.getModbusZoneNumber()),
                     zone.getModbusZoneNumber(), chapterManager);
-
             zoneMenu.setScanner(scanner);
             zoneMenu.setConsoleUIManager(this);
             zonesFromChapterMenu.add(zoneMenu);
@@ -119,7 +113,6 @@ public class ConsoleUIManager {
         try {
             Zone zone = getChapterManager().getZoneManager().getZoneByZoneNumber(number);
             ZoneState state = zone.getZoneState();
-
             for (int i = 0; i < state.getStates().size(); i++) {
                 StateMenu stateMenu = new StateMenu("Состояние " + (i + 1) + ": " + state.getStates().get(i));
                 stateMenu.setScanner(getScanner());
@@ -133,7 +126,6 @@ public class ConsoleUIManager {
                 stateMenu.addSubMenus(changeStateMenus);
                 statesFromZoneMenu.add(stateMenu);
             }
-
         } catch (ZoneNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -144,7 +136,6 @@ public class ConsoleUIManager {
     public ConsoleUIMenu getAvailableFromStorageChaptersMenu() {
         AvailableFromStorageChaptersMenu availableFromStorageChaptersMenu =
                 new AvailableFromStorageChaptersMenu("Доступные из базы данных разделы");
-
         availableFromStorageChaptersMenu.setScanner(getScanner());
         availableFromStorageChaptersMenu.setChapterManager(getChapterManager());
         availableFromStorageChaptersMenu.setConsoleUIManager(this);

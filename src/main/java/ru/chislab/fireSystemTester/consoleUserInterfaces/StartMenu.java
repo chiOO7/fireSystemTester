@@ -16,7 +16,6 @@ public class StartMenu extends ConsoleUIMenu {
     @Override
     public void processMenu() throws ZoneNotFoundException {
         while (true) {
-            printSubMenus();
             int command = checkCommand();
             if (command == 0) break;
             if (command == 1) chapterManager.initChaptersFromDevice();

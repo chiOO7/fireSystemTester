@@ -23,12 +23,11 @@ public abstract class ConsoleUIMenu {
         this.menuName = menuName;
     }
 
-
     public int checkCommand() {
+        printSubMenus();
         String commandStr;
         int command = -2;
-        commandStr = getScanner().next();
-        commandStr += getScanner().nextLine();
+        commandStr = getScanner().nextLine();
         if (commandStr.matches("^-?\\d$")) {
             command = Integer.parseInt(commandStr);
         }

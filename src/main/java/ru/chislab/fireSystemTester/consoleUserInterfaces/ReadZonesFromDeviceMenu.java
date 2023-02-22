@@ -22,17 +22,14 @@ public class ReadZonesFromDeviceMenu extends ConsoleUIMenu{
 
     @Override
     public void processMenu() throws ZoneNotFoundException {
-
         while (true) {
             setSubMenus(getConsoleUIManager().getChaptersFromDeviceMenu());
-            printSubMenus();
             int command = checkCommand();
             if (command == 0) break;
             if (command == 1) getChapterManager().saveChaptersToStorage();
             processCommand(command);
         }
     }
-
 
     @Override
     protected void printMenuHeader() {

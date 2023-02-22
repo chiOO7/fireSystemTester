@@ -1,7 +1,6 @@
 package ru.chislab.fireSystemTester.zones;
 
 import lombok.Data;
-import lombok.Getter;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.dao.ZoneDao;
 import ru.chislab.fireSystemTester.enums.States;
@@ -15,6 +14,7 @@ public class ZoneManager {
     private final List<Zone> zones;
     private final ModbusDataSource modbusDataSource;
     private final ZoneDao zoneDao;
+
     public ZoneManager(ModbusDataSource modbusDataSource, ZoneDao zoneDao) {
         this.modbusDataSource = modbusDataSource;
         this.zones = new ArrayList<>();
@@ -41,13 +41,13 @@ public class ZoneManager {
         zones.clear();
     }
 
-    public void saveZonesToStorage() {
-        zoneDao.saveZonesToStorage(zones);
-    }
+//    public void saveZonesToStorage() {
+//        zoneDao.saveZonesToStorage(zones);
+//    }
 
-    public void getZonesFromStorage() {
-        this.zones.addAll(zoneDao.getZonesFromStorage());
-    }
+//    public void getZonesFromStorage() {
+//        this.zones.addAll(zoneDao.getZonesFromStorage());
+//    }
 
     public List<Zone> getZones() {
         return zones;
@@ -60,7 +60,9 @@ public class ZoneManager {
     }
 
     public void updateZone(Zone zone) {
-        zoneDao.updateZone(zone);
+        if (zoneDao != null) {
+            zoneDao.updateZone(zone);
+        }
     }
 
     public void updateZoneStateByZoneNumber(int number) {

@@ -1,28 +1,21 @@
-package ru.chislab.fireSystemTester.zones;
+package ru.chislab.fireSystemTester;
 
-import lombok.Cleanup;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+//import lombok.Cleanup;
+//import org.hibernate.Session;
+//import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import ru.chislab.fireSystemTester.chapters.Chapter;
-import ru.chislab.fireSystemTester.enums.DeviceType;
-import ru.chislab.fireSystemTester.enums.States;
-import ru.chislab.fireSystemTester.enums.ZoneTypes;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class HibernateRunner {
+public class _HibernateRunner {
     public static void main(String[] args) {
         Configuration configuration = new Configuration();
 
         configuration.configure();
 
-        @Cleanup
-        SessionFactory sessionFactory = configuration.buildSessionFactory();
+//        @Cleanup
+//        SessionFactory sessionFactory = configuration.buildSessionFactory();
 
-        @Cleanup
-        Session session = sessionFactory.openSession();
+//        @Cleanup
+//        Session session = sessionFactory.openSession();
 
 //        session.beginTransaction();
 
