@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 import ru.chislab.fireSystemTester.chapters.Chapter;
 
 
@@ -12,13 +13,14 @@ import java.util.List;
 
 @Data
 @RequiredArgsConstructor
+@Repository
 public class ChapterDao {
 
-    private static final int CHAPTERS_COUNT = 64;
+//    private static final int CHAPTERS_COUNT = 64;
 
     private final SessionFactory sessionFactory;
 
-    public final Chapter[] chapters = new Chapter[CHAPTERS_COUNT];
+   // public final Chapter[] chapters = new Chapter[CHAPTERS_COUNT];
 
     public void saveChaptersToStorage(List<Chapter> chapters) {
 

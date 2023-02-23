@@ -1,6 +1,7 @@
 package ru.chislab.fireSystemTester.chapters;
 
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 import ru.chislab.fireSystemTester.dao.ChapterDao;
 import ru.chislab.fireSystemTester.zones.Zone;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Component
 public class ChapterManager {
     private static final int CHAPTERS_COUNT = 64;
     private final Chapter[] chapters = new Chapter[CHAPTERS_COUNT];
@@ -21,11 +23,11 @@ public class ChapterManager {
         reInitChapters();
     }
 
-    public ChapterManager(ZoneManager zoneManager) {
-        this.zoneManager = zoneManager;
-        this.chapterDao = null;
-        reInitChapters();
-    }
+//    public ChapterManager(ZoneManager zoneManager) {
+//        this.zoneManager = zoneManager;
+//        this.chapterDao = null;
+//        reInitChapters();
+//    }
 
     public void saveChaptersToStorage() {
         chapterDao.saveChaptersToStorage(getAvailableChapters());

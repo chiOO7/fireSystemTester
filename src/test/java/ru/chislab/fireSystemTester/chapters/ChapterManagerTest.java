@@ -3,6 +3,8 @@ package ru.chislab.fireSystemTester.chapters;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.chislab.fireSystemTester.dao.ChapterDao;
+import ru.chislab.fireSystemTester.dao.ZoneDao;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSourceForTests;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
@@ -17,12 +19,14 @@ class ChapterManagerTest {
     private static ChapterManager chapterManager;
     private static ZoneManager zoneManager;
     private static ModbusDataSource modbusDataSource;
+    private final ZoneDao zoneDao = null;
+    private final ChapterDao chapterDao = null;
 
     @BeforeEach
     void setUp() {
         modbusDataSource = new ModbusDataSourceForTests();
-        zoneManager = new ZoneManager(modbusDataSource);
-        chapterManager = new ChapterManager(zoneManager);
+        zoneManager = new ZoneManager(modbusDataSource, zoneDao);
+        chapterManager = new ChapterManager(zoneManager, chapterDao);
     }
 
     @AfterEach

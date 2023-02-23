@@ -1,5 +1,6 @@
 package ru.chislab.fireSystemTester.modbus;
 
+//import org.springframework.stereotype.Component;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.modbus.modbusEmulators.S2000PPEmulator;
 import ru.chislab.fireSystemTester.zones.ZoneConfigurationDto;
@@ -8,6 +9,7 @@ import ru.chislab.fireSystemTester.zones.ZoneState;
 import java.util.ArrayList;
 import java.util.List;
 
+//@Component
 public class ModbusDataSourceForTests extends ModbusDataSource {
     public ModbusDataSourceForTests() {
         super("", 0);

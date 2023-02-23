@@ -3,6 +3,7 @@ package ru.chislab.fireSystemTester.zones;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.chislab.fireSystemTester.dao.ZoneDao;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
@@ -18,11 +19,12 @@ class ZoneManagerTest {
     private static ZoneManager zoneManager;
 
     private static ModbusDataSource modbusDataSource;
+    private final ZoneDao zoneDao = null;
 
     @BeforeEach
     void setUp() {
         modbusDataSource = new ModbusDataSourceForTests();
-        zoneManager = new ZoneManager(modbusDataSource);
+        zoneManager = new ZoneManager(modbusDataSource, zoneDao);
     }
 
     @AfterEach

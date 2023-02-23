@@ -1,15 +1,11 @@
 package ru.chislab.fireSystemTester;
 
 import com.intelligt.modbus.jlibmodbus.Modbus;
-//import org.apache.log4j.BasicConfigurator;
-//import org.apache.log4j.PropertyConfigurator;
 import lombok.Cleanup;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.consoleUserInterfaces.ConsoleUIManager;
 import ru.chislab.fireSystemTester.consoleUserInterfaces.StartMenu;
@@ -28,12 +24,6 @@ public class ApplicationRunner {
 
     private static final int SLAVE_ID = 1;
 
-//    private static SessionFactory sessionFactory;
-
-    private static ZoneDao zoneDao;
-
-    private static ChapterDao chapterDao;
-
     public static void main(String[] args) throws ZoneNotFoundException {
 
         Modbus.setLogLevel(Modbus.LogLevel.LEVEL_WARNINGS);
@@ -47,9 +37,9 @@ public class ApplicationRunner {
         @Cleanup
         SessionFactory sessionFactory = configuration.buildSessionFactory();
 
-        zoneDao = new ZoneDao(sessionFactory);
+        ZoneDao zoneDao = new ZoneDao(sessionFactory);
 
-        chapterDao = new ChapterDao(sessionFactory);
+        ChapterDao chapterDao = new ChapterDao(sessionFactory);
 
         ModbusDataSource modbusDataSource = new ModbusDataSource(PORT, SLAVE_ID);
 //        ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();

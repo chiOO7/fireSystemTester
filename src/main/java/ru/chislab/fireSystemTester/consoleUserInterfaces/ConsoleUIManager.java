@@ -4,6 +4,7 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import ru.chislab.fireSystemTester.ApplicationRunner;
 import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Scanner;
 
 @Data
+@Component
 public class ConsoleUIManager {
 
     private final static Logger logger = LoggerFactory.getLogger(ApplicationRunner.class);

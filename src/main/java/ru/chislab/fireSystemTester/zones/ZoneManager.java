@@ -1,6 +1,7 @@
 package ru.chislab.fireSystemTester.zones;
 
 import lombok.Data;
+import org.springframework.stereotype.Component;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.dao.ZoneDao;
 import ru.chislab.fireSystemTester.enums.States;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@Component
 public class ZoneManager {
     private final List<Zone> zones;
     private final ModbusDataSource modbusDataSource;
@@ -19,12 +21,6 @@ public class ZoneManager {
         this.modbusDataSource = modbusDataSource;
         this.zones = new ArrayList<>();
         this.zoneDao = zoneDao;
-    }
-
-    public ZoneManager(ModbusDataSource modbusDataSource) {
-        this.modbusDataSource = modbusDataSource;
-        this.zones = new ArrayList<>();
-        this.zoneDao = null;
     }
 
     public void readZoneConfigsFromDevice() {

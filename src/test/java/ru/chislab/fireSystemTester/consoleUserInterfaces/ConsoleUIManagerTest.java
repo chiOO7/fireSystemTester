@@ -3,6 +3,8 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.chislab.fireSystemTester.dao.ChapterDao;
+import ru.chislab.fireSystemTester.dao.ZoneDao;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSourceForTests;
@@ -14,13 +16,15 @@ import java.util.Scanner;
 class ConsoleUIManagerTest {
     private ConsoleUIManager consoleUIManager;
     private Scanner scanner;
+    private final ZoneDao zoneDao = null;
+    private final ChapterDao chapterDao = null;
 
     @BeforeEach
     void setUp() {
         ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
-        ZoneManager zoneManager = new ZoneManager(modbusDataSource);
+        ZoneManager zoneManager = new ZoneManager(modbusDataSource, zoneDao);
 
-        ChapterManager chapterManager = new ChapterManager(zoneManager);
+        ChapterManager chapterManager = new ChapterManager(zoneManager, chapterDao);
         chapterManager.initChaptersFromDevice();
         consoleUIManager = new ConsoleUIManager(chapterManager);
     }

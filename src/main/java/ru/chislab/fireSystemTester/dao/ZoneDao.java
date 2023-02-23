@@ -4,11 +4,13 @@ package ru.chislab.fireSystemTester.dao;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 import ru.chislab.fireSystemTester.zones.Zone;
 
 //import java.util.List;
 
 @RequiredArgsConstructor
+@Repository
 public class ZoneDao {
 
     private final SessionFactory sessionFactory;
