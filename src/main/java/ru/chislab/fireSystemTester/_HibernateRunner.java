@@ -7,9 +7,9 @@ import org.hibernate.cfg.Configuration;
 
 public class _HibernateRunner {
     public static void main(String[] args) {
-        Configuration configuration = new Configuration();
-
-        configuration.configure();
+//        Configuration configuration = new Configuration();
+//
+//        configuration.configure();
 
 //        @Cleanup
 //        SessionFactory sessionFactory = configuration.buildSessionFactory();

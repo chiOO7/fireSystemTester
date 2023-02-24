@@ -10,6 +10,8 @@ import ru.chislab.fireSystemTester.consoleUserInterfaces.ConsoleUIManager;
 import ru.chislab.fireSystemTester.consoleUserInterfaces.StartMenu;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 
+import javax.persistence.EntityManagerFactory;
+
 @Configuration
 @ComponentScan(basePackages = "ru.chislab.fireSystemTester")
 public class ApplicationConfiguration {
@@ -18,16 +20,23 @@ public class ApplicationConfiguration {
 
     private static final int SLAVE_ID = 1;
 
-    @Autowired
-    private ConsoleUIManager consoleUIManager;
+//    @Autowired
+//    private ConsoleUIManager consoleUIManager;
 
-    @Bean
-    public SessionFactory sessionFactory() {
-        org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
-        configuration.configure();
+//    @Bean
+//    public SessionFactory sessionFactory() {
+//
+//        org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
+//        configuration.configure();
+//
+//        return configuration.buildSessionFactory();
+//    }
 
-        return configuration.buildSessionFactory();
-    }
+//    public EntityManagerFactory entityManagerFactory() {
+//
+//
+//        return
+//    }
 
     @Bean
     public ModbusDataSource modbusDataSource() {
@@ -36,8 +45,8 @@ public class ApplicationConfiguration {
         return modbusDataSource;
     }
 
-    @Bean
-    public StartMenu startMenu() {
-        return consoleUIManager.getStartMenu();
-    }
+//    @Bean
+//    public StartMenu startMenu() {
+//        return consoleUIManager.getStartMenu();
+//    }
 }

@@ -1,6 +1,7 @@
 package ru.chislab.fireSystemTester.chapters;
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import ru.chislab.fireSystemTester.enums.DeviceType;
 import ru.chislab.fireSystemTester.zones.Zone;

@@ -30,25 +30,25 @@ public class ApplicationRunner {
 
         logger.info("Application start");
 
-        Configuration configuration = new Configuration();
-
-        configuration.configure();
-
-        @Cleanup
-        SessionFactory sessionFactory = configuration.buildSessionFactory();
-
-        ZoneDao zoneDao = new ZoneDao(sessionFactory);
-
-        ChapterDao chapterDao = new ChapterDao(sessionFactory);
-
-        ModbusDataSource modbusDataSource = new ModbusDataSource(PORT, SLAVE_ID);
-//        ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
-        ZoneManager zoneManager = new ZoneManager(modbusDataSource, zoneDao);
-        ChapterManager chapterManager = new ChapterManager(zoneManager, chapterDao);
-        ConsoleUIManager consoleUIManager = new ConsoleUIManager(chapterManager);
-
-        StartMenu startMenu = consoleUIManager.getStartMenu();
-        startMenu.processMenu();
+//        Configuration configuration = new Configuration();
+//
+//        configuration.configure();
+//
+//        @Cleanup
+//        SessionFactory sessionFactory = configuration.buildSessionFactory();
+//
+//        ZoneDao zoneDao = new ZoneDao(sessionFactory);
+//
+//        ChapterDao chapterDao = new ChapterDao(sessionFactory);
+//
+//        ModbusDataSource modbusDataSource = new ModbusDataSource(PORT, SLAVE_ID);
+////        ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
+//        ZoneManager zoneManager = new ZoneManager(modbusDataSource, zoneDao);
+//        ChapterManager chapterManager = new ChapterManager(zoneManager, chapterDao);
+//        ConsoleUIManager consoleUIManager = new ConsoleUIManager(chapterManager);
+//
+//        StartMenu startMenu = consoleUIManager.getStartMenu();
+//        startMenu.processMenu();
 
 
 

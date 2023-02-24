@@ -22,9 +22,9 @@ class ConsoleUIManagerTest {
     @BeforeEach
     void setUp() {
         ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
-        ZoneManager zoneManager = new ZoneManager(modbusDataSource, zoneDao);
+        ZoneManager zoneManager = new ZoneManager(modbusDataSource, null);
 
-        ChapterManager chapterManager = new ChapterManager(zoneManager, chapterDao);
+        ChapterManager chapterManager = new ChapterManager(zoneManager, null);
         chapterManager.initChaptersFromDevice();
         consoleUIManager = new ConsoleUIManager(chapterManager);
     }

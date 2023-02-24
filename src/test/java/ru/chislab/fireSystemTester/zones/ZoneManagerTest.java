@@ -24,7 +24,7 @@ class ZoneManagerTest {
     @BeforeEach
     void setUp() {
         modbusDataSource = new ModbusDataSourceForTests();
-        zoneManager = new ZoneManager(modbusDataSource, zoneDao);
+        zoneManager = new ZoneManager(modbusDataSource, null);
     }
 
     @AfterEach

@@ -38,16 +38,16 @@ public class ZoneDao {
 //    }
 
     public void updateZone(Zone zone) {
-        if (zone == null) return;
-
-        if (sessionFactory != null) {
-            Session session = sessionFactory.openSession();
-
-            session.beginTransaction();
-
-            session.merge(zone);
-
-            session.getTransaction().commit();
-        }
+//        if (zone == null) return;
+//
+//        if (sessionFactory != null) {
+//            Session session = sessionFactory.openSession();
+//
+//            session.beginTransaction();
+//
+//            session.merge(zone);
+//
+//            session.getTransaction().commit();
+//        }
     }
 }

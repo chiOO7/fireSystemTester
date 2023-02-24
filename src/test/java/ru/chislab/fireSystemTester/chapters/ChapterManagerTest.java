@@ -8,6 +8,7 @@ import ru.chislab.fireSystemTester.dao.ZoneDao;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSourceForTests;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
+import ru.chislab.fireSystemTester.repositories.ZoneRepository;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
 import java.util.List;
@@ -21,12 +22,13 @@ class ChapterManagerTest {
     private static ModbusDataSource modbusDataSource;
     private final ZoneDao zoneDao = null;
     private final ChapterDao chapterDao = null;
+    private final ZoneRepository zoneRepository = null;
 
     @BeforeEach
     void setUp() {
         modbusDataSource = new ModbusDataSourceForTests();
-        zoneManager = new ZoneManager(modbusDataSource, zoneDao);
-        chapterManager = new ChapterManager(zoneManager, chapterDao);
+        zoneManager = new ZoneManager(modbusDataSource, null);
+        chapterManager = new ChapterManager(zoneManager, null);
     }
 
     @AfterEach
