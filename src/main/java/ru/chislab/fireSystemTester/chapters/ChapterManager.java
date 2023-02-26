@@ -1,6 +1,8 @@
 package ru.chislab.fireSystemTester.chapters;
 
 import lombok.Getter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.chislab.fireSystemTester.repositories.ChapterRepository;
@@ -44,13 +46,16 @@ public class ChapterManager {
         chapterRepository.saveAll(getAvailableChapters());
     }
 
+    @Transactional(readOnly = true)
     public void initChaptersFromStorage() {
 //        List<Chapter> chaptersFromStorage = chapterDao.getChaptersFromStorage();
         List<Chapter> chaptersFromStorage = getAvailableChaptersFromDb();
         zoneManager.clearZones();
         for (Chapter chapter : chaptersFromStorage) {
-            chapters[chapter.getModbusChapterNumber() - 1] = chapter;
-            zoneManager.getZones().addAll(chapters[chapter.getModbusChapterNumber() - 1].getZones());
+//            chapters[chapter.getModbusChapterNumber() - 1] = chapter;
+//            Integer chNumber = chapter.getModbusChapterNumber();
+            zoneManager.getZones().addAll(chapter.getZones());
+//            zoneManager.getZones().addAll(chapters[chapter.getModbusChapterNumber() - 1].getZones());
         }
     }
 
@@ -105,9 +110,15 @@ public class ChapterManager {
         return availableChapters;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Chapter> getAvailableChaptersFromDb() {
-        List<Chapter> chapters1 = chapterRepository.findAll();
+//        List<Chapter> chapters1 = chapterRepository.findAll();
+//        for (Chapter chapter: chapters1) {
+//            List<Zone>zones = zoneManager.getZoneRepository().findAllById(chapter.getModbusChapterNumber());
+//            chapter.setZones(zones);
+//        }
+
+                List<Chapter> chapters1 = chapterRepository.getAll();
         return chapters1;
 //        return chapterDao.getChaptersFromStorage();
     }

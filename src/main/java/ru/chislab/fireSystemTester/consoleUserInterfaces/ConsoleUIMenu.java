@@ -1,6 +1,8 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 
@@ -32,7 +34,10 @@ public abstract class ConsoleUIMenu {
             command = Integer.parseInt(commandStr);
         }
         System.out.println();
-        if (command == -1) System.exit(0);
+        if (command == -1) {
+            consoleUIManager.getContext().close();
+            System.exit(0);
+        }
 
         return command;
     }

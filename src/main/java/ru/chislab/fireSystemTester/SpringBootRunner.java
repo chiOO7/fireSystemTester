@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import ru.chislab.fireSystemTester.consoleUserInterfaces.ConsoleUIManager;
@@ -14,24 +15,23 @@ import ru.chislab.fireSystemTester.spring.configurations.ApplicationConfiguratio
 
 @SpringBootApplication
 @ComponentScan(basePackages = "ru.chislab.fireSystemTester")
-public class SpringBootRunner implements CommandLineRunner {
-
-	@Autowired
-	private ConsoleUIManager consoleUIManager;
+public class SpringBootRunner {
 
 //	@Autowired
-//	private ApplicationContextProvider applicationContextProvider;
+//	private ConsoleUIManager consoleUIManager;
+
 
 	public static void main(String[] args) throws ZoneNotFoundException {
 
-		SpringApplication.run(SpringBootRunner.class, args);
+		ConfigurableApplicationContext context = SpringApplication.run(SpringBootRunner.class, args);
 
-	}
+		ConsoleUIManager consoleUIManager = context.getBean(ConsoleUIManager.class);
 
-	@Override
-	public void run(String...args) throws Exception {
+		consoleUIManager.setContext(context);
 
 		StartMenu startMenu = consoleUIManager.getStartMenu();
+
+		startMenu.setConsoleUIManager(consoleUIManager);
 
 		startMenu.processMenu();
 	}

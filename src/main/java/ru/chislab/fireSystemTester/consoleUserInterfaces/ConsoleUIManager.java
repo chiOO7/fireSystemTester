@@ -4,6 +4,7 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 import ru.chislab.fireSystemTester.ApplicationRunner;
 import ru.chislab.fireSystemTester.chapters.Chapter;
@@ -25,6 +26,7 @@ public class ConsoleUIManager {
     private final static Logger logger = LoggerFactory.getLogger(ApplicationRunner.class);
     private Scanner scanner;
     private ChapterManager chapterManager;
+    private ConfigurableApplicationContext context;
 
     EnumSet<States> settableStates = EnumSet.of(States.DISARMING_INPUT, States.ARMING_INPUT);
 
