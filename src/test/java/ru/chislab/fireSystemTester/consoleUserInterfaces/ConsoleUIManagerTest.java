@@ -3,8 +3,6 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.chislab.fireSystemTester.dao.ChapterDao;
-import ru.chislab.fireSystemTester.dao.ZoneDao;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSourceForTests;
@@ -16,8 +14,6 @@ import java.util.Scanner;
 class ConsoleUIManagerTest {
     private ConsoleUIManager consoleUIManager;
     private Scanner scanner;
-    private final ZoneDao zoneDao = null;
-    private final ChapterDao chapterDao = null;
 
     @BeforeEach
     void setUp() {
@@ -27,6 +23,8 @@ class ConsoleUIManagerTest {
         ChapterManager chapterManager = new ChapterManager(zoneManager, null);
         chapterManager.initChaptersFromDevice();
         consoleUIManager = new ConsoleUIManager(chapterManager);
+
+
     }
 
     @AfterEach
@@ -37,9 +35,10 @@ class ConsoleUIManagerTest {
     //getStartMenu()
     void showStartMenuTest() throws ZoneNotFoundException {
         System.out.println("Start of show start menu TEST");
-        scanner = new Scanner("0");
+        scanner = new Scanner("0\n");
         consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
+        ConsoleUIManager.StartMenuForTests startMenu = consoleUIManager.getStartMenuForTests();
+        startMenu.setConsoleUIManager(consoleUIManager);
         startMenu.processMenu();
         System.out.println();
         System.out.println();
@@ -53,7 +52,8 @@ class ConsoleUIManagerTest {
         scanner = new Scanner("1\n0\n0");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
+        ConsoleUIManager.StartMenuForTests startMenu = consoleUIManager.getStartMenuForTests();
+        startMenu.setConsoleUIManager(consoleUIManager);
         startMenu.processMenu();
         System.out.println();
         System.out.println();
@@ -81,7 +81,8 @@ class ConsoleUIManagerTest {
         scanner = new Scanner("1\n2\n0\n0\n0\n");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
+        ConsoleUIManager.StartMenuForTests startMenu = consoleUIManager.getStartMenuForTests();
+        startMenu.setConsoleUIManager(consoleUIManager);
         startMenu.processMenu();
         System.out.println();
         System.out.println();
@@ -95,7 +96,8 @@ class ConsoleUIManagerTest {
         scanner = new Scanner("1\n2\n3\n0\n0\n0\n0\n0\n");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
+        ConsoleUIManager.StartMenuForTests startMenu = consoleUIManager.getStartMenuForTests();
+        startMenu.setConsoleUIManager(consoleUIManager);
         startMenu.processMenu();
         System.out.println();
         System.out.println();
@@ -109,7 +111,8 @@ class ConsoleUIManagerTest {
         scanner = new Scanner("1\n2\n3\n3\n0\n0\n0\n0\n0\n");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
+        ConsoleUIManager.StartMenuForTests startMenu = consoleUIManager.getStartMenuForTests();
+        startMenu.setConsoleUIManager(consoleUIManager);
         startMenu.processMenu();
         System.out.println();
         System.out.println();
@@ -122,7 +125,8 @@ class ConsoleUIManagerTest {
         scanner = new Scanner("1\n2\n3\n3\n2\n0\n0\n0\n0\n0\n0\n0\n");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
+        ConsoleUIManager.StartMenuForTests startMenu = consoleUIManager.getStartMenuForTests();
+        startMenu.setConsoleUIManager(consoleUIManager);
         startMenu.processMenu();
         System.out.println();
         System.out.println();

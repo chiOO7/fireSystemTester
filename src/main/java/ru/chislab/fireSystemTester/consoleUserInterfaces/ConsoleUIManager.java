@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
-import ru.chislab.fireSystemTester.ApplicationRunner;
 import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.enums.States;
@@ -23,7 +22,7 @@ import java.util.Scanner;
 @Component
 public class ConsoleUIManager {
 
-    private final static Logger logger = LoggerFactory.getLogger(ApplicationRunner.class);
+    private final static Logger logger = LoggerFactory.getLogger(ConsoleUIManager.class);
     private Scanner scanner;
     private ChapterManager chapterManager;
     private ConfigurableApplicationContext context;
@@ -35,9 +34,17 @@ public class ConsoleUIManager {
         this.scanner = new Scanner(System.in);
     }
 
-
     public StartMenu getStartMenu() {
         StartMenu startMenu = new StartMenu("Главное меню", chapterManager);
+        startMenu.setScanner(getScanner());
+        startMenu.addSubMenu(getReadZonesFromDeviceMenu());
+        startMenu.addSubMenu(getAvailableFromStorageChaptersMenu());
+
+        return startMenu;
+    }
+
+    public StartMenuForTests getStartMenuForTests() {
+        StartMenuForTests startMenu = new StartMenuForTests("Главное меню", chapterManager);
         startMenu.setScanner(getScanner());
         startMenu.addSubMenu(getReadZonesFromDeviceMenu());
         startMenu.addSubMenu(getAvailableFromStorageChaptersMenu());
@@ -71,7 +78,7 @@ public class ConsoleUIManager {
 
     public List<ConsoleUIMenu> getChaptersFromDbMenu() {
         List<ConsoleUIMenu> chaptersMenu = new ArrayList<>();
-        List<Chapter> chapters = getChapterManager().getAvailableChaptersFromDb();
+        List<Chapter> chapters = getChapterManager().getAvailableChapters();
         for (int i = 0; i < chapters.size(); i++) {
             ChapterMenuDb chapterMenu = new ChapterMenuDb("Раздел " + (i + 1),
                     chapters.get(i).getModbusChapterNumber(),
@@ -89,7 +96,7 @@ public class ConsoleUIManager {
         List<Zone> zones = getChapterManager().getChapterByNumber(number).getZones();
         for (Zone zone : zones) {
             ZoneMenu zoneMenu = new ZoneMenu("Зона " + (zone.getModbusZoneNumber()),
-                        zone.getModbusZoneNumber(), chapterManager);
+                    zone.getModbusZoneNumber(), chapterManager);
             zoneMenu.setScanner(scanner);
             zoneMenu.setConsoleUIManager(this);
             zonesFromChapterMenu.add(zoneMenu);
@@ -117,21 +124,23 @@ public class ConsoleUIManager {
         try {
             Zone zone = getChapterManager().getZoneManager().getZoneByZoneNumber(number);
             ZoneState state = zone.getZoneState();
-            for (int i = 0; i < state.getStates().size(); i++) {
-                StateMenu stateMenu = new StateMenu("Состояние " + (i + 1) + ": " + state.getStates().get(i));
-                stateMenu.setScanner(getScanner());
-                List<ConsoleUIMenu> changeStateMenus = new ArrayList<>();
-                for (States settableState : settableStates) {
-                    ChangeStateMenu changeStateMenu = new ChangeStateMenu(settableState.name(), zone, i);
-                    changeStateMenu.setScanner(getScanner());
-                    changeStateMenu.setChapterManager(getChapterManager());
-                    changeStateMenus.add(changeStateMenu);
+            if (state.getStates() != null) {
+                for (int i = 0; i < state.getStates().size(); i++) {
+                    StateMenu stateMenu = new StateMenu("Состояние " + (i + 1) + ": " + state.getStates().get(i));
+                    stateMenu.setScanner(getScanner());
+                    List<ConsoleUIMenu> changeStateMenus = new ArrayList<>();
+                    for (States settableState : settableStates) {
+                        ChangeStateMenu changeStateMenu = new ChangeStateMenu(settableState.name(), zone, i);
+                        changeStateMenu.setScanner(getScanner());
+                        changeStateMenu.setChapterManager(getChapterManager());
+                        changeStateMenus.add(changeStateMenu);
+                    }
+                    stateMenu.addSubMenus(changeStateMenus);
+                    statesFromZoneMenu.add(stateMenu);
                 }
-                stateMenu.addSubMenus(changeStateMenus);
-                statesFromZoneMenu.add(stateMenu);
             }
         } catch (ZoneNotFoundException e) {
-            throw new RuntimeException(e);
+            logger.error(e.getMessage());
         }
 
         return statesFromZoneMenu;
@@ -147,5 +156,21 @@ public class ConsoleUIManager {
         return availableFromStorageChaptersMenu;
     }
 
+    class StartMenuForTests extends StartMenu {
+        public StartMenuForTests(String menuName, ChapterManager chapterManager) {
+            super(menuName, chapterManager);
+        }
 
+        @Override
+        public void processMenu() throws ZoneNotFoundException {
+            while (true) {
+                int command = checkCommand();
+                if (command == 0) {
+                    break;
+                }
+                if (command == 1) chapterManager.initChaptersFromDevice();
+                processCommand(command);
+            }
+        }
+    }
 }

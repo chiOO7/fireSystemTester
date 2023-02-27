@@ -9,7 +9,6 @@ import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 @Getter
 public class ChapterMenu extends ConsoleUIMenu {
 
-
     private final ChapterManager chapterManager;
     private final int chapterNumber;
     private final String chapterName;

@@ -1,11 +1,10 @@
 package ru.chislab.fireSystemTester.zones;
 
+
 import lombok.Data;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
-import ru.chislab.fireSystemTester.dao.ZoneDao;
 import ru.chislab.fireSystemTester.enums.States;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.repositories.ZoneRepository;
@@ -18,7 +17,6 @@ import java.util.List;
 public class ZoneManager {
     private final List<Zone> zones;
     private final ModbusDataSource modbusDataSource;
-//    private final ZoneDao zoneDao;
     private final ZoneRepository zoneRepository;
 
     public ZoneManager(ModbusDataSource modbusDataSource, ZoneRepository zoneRepository) {
@@ -41,11 +39,6 @@ public class ZoneManager {
         zones.clear();
     }
 
-
-    public List<Zone> getZones() {
-        return zones;
-    }
-
     public void updateZonesState(List<Zone> zones) {
         for (Zone zone : zones) {
             zone.setZoneState(modbusDataSource.getZoneStateByModbusZoneNumber(zone.getModbusZoneNumber()));
@@ -54,7 +47,7 @@ public class ZoneManager {
 
     @Transactional
     public void updateZone(Zone zone) {
-        zoneRepository.update(zone.getZoneName());
+        zoneRepository.update(zone.getModbusZoneNumber(), zone.getZoneName());
     }
 
     public void updateZoneStateByZoneNumber(int number) {

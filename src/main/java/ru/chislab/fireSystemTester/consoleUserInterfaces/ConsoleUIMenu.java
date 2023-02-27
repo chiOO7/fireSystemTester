@@ -1,8 +1,6 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ConfigurableApplicationContext;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 
@@ -83,5 +81,4 @@ public abstract class ConsoleUIMenu {
     public void addSubMenus(List<ConsoleUIMenu> subMenus) {
         getSubMenus().addAll(subMenus);
     }
-
 }

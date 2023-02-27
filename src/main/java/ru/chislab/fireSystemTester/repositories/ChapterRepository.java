@@ -6,15 +6,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.chislab.fireSystemTester.chapters.Chapter;
 
-import java.util.List;
 
 @Repository
 public interface ChapterRepository extends JpaRepository<Chapter, Integer> {
-//    void saveAll(List<Chapter> chapters);
-
-//    @Modifying
-    @Query("select c from Chapter c")
-    List<Chapter> getAll();
-
-//    void merge(Chapter chapter);
+    @Modifying
+    @Query("update Chapter c set c.chapterName = ?2 where c.modbusChapterNumber = ?1")
+    void update(Integer id, String chapterName);
 }
