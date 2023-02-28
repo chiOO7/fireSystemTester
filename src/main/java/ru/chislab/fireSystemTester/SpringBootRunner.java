@@ -7,7 +7,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import ru.chislab.fireSystemTester.consoleUserInterfaces.ConsoleUIManager;
 import ru.chislab.fireSystemTester.consoleUserInterfaces.StartMenu;
-import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 
 @SpringBootApplication
@@ -17,7 +16,7 @@ public class SpringBootRunner {
 
 	private static final int SLAVE_ID = 1;
 
-	public static void main(String[] args) throws ZoneNotFoundException {
+	public static void main(String[] args) {
 
 		ConfigurableApplicationContext context = SpringApplication.run(SpringBootRunner.class, args);
 

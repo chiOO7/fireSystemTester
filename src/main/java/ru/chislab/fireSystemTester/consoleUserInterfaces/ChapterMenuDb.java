@@ -13,8 +13,7 @@ public class ChapterMenuDb extends ChapterMenu {
         while (true) {
             getChapterManager().getZoneManager().updateZonesState(getChapterManager()
                     .getChapterByNumber(getChapterNumber()).getZones());
-//            setSubMenus(getConsoleUIManager().getZonesFromDbByChapterNumberMenu(getChapterNumber()));
-            setSubMenus(getConsoleUIManager().getZonesFromChapterByChapterNumberMenu(getChapterNumber()));
+            setSubMenus(getConsoleUIManager().getZonesFromDbByChapterNumberMenu(getChapterNumber()));
             int command = checkCommand();
             if (command == 0) break;
             if (command == 1) {

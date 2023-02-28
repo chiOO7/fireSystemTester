@@ -104,19 +104,19 @@ public class ConsoleUIManager {
         return zonesFromChapterMenu;
     }
 
-//    public List<ConsoleUIMenu> getZonesFromDbByChapterNumberMenu(int chapterNumber) {
-//        List<ConsoleUIMenu> zonesFromChapterMenu = new ArrayList<>();
-//        List<Zone> zones = getChapterManager().getChapterByNumber(chapterNumber).getZones();
-//        for (Zone zone : zones) {
-//            ZoneMenuDb zoneMenu = new ZoneMenuDb("Зона " + (zone.getModbusZoneNumber()),
-//                    zone.getModbusZoneNumber(), chapterManager);
-//            zoneMenu.setScanner(scanner);
-//            zoneMenu.setConsoleUIManager(this);
-//            zonesFromChapterMenu.add(zoneMenu);
-//        }
-//
-//        return zonesFromChapterMenu;
-//    }
+    public List<ConsoleUIMenu> getZonesFromDbByChapterNumberMenu(int chapterNumber) {
+        List<ConsoleUIMenu> zonesFromChapterMenu = new ArrayList<>();
+        List<Zone> zones = getChapterManager().getChapterByNumber(chapterNumber).getZones();
+        for (Zone zone : zones) {
+            ZoneMenuDb zoneMenu = new ZoneMenuDb("Зона " + (zone.getModbusZoneNumber()),
+                    zone.getModbusZoneNumber(), chapterManager);
+            zoneMenu.setScanner(scanner);
+            zoneMenu.setConsoleUIManager(this);
+            zonesFromChapterMenu.add(zoneMenu);
+        }
+
+        return zonesFromChapterMenu;
+    }
 
     public List<ConsoleUIMenu> getStatesFromZoneByZoneNumberMenu(int number) {
         List<ConsoleUIMenu> statesFromZoneMenu = new ArrayList<>();
