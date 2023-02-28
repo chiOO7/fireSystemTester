@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.chislab.fireSystemTester.enums.States;
-import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSourceForTests;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
@@ -82,24 +81,18 @@ class ZoneManagerTest {
     @Test
     void getZoneByZoneNumber() {
         zoneManager.readZoneConfigsFromDevice();
-        try {
-            assertEquals(3, zoneManager.getZoneByZoneNumber(3).getModbusZoneNumber());
-        } catch (ZoneNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        assertEquals(3, zoneManager.getZoneByZoneNumber(3).getModbusZoneNumber());
     }
 
     @Test
     void setZoneStateByZoneNumber() {
         zoneManager.readZoneConfigsFromDevice();
-        zoneManager.setZoneStateByZoneNumber(1, List.of(States.FIRE_2,States.HINDRANCE));
+        zoneManager.setZoneStateByZoneNumber(1, List.of(States.FIRE_2, States.HINDRANCE));
         zoneManager.updateZoneStateByZoneNumber(1);
-        try {
-            assertSame(States.FIRE_2, zoneManager.getZoneByZoneNumber(1).getZoneState().getStates().get(0));
-            assertSame(States.HINDRANCE, zoneManager.getZoneByZoneNumber(1).getZoneState().getStates().get(1));
-        } catch (ZoneNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+
+        assertSame(States.FIRE_2, zoneManager.getZoneByZoneNumber(1).getZoneState().getStates().get(0));
+        assertSame(States.HINDRANCE, zoneManager.getZoneByZoneNumber(1).getZoneState().getStates().get(1));
+
     }
 
     @Test

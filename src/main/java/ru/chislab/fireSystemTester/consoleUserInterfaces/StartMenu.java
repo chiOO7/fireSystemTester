@@ -1,8 +1,6 @@
 package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
-import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
-
 
 public class StartMenu extends ConsoleUIMenu {
 
@@ -14,7 +12,7 @@ public class StartMenu extends ConsoleUIMenu {
     }
 
     @Override
-    public void processMenu() throws ZoneNotFoundException {
+    public void processMenu() {
         while (true) {
             int command = checkCommand();
             if (command == 0) {

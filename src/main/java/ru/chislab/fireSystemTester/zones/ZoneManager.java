@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.chislab.fireSystemTester.modbus.ModbusDataSource;
 import ru.chislab.fireSystemTester.enums.States;
-import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.repositories.ZoneRepository;
 
 import java.util.ArrayList;
@@ -58,13 +57,14 @@ public class ZoneManager {
         }
     }
 
-    public Zone getZoneByZoneNumber(int number) throws ZoneNotFoundException {
+    public Zone getZoneByZoneNumber(int number) {
         for (Zone zone : zones) {
             if (zone.getModbusZoneNumber() == number) {
                 return zone;
             }
         }
-        throw new ZoneNotFoundException("Zone not found or connection with С2000-ПП failed");
+        return null;
+//        throw new ZoneNotFoundException("Zone not found or connection with С2000-ПП failed");
     }
 
     public void setZoneStateByZoneNumber(int number, List<States> state) {
