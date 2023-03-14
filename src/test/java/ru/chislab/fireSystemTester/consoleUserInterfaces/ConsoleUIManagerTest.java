@@ -18,11 +18,13 @@ class ConsoleUIManagerTest {
     @BeforeEach
     void setUp() {
         ModbusDataSource modbusDataSource = new ModbusDataSourceForTests();
-        ZoneManager zoneManager = new ZoneManager(modbusDataSource);
+        ZoneManager zoneManager = new ZoneManager(modbusDataSource, null);
 
-        ChapterManager chapterManager = new ChapterManager(zoneManager);
+        ChapterManager chapterManager = new ChapterManager(zoneManager, null);
         chapterManager.initChaptersFromDevice();
         consoleUIManager = new ConsoleUIManager(chapterManager);
+
+
     }
 
     @AfterEach
@@ -33,9 +35,10 @@ class ConsoleUIManagerTest {
     //getStartMenu()
     void showStartMenuTest() throws ZoneNotFoundException {
         System.out.println("Start of show start menu TEST");
-        scanner = new Scanner("0");
+        scanner = new Scanner("0\n");
         consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
+        ConsoleUIManager.StartMenuForTests startMenu = consoleUIManager.getStartMenuForTests();
+        startMenu.setConsoleUIManager(consoleUIManager);
         startMenu.processMenu();
         System.out.println();
         System.out.println();
@@ -49,7 +52,8 @@ class ConsoleUIManagerTest {
         scanner = new Scanner("1\n0\n0");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
+        ConsoleUIManager.StartMenuForTests startMenu = consoleUIManager.getStartMenuForTests();
+        startMenu.setConsoleUIManager(consoleUIManager);
         startMenu.processMenu();
         System.out.println();
         System.out.println();
@@ -77,7 +81,8 @@ class ConsoleUIManagerTest {
         scanner = new Scanner("1\n2\n0\n0\n0\n");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
+        ConsoleUIManager.StartMenuForTests startMenu = consoleUIManager.getStartMenuForTests();
+        startMenu.setConsoleUIManager(consoleUIManager);
         startMenu.processMenu();
         System.out.println();
         System.out.println();
@@ -91,7 +96,8 @@ class ConsoleUIManagerTest {
         scanner = new Scanner("1\n2\n3\n0\n0\n0\n0\n0\n");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
+        ConsoleUIManager.StartMenuForTests startMenu = consoleUIManager.getStartMenuForTests();
+        startMenu.setConsoleUIManager(consoleUIManager);
         startMenu.processMenu();
         System.out.println();
         System.out.println();
@@ -105,7 +111,8 @@ class ConsoleUIManagerTest {
         scanner = new Scanner("1\n2\n3\n3\n0\n0\n0\n0\n0\n");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
+        ConsoleUIManager.StartMenuForTests startMenu = consoleUIManager.getStartMenuForTests();
+        startMenu.setConsoleUIManager(consoleUIManager);
         startMenu.processMenu();
         System.out.println();
         System.out.println();
@@ -118,7 +125,8 @@ class ConsoleUIManagerTest {
         scanner = new Scanner("1\n2\n3\n3\n2\n0\n0\n0\n0\n0\n0\n0\n");
         //consoleUIManager = new ConsoleUIManager(chapterManager, scanner);
         consoleUIManager.setScanner(scanner);
-        StartMenu startMenu = consoleUIManager.getStartMenu();
+        ConsoleUIManager.StartMenuForTests startMenu = consoleUIManager.getStartMenuForTests();
+        startMenu.setConsoleUIManager(consoleUIManager);
         startMenu.processMenu();
         System.out.println();
         System.out.println();

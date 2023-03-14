@@ -21,8 +21,8 @@ class ChapterManagerTest {
     @BeforeEach
     void setUp() {
         modbusDataSource = new ModbusDataSourceForTests();
-        zoneManager = new ZoneManager(modbusDataSource);
-        chapterManager = new ChapterManager(zoneManager);
+        zoneManager = new ZoneManager(modbusDataSource, null);
+        chapterManager = new ChapterManager(zoneManager, null);
     }
 
     @AfterEach

@@ -2,7 +2,6 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
-import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 
 public class ChapterMenuDb extends ChapterMenu {
     public ChapterMenuDb(String menuName, int chapterNumber, ChapterManager chapterManager) {
@@ -10,7 +9,7 @@ public class ChapterMenuDb extends ChapterMenu {
     }
 
     @Override
-    public void processMenu() throws ZoneNotFoundException {
+    public void processMenu() {
         while (true) {
             getChapterManager().getZoneManager().updateZonesState(getChapterManager()
                     .getChapterByNumber(getChapterNumber()).getZones());

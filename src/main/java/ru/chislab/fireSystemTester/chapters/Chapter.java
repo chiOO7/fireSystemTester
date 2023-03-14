@@ -1,6 +1,7 @@
 package ru.chislab.fireSystemTester.chapters;
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 import ru.chislab.fireSystemTester.enums.DeviceType;
 import ru.chislab.fireSystemTester.zones.Zone;
@@ -31,7 +32,7 @@ public class Chapter {
     @Column(name = "chapter_name", length = 128)
     private String chapterName;
 
-    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "chapter_number")
     private List<Zone> zones;
 

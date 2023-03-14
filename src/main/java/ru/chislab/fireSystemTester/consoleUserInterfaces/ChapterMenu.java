@@ -4,11 +4,9 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 import lombok.Getter;
 import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
-import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 
 @Getter
 public class ChapterMenu extends ConsoleUIMenu {
-
 
     private final ChapterManager chapterManager;
     private final int chapterNumber;
@@ -30,7 +28,7 @@ public class ChapterMenu extends ConsoleUIMenu {
     }
 
     @Override
-    public void processCommand(int command) throws ZoneNotFoundException {
+    public void processCommand(int command) {
         if (!getSubMenus().isEmpty() && command > 2) {
             getSubMenus().get(command - 3).processMenu();
         }
@@ -47,7 +45,7 @@ public class ChapterMenu extends ConsoleUIMenu {
     }
 
     @Override
-    public void processMenu() throws ZoneNotFoundException {
+    public void processMenu() {
         while (true) {
             getChapterManager().getZoneManager().updateZonesState(getChapterManager()
                     .getChapterByNumber(chapterNumber).getZones());

@@ -1,9 +1,10 @@
 package ru.chislab.fireSystemTester.zones;
 
-import jakarta.persistence.*;
+
 import lombok.*;
 import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.enums.ZoneTypes;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor

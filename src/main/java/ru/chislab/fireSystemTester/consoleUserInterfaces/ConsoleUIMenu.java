@@ -2,7 +2,6 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 
 import lombok.*;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
-import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +31,15 @@ public abstract class ConsoleUIMenu {
             command = Integer.parseInt(commandStr);
         }
         System.out.println();
-        if (command == -1) System.exit(0);
+        if (command == -1) {
+            consoleUIManager.getContext().close();
+            System.exit(0);
+        }
 
         return command;
     }
 
-    public void processMenu() throws ZoneNotFoundException {
+    public void processMenu() {
         while (true) {
             printSubMenus();
             int command = checkCommand();
@@ -65,7 +67,7 @@ public abstract class ConsoleUIMenu {
         printMenuFooter();
     }
 
-    public void processCommand(int command) throws ZoneNotFoundException {
+    public void processCommand(int command) {
         if (!subMenus.isEmpty() && subMenus.size() >= command - 1 && command > 0) {
             subMenus.get(command - 1).processMenu();
         } else System.out.println("Введите номер пункта меню");
@@ -78,5 +80,4 @@ public abstract class ConsoleUIMenu {
     public void addSubMenus(List<ConsoleUIMenu> subMenus) {
         getSubMenus().addAll(subMenus);
     }
-
 }

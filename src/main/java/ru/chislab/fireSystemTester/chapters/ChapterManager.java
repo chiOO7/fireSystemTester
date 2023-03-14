@@ -1,7 +1,9 @@
 package ru.chislab.fireSystemTester.chapters;
 
 import lombok.Getter;
-import ru.chislab.fireSystemTester.dao.ChapterDao;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.chislab.fireSystemTester.repositories.ChapterRepository;
 import ru.chislab.fireSystemTester.zones.Zone;
 import ru.chislab.fireSystemTester.zones.ZoneManager;
 
@@ -9,35 +11,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Service
 public class ChapterManager {
     private static final int CHAPTERS_COUNT = 64;
     private final Chapter[] chapters = new Chapter[CHAPTERS_COUNT];
     private final ZoneManager zoneManager;
-    private final ChapterDao chapterDao;
+    private final ChapterRepository chapterRepository;
 
-    public ChapterManager(ZoneManager zoneManager, ChapterDao chapterDao) {
+    public ChapterManager(ZoneManager zoneManager, ChapterRepository chapterRepository) {
         this.zoneManager = zoneManager;
-        this.chapterDao = chapterDao;
+        this.chapterRepository = chapterRepository;
         reInitChapters();
     }
 
-    public ChapterManager(ZoneManager zoneManager) {
-        this.zoneManager = zoneManager;
-        this.chapterDao = null;
-        reInitChapters();
-    }
-
+    @Transactional
     public void saveChaptersToStorage() {
-        chapterDao.saveChaptersToStorage(getAvailableChapters());
+        chapterRepository.saveAll(getAvailableChapters());
     }
 
+    @Transactional(readOnly = true)
     public void initChaptersFromStorage() {
-        List<Chapter> chaptersFromStorage = chapterDao.getChaptersFromStorage();
+        List<Chapter> chaptersFromStorage = getAvailableChaptersFromDb();
         zoneManager.clearZones();
         for (Chapter chapter : chaptersFromStorage) {
+            zoneManager.getZones().addAll(chapter.getZones());
             chapters[chapter.getModbusChapterNumber() - 1] = chapter;
-            zoneManager.getZones().addAll(chapters[chapter.getModbusChapterNumber() - 1].getZones());
         }
+
     }
 
     public void initChaptersFromDevice() {
@@ -47,8 +47,9 @@ public class ChapterManager {
         addNewZoneToChapter();
     }
 
+    @Transactional
     public void updateChapter(Chapter chapter) {
-        chapterDao.updateChapter(chapter);
+        chapterRepository.update(chapter.getModbusChapterNumber(), chapter.getChapterName());
     }
 
     public void reInitChapters() {
@@ -83,7 +84,7 @@ public class ChapterManager {
     }
 
     public List<Chapter> getAvailableChaptersFromDb() {
-        return chapterDao.getChaptersFromStorage();
+        return chapterRepository.findAll();
     }
 }
 

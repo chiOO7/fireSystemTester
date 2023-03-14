@@ -4,11 +4,11 @@ package ru.chislab.fireSystemTester.consoleUserInterfaces;
 import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.chislab.fireSystemTester.ApplicationRunner;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.stereotype.Component;
 import ru.chislab.fireSystemTester.chapters.Chapter;
 import ru.chislab.fireSystemTester.chapters.ChapterManager;
 import ru.chislab.fireSystemTester.enums.States;
-import ru.chislab.fireSystemTester.exceptions.ZoneNotFoundException;
 import ru.chislab.fireSystemTester.zones.Zone;
 import ru.chislab.fireSystemTester.zones.ZoneState;
 
@@ -18,11 +18,13 @@ import java.util.List;
 import java.util.Scanner;
 
 @Data
+@Component
 public class ConsoleUIManager {
 
-    private final static Logger logger = LoggerFactory.getLogger(ApplicationRunner.class);
+    private final static Logger logger = LoggerFactory.getLogger(ConsoleUIManager.class);
     private Scanner scanner;
     private ChapterManager chapterManager;
+    private ConfigurableApplicationContext context;
 
     EnumSet<States> settableStates = EnumSet.of(States.DISARMING_INPUT, States.ARMING_INPUT);
 
@@ -31,9 +33,17 @@ public class ConsoleUIManager {
         this.scanner = new Scanner(System.in);
     }
 
-
     public StartMenu getStartMenu() {
         StartMenu startMenu = new StartMenu("Главное меню", chapterManager);
+        startMenu.setScanner(getScanner());
+        startMenu.addSubMenu(getReadZonesFromDeviceMenu());
+        startMenu.addSubMenu(getAvailableFromStorageChaptersMenu());
+
+        return startMenu;
+    }
+
+    public StartMenuForTests getStartMenuForTests() {
+        StartMenuForTests startMenu = new StartMenuForTests("Главное меню", chapterManager);
         startMenu.setScanner(getScanner());
         startMenu.addSubMenu(getReadZonesFromDeviceMenu());
         startMenu.addSubMenu(getAvailableFromStorageChaptersMenu());
@@ -67,7 +77,7 @@ public class ConsoleUIManager {
 
     public List<ConsoleUIMenu> getChaptersFromDbMenu() {
         List<ConsoleUIMenu> chaptersMenu = new ArrayList<>();
-        List<Chapter> chapters = getChapterManager().getAvailableChaptersFromDb();
+        List<Chapter> chapters = getChapterManager().getAvailableChapters();
         for (int i = 0; i < chapters.size(); i++) {
             ChapterMenuDb chapterMenu = new ChapterMenuDb("Раздел " + (i + 1),
                     chapters.get(i).getModbusChapterNumber(),
@@ -80,12 +90,12 @@ public class ConsoleUIManager {
         return chaptersMenu;
     }
 
-    public List<ConsoleUIMenu> getZonesFromChapterByChapterNumberMenu(int number) throws ZoneNotFoundException {
+    public List<ConsoleUIMenu> getZonesFromChapterByChapterNumberMenu(int number) {
         List<ConsoleUIMenu> zonesFromChapterMenu = new ArrayList<>();
         List<Zone> zones = getChapterManager().getChapterByNumber(number).getZones();
         for (Zone zone : zones) {
             ZoneMenu zoneMenu = new ZoneMenu("Зона " + (zone.getModbusZoneNumber()),
-                        zone.getModbusZoneNumber(), chapterManager);
+                    zone.getModbusZoneNumber(), chapterManager);
             zoneMenu.setScanner(scanner);
             zoneMenu.setConsoleUIManager(this);
             zonesFromChapterMenu.add(zoneMenu);
@@ -94,7 +104,7 @@ public class ConsoleUIManager {
         return zonesFromChapterMenu;
     }
 
-    public List<ConsoleUIMenu> getZonesFromDbByChapterNumberMenu(int chapterNumber) throws ZoneNotFoundException {
+    public List<ConsoleUIMenu> getZonesFromDbByChapterNumberMenu(int chapterNumber) {
         List<ConsoleUIMenu> zonesFromChapterMenu = new ArrayList<>();
         List<Zone> zones = getChapterManager().getChapterByNumber(chapterNumber).getZones();
         for (Zone zone : zones) {
@@ -110,9 +120,10 @@ public class ConsoleUIManager {
 
     public List<ConsoleUIMenu> getStatesFromZoneByZoneNumberMenu(int number) {
         List<ConsoleUIMenu> statesFromZoneMenu = new ArrayList<>();
-        try {
-            Zone zone = getChapterManager().getZoneManager().getZoneByZoneNumber(number);
-            ZoneState state = zone.getZoneState();
+
+        Zone zone = getChapterManager().getZoneManager().getZoneByZoneNumber(number);
+        ZoneState state = zone.getZoneState();
+        if (state.getStates() != null) {
             for (int i = 0; i < state.getStates().size(); i++) {
                 StateMenu stateMenu = new StateMenu("Состояние " + (i + 1) + ": " + state.getStates().get(i));
                 stateMenu.setScanner(getScanner());
@@ -126,8 +137,6 @@ public class ConsoleUIManager {
                 stateMenu.addSubMenus(changeStateMenus);
                 statesFromZoneMenu.add(stateMenu);
             }
-        } catch (ZoneNotFoundException e) {
-            throw new RuntimeException(e);
         }
 
         return statesFromZoneMenu;
@@ -143,5 +152,21 @@ public class ConsoleUIManager {
         return availableFromStorageChaptersMenu;
     }
 
+    class StartMenuForTests extends StartMenu {
+        public StartMenuForTests(String menuName, ChapterManager chapterManager) {
+            super(menuName, chapterManager);
+        }
 
+        @Override
+        public void processMenu() {
+            while (true) {
+                int command = checkCommand();
+                if (command == 0) {
+                    break;
+                }
+                if (command == 1) chapterManager.initChaptersFromDevice();
+                processCommand(command);
+            }
+        }
+    }
 }
