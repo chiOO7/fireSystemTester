@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
-@RequestMapping("/")
+@RequestMapping(path = "/")
 public class ChapterController {
 
     @CrossOrigin(origins = "*")
-    @GetMapping("/foo")
+    @GetMapping(path = "")
     public String getChapters() {
         System.out.println("foo");
         return "index";
